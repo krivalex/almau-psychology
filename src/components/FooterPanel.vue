@@ -17,7 +17,7 @@ const currentYear = new Date().getFullYear()
   border-top: 1px solid #eaeaea;
   height: 60px;
   width: 100%;
-  position: fixed;
+  position: relative;
   bottom: 0;
   left: 0;
   z-index: 100;

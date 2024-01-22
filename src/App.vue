@@ -1,6 +1,8 @@
 <template>
   <navbar-panel />
-  <router-view />
+  <main>
+    <router-view />
+  </main>
   <footer-panel />
 </template>
 
@@ -10,4 +12,10 @@ import NavbarPanel from './components/NavbarPanel.vue'
 import FooterPanel from './components/FooterPanel.vue'
 </script>
 
-<style scoped></style>
+<style scoped>
+main {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  min-height: 100vh - 120px;
+}
+</style>

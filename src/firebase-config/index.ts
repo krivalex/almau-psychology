@@ -5,12 +5,12 @@ import { initializeApp } from 'firebase/app'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyAevhsUClJR9mSwS8usXVJYIiNeQ-iMkGY',
-  authDomain: 'almau-psychology.firebaseapp.com',
-  projectId: 'almau-psychology',
-  storageBucket: 'almau-psychology.appspot.com',
-  messagingSenderId: '381800203653',
-  appId: '1:381800203653:web:4417ac03aee51c3c0df0ec',
+  apiKey: 'AIzaSyC8oKlXm8viK4dVZt4xo4T0AWSnACVMM_M',
+  authDomain: 'almau-psychologist.firebaseapp.com',
+  projectId: 'almau-psychologist',
+  storageBucket: 'almau-psychologist.appspot.com',
+  messagingSenderId: '291718757462',
+  appId: '1:291718757462:web:8c60f6b6efef12ef100ff7',
 }
 
 const app = initializeApp(firebaseConfig)
