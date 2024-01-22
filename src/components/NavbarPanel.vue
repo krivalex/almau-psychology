@@ -1,12 +1,19 @@
 <template>
   <div class="navbar-panel">
-    <div class="naming" @click="goToMain">
-      <img class="logo" src="@/assets/logo.png" alt="logo" />
-      <h1 class="name">AlmaU Psychology</h1>
+    <div class="standart-navbar">
+      <div class="naming" @click="goToMain">
+        <img class="logo" src="@/assets/logo.png" alt="logo" />
+        <h1 class="name">AlmaU Psychology</h1>
+      </div>
+      <div class="login-control">
+        <p-button class="enter p-button-sm" v-if="!user" @click="googleRegister" label="Войти" icon="pi pi-sign"></p-button>
+        <p-button class="enter p-button-sm" v-if="user" @click="googleLogout" label="Выйти" icon="pi pi-sign-out"></p-button>
+      </div>
     </div>
-    <div class="login-control">
-      <p-button class="enter p-button-sm" v-if="!user" @click="googleRegister" label="Войти" icon="pi pi-sign"></p-button>
-      <p-button class="enter p-button-sm" v-if="user" @click="googleLogout" label="Выйти" icon="pi pi-sign-out"></p-button>
+    <div class="navbar-actions">
+      <p-button class="nav-buttons" label="Тесты" />
+      <p-button class="nav-buttons" label="Психологи" />
+      <p-button class="nav-buttons" label="О нас" />
     </div>
   </div>
 </template>
@@ -38,36 +45,62 @@ const { user, googleRegister, googleLogout } = useUser()
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 0 10px;
 
-  .naming {
-    height: inherit;
+  flex-direction: column;
+
+  .standart-navbar {
     display: flex;
-    justify-content: flex-start;
     align-items: center;
-    cursor: pointer;
-    .logo {
-      height: 40px;
-      margin: 10px;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 10px;
+
+    .naming {
+      height: inherit;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      cursor: pointer;
+      flex-direction: row;
+      .logo {
+        height: 40px;
+        margin: 10px;
+      }
+
+      .name {
+        display: inline-block;
+        margin: 0;
+        font-size: 1rem;
+        vertical-align: middle;
+        color: black;
+      }
     }
 
-    .name {
-      display: inline-block;
-      margin: 0;
-      font-size: 1rem;
-      vertical-align: middle;
-      color: black;
+    .login-control {
+      margin-left: auto;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      .enter {
+        margin: 0 10px;
+      }
     }
   }
 
-  .login-control {
+  .navbar-actions {
     margin-left: auto;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    width: 100vw;
+    margin: 0 auto;
 
-    .enter {
-      margin: 0 10px;
+    .nav-buttons {
+      width: 100%;
+      font-size: 0.8rem;
+      background-color: #fff;
+      border-radius: 0;
     }
   }
 }

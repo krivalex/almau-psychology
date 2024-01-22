@@ -71,7 +71,7 @@ const currentIndex = ref(0)
 <style lang="scss" scoped>
 .test {
   height: 100vh;
-  margin-top: 60px;
+  margin-top: 100px;
   margin-bottom: 60px;
   display: flex;
   justify-content: center;
@@ -104,7 +104,7 @@ const currentIndex = ref(0)
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    height: 45vh;
   }
 
   .control {

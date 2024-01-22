@@ -23,7 +23,7 @@ onMounted(() => {
 <style lang="scss">
 .all-tests {
   height: 100vh;
-  margin-top: 60px;
+  margin-top: 120px;
   margin-bottom: 60px;
   display: flex;
   justify-content: flex-start;
