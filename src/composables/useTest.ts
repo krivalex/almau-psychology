@@ -1,11 +1,11 @@
-import { getDocs, addDoc, doc, collection, type DocumentData, deleteDoc, updateDoc } from 'firebase/firestore'
-import { db } from '@/firebase-config'
+import { getDocs, addDoc, doc, collection, type DocumentData, deleteDoc } from 'firebase/firestore'
+import { db } from '../firebase-config'
 import { ref, reactive } from 'vue'
-import { useUser } from './useUser'
+// import { useUser } from './useUser'
 import * as firebase from 'firebase/storage'
 import { getStorage, uploadBytes } from 'firebase/storage'
-import type { Test } from '@/interfaces'
-import { initNewTest } from '@/utils/init'
+import type { Test } from '../interfaces'
+import { initNewTest } from '../utils/init'
 
 const test = ref<Test | DocumentData>()
 const selectedTest = ref<Test>()

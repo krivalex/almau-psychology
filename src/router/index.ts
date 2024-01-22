@@ -7,27 +7,27 @@ const router = createRouter({
     {
       path: '/',
       name: 'all-tests',
-      component: () => import('@/views/AllTestsView.vue'),
+      component: () => import('../views/AllTestsView.vue'),
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/LoginView.vue'),
+      component: () => import('../views/LoginView.vue'),
     },
     {
       path: '/test/:id',
       name: 'test',
-      component: () => import('@/views/TestView.vue'),
+      component: () => import('../views/TestView.vue'),
     },
     {
       path: '/result/:id',
       name: 'result',
-      component: () => import('@/views/ResultView.vue'),
+      component: () => import('../views/ResultView.vue'),
     },
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
-      component: () => import('@/views/NotFoundView.vue'),
+      component: () => import('../views/NotFoundView.vue'),
     },
   ],
 })

@@ -1,8 +1,8 @@
-import { collection, getDocs, addDoc, type DocumentData, getDoc, doc, setDoc } from 'firebase/firestore'
-import { db } from '@/firebase-config'
+import { collection, getDocs, addDoc, type DocumentData /* getDoc, doc, setDoc */ } from 'firebase/firestore'
+import { db } from '../firebase-config'
 import { ref, computed, reactive } from 'vue'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
-import type { User } from '@/interfaces'
+import type { User } from '../interfaces'
 
 const user = ref<User | DocumentData | null>()
 const userList = ref([] as DocumentData)
@@ -94,25 +94,25 @@ export const useUser = () => {
   }
 
   // обновить данные в базе данных
-  async function updateUserInDatabase() {
-    if (user.value) {
-      try {
-        const userDocRef = doc(db, yourDatabase, user.value.uid)
-        const existingUserDoc = await getDoc(userDocRef)
-        if (existingUserDoc.exists()) {
-          const userData = existingUserDoc.data()
-          const updatedData = {
-            ...userData,
-            ...user.value,
-          }
-          await setDoc(userDocRef, updatedData)
-          await addToLocalStorage()
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-  }
+  // async function updateUserInDatabase() {
+  //   if (user.value) {
+  //     try {
+  //       const userDocRef = doc(db, yourDatabase, user.value.uid)
+  //       const existingUserDoc = await getDoc(userDocRef)
+  //       if (existingUserDoc.exists()) {
+  //         const userData = existingUserDoc.data()
+  //         const updatedData = {
+  //           ...userData,
+  //           ...user.value,
+  //         }
+  //         await setDoc(userDocRef, updatedData)
+  //         await addToLocalStorage()
+  //       }
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  // }
 
   function addToLocalStorage() {
     if (user.value) {
