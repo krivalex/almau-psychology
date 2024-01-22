@@ -47,7 +47,7 @@ const { selectedTest } = useTest()
 
 function enjoyTest() {
   selectedTest.value = props.test
-  router.push(`/test/${props.test.id}`)
+  router.push(`/test/${props.test.firebaseId}`)
 }
 
 const props = defineProps<{

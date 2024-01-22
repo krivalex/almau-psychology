@@ -1,6 +1,6 @@
 <template>
   <div class="navbar-panel">
-    <div class="naming">
+    <div class="naming" @click="goToMain">
       <img class="logo" src="@/assets/logo.png" alt="logo" />
       <h1 class="name">AlmaU Psychology</h1>
     </div>
@@ -13,7 +13,14 @@
 
 <script setup lang="ts">
 import PButton from 'primevue/button'
-import { useUser } from '@/composables/useUser'
+import { useUser } from '../composables/useUser'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function goToMain() {
+  router.push('/')
+}
 
 const { user, googleRegister, googleLogout } = useUser()
 </script>
@@ -38,6 +45,7 @@ const { user, googleRegister, googleLogout } = useUser()
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    cursor: pointer;
     .logo {
       height: 40px;
       margin: 10px;
