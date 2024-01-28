@@ -1,9 +1,30 @@
-export interface User {
+export interface User extends GoogleUser {
+  id: string
+  name: string
+  phone: string
+  studentBiletNumber: string
+  status: 'student' | 'psychologist'
+  completedTests: [] | CompletedTest[]
+}
+
+export interface GoogleUser {
   uid: string
   email: string
   displayName: string
   photoURL: string
-  status: 'student' | 'psychologist'
+}
+
+export interface CompletedTest {
+  id: string
+  name: string
+  scoreValue: number
+  scoreName: string
+  answers: AnswersMap[]
+}
+
+export interface AnswersMap {
+  question: string
+  answer: string
 }
 
 export interface Test {

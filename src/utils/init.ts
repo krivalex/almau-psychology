@@ -1,4 +1,13 @@
-import { Test } from '../interfaces'
+import { Test, User } from '../interfaces'
+
+export const initNewUser: User = {
+  id: '',
+  name: '',
+  phone: '',
+  studentBiletNumber: '',
+  status: 'student',
+  completedTests: [],
+}
 
 export const initNewTest: Test = {
   id: '',

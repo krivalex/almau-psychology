@@ -2,30 +2,31 @@ import { collection, getDocs, addDoc, type DocumentData /* getDoc, doc, setDoc *
 import { db } from '../firebase-config'
 import { ref, computed, reactive } from 'vue'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
-import type { User } from '../interfaces'
+import type { GoogleUser } from '../interfaces'
+import { useRouter } from 'vue-router'
 
-const user = ref<User | DocumentData | null>()
-const userList = ref([] as DocumentData)
+const googleUser = ref<GoogleUser | DocumentData | null>()
+const googleUserList = ref([] as DocumentData)
 
 const loading = reactive({
-  user: false,
-  userList: false,
+  googleUser: false,
+  googleUserList: false,
 })
 
-const userToObject = computed((): User | null => {
-  if (user.value) {
+const userToObject = computed((): GoogleUser | null => {
+  if (googleUser.value) {
     return {
-      uid: user.value.uid,
-      email: user.value.email,
-      displayName: user.value.displayName,
-      photoURL: user.value.photoURL,
-      status: user.value.status ?? 'student',
+      uid: googleUser.value.uid,
+      email: googleUser.value.email,
+      displayName: googleUser.value.displayName,
+      photoURL: googleUser.value.photoURL,
     }
   }
   return null
 })
 
 export const useUser = () => {
+  const router = useRouter()
   const auth = getAuth()
   const yourDatabase = 'users'
 
@@ -35,16 +36,24 @@ export const useUser = () => {
 
     signInWithPopup(auth, provider)
       .then(async (userCredential) => {
-        user.value = userCredential.user
+        googleUser.value = userCredential.user
 
         // проверка первый ли раз он зашел
-        await addUserToMainDatabase()
+        const result = await addUserToMainDatabase()
 
         // достаем данные если не первый раз
         await getFromMainDatabase()
 
         // добавляем в локал сторадж
         addToLocalStorage()
+
+        if (result === 'already exist') {
+          router.push('/login')
+        } else {
+          router.push('/')
+        }
+
+        // пуш на страницу логина
       })
       .catch((error) => {
         console.error(error)
@@ -52,17 +61,17 @@ export const useUser = () => {
   }
 
   async function addUserToMainDatabase() {
-    loading.user = true
+    loading.googleUser = true
     try {
       if (userToObject.value) {
         await getAllUsers()
         if (!checkUserInDatabase()) {
           await addDoc(collection(db, yourDatabase), userToObject.value)
         } else {
-          console.error('User already in database')
+          return 'already exist'
         }
       }
-      loading.user = false
+      loading.googleUser = false
     } catch (error) {
       console.error(error)
     }
@@ -70,13 +79,13 @@ export const useUser = () => {
 
   // получить всех юзеров
   async function getAllUsers() {
-    loading.userList = true
+    loading.googleUserList = true
     try {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
       querySnapshot.forEach((doc) => {
-        userList.value.push(doc.data())
+        googleUserList.value.push(doc.data())
       })
-      loading.userList = false
+      loading.googleUserList = false
     } catch (error) {
       console.error(error)
     }
@@ -84,46 +93,25 @@ export const useUser = () => {
 
   // проверка есть ли юзер в базе данных
   function checkUserInDatabase() {
-    return userList.value.some((item: any) => item.uid === userToObject.value?.uid)
+    return googleUserList.value.some((item: any) => item.uid === userToObject.value?.uid)
   }
 
   // получить данные из базы данных
   async function getFromMainDatabase() {
     await getAllUsers()
-    user.value = userList.value.find((item: any) => item.uid === user.value?.uid)
+    googleUser.value = googleUserList.value.find((item: any) => item.uid === googleUser.value?.uid)
   }
 
-  // обновить данные в базе данных
-  // async function updateUserInDatabase() {
-  //   if (user.value) {
-  //     try {
-  //       const userDocRef = doc(db, yourDatabase, user.value.uid)
-  //       const existingUserDoc = await getDoc(userDocRef)
-  //       if (existingUserDoc.exists()) {
-  //         const userData = existingUserDoc.data()
-  //         const updatedData = {
-  //           ...userData,
-  //           ...user.value,
-  //         }
-  //         await setDoc(userDocRef, updatedData)
-  //         await addToLocalStorage()
-  //       }
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  // }
-
   function addToLocalStorage() {
-    if (user.value) {
-      localStorage.setItem('user', JSON.stringify(user.value))
+    if (googleUser.value) {
+      localStorage.setItem('user', JSON.stringify(googleUser.value))
     }
   }
 
   function getUserFromLocalStorage() {
     const userFromLocalStorage = localStorage.getItem('user')
     if (userFromLocalStorage) {
-      user.value = JSON.parse(userFromLocalStorage)
+      googleUser.value = JSON.parse(userFromLocalStorage)
     }
   }
 
@@ -134,20 +122,20 @@ export const useUser = () => {
   // выйти из гугла
   function googleLogout() {
     auth.signOut()
-    user.value = null
+    googleUser.value = null
 
     // удаляем из локал сторадж
     removeFromLocalStorage()
   }
 
   return {
-    user,
+    googleUser,
+    googleUserList,
     loading,
     googleRegister,
     googleLogout,
     getAllUsers,
     userToObject,
-    userList,
     addToLocalStorage,
     getUserFromLocalStorage,
     removeFromLocalStorage,
