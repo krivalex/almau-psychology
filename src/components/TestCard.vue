@@ -13,7 +13,7 @@
       </template>
       <template #footer>
         <div class="start-test-contol">
-          <template v-if="user">
+          <template v-if="googleUser">
             <p-button label="Начать тест" class="contol-button" @click="enjoyTest" />
           </template>
           <template v-else>
@@ -42,7 +42,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const { user, googleRegister } = useUser()
+const { googleUser, googleRegister } = useUser()
 const { selectedTest } = useTest()
 
 function enjoyTest() {
@@ -59,7 +59,16 @@ const props = defineProps<{
 .test-card {
   position: relative;
   max-width: 90vw;
-  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border-top-left-radius: 30px !important;
+  border-top-right-radius: 30px !important;
+
+  :deep(.p-card) {
+    border-radius: 10px;
+    border-top-left-radius: 30px !important;
+    border-top-right-radius: 30px !important;
+  }
 
   .desc {
     padding: 0;

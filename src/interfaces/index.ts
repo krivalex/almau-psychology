@@ -1,6 +1,4 @@
 export interface User extends GoogleUser {
-  id: string
-  name: string
   phone: string
   studentBiletNumber: string
   status: 'student' | 'psychologist'

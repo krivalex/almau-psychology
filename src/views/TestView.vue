@@ -78,6 +78,7 @@ const currentIndex = ref(0)
   align-items: center;
   flex-direction: column;
   padding: 20px;
+  color: black;
 
   .info {
     width: 100%;
@@ -87,10 +88,10 @@ const currentIndex = ref(0)
     margin-bottom: 20px;
     height: 10vh;
     flex-direction: column;
+    text-align: center;
     .about-test {
       font-size: 1rem;
       font-weight: bold;
-      color: white;
       text-align: center;
     }
     .naming {

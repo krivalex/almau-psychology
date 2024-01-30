@@ -10,6 +10,15 @@
 import { RouterView } from 'vue-router'
 import NavbarPanel from './components/NavbarPanel.vue'
 import FooterPanel from './components/FooterPanel.vue'
+import { onMounted } from 'vue'
+import { useUser } from './composables/useUser'
+
+const { getAllUsers, getUserFromLocalStorage } = useUser()
+
+onMounted(async () => {
+  await getAllUsers()
+  getUserFromLocalStorage()
+})
 </script>
 
 <style scoped>

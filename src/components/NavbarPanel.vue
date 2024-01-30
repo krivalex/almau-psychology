@@ -5,16 +5,21 @@
         <img class="logo" src="@/assets/logo.png" alt="logo" />
         <h1 class="name">AlmaU Psychology</h1>
       </div>
-      <div class="login-control">
-        <p-button class="enter p-button-sm" v-if="!user" @click="googleRegister" label="Войти" icon="pi pi-sign"></p-button>
-        <p-button class="enter p-button-sm" v-if="user" @click="googleLogout" label="Выйти" icon="pi pi-sign-out"></p-button>
-      </div>
+      <template v-if="!isLoginPage">
+        <div class="login-control">
+          <p-button class="enter p-button-sm" v-if="!googleUser" @click="googleRegister" label="Войти" icon="pi pi-sign"></p-button>
+          <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
+        </div>
+      </template>
+      <template v-else>
+        <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
+      </template>
     </div>
-    <div class="navbar-actions">
+    <!-- <div class="navbar-actions">
       <p-button class="nav-buttons" label="Тесты" />
       <p-button class="nav-buttons" label="Психологи" />
       <p-button class="nav-buttons" label="О нас" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -22,6 +27,8 @@
 import PButton from 'primevue/button'
 import { useUser } from '../composables/useUser'
 import { useRouter } from 'vue-router'
+import { computed } from 'vue'
+import PAvatar from 'primevue/avatar'
 
 const router = useRouter()
 
@@ -29,13 +36,17 @@ function goToMain() {
   router.push('/')
 }
 
-const { user, googleRegister, googleLogout } = useUser()
+const { googleRegister, googleUser } = useUser()
+
+const isLoginPage = computed(() => {
+  return router.currentRoute.value.name === 'login'
+})
 </script>
 
 <style scoped lang="scss">
 .navbar-panel {
   background-color: #fff;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 2px solid #484848;
   height: 60px;
   width: 100%;
   position: fixed;
@@ -45,7 +56,6 @@ const { user, googleRegister, googleLogout } = useUser()
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
   flex-direction: column;
 
   .standart-navbar {
@@ -101,6 +111,7 @@ const { user, googleRegister, googleLogout } = useUser()
       font-size: 0.8rem;
       background-color: #fff;
       border-radius: 0;
+      color: black;
     }
   }
 }

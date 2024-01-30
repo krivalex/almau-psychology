@@ -33,6 +33,7 @@ function goToMain() {
   height: calc(100vh - 180px);
   padding: 15px 25px;
   position: relative;
+  color: black;
 
   .title {
     font-size: 2rem;
@@ -56,6 +57,7 @@ function goToMain() {
     font-size: 0.8rem;
     font-weight: 500;
     background-color: #fff;
+    color: #000;
   }
 }
 </style>

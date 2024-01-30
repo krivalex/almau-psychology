@@ -1,12 +1,14 @@
 import { Test, User } from '../interfaces'
 
 export const initNewUser: User = {
-  id: '',
-  name: '',
   phone: '',
   studentBiletNumber: '',
   status: 'student',
   completedTests: [],
+  uid: '',
+  email: '',
+  displayName: '',
+  photoURL: '',
 }
 
 export const initNewTest: Test = {

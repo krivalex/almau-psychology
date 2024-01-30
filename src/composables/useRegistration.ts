@@ -1,48 +1,37 @@
 import { reactive, ref } from 'vue'
 import { initNewUser } from '../utils/init'
 import { User } from '../interfaces'
-import { addDoc, collection, getDocs } from 'firebase/firestore'
+import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../firebase-config'
+import { useUser } from './useUser'
+import { useRouter } from 'vue-router'
 
 const newStudent = ref<User>(initNewUser)
 const studentList = ref<User[]>([])
 
 export const useRegistration = () => {
+  const { userToObject } = useUser()
+  const router = useRouter()
   const database = 'users'
 
   const loading = reactive({
     studentList: false,
   })
 
-  async function getAllStudents() {
-    loading.studentList = true
-    try {
-      const querySnapshot = await getDocs(collection(db, database))
-      querySnapshot.forEach((doc) => {
-        studentList.value.push(doc.data())
-      })
-      loading.studentList = false
-    } catch (error) {
-      console.error(error)
+  async function completeRegister() {
+    newStudent.value = {
+      ...newStudent.value,
+      ...userToObject.value,
     }
-  }
-
-  function isStudentExist(student: User) {
-    return studentList.value.some((item) => item.id === student.id)
-  }
-
-  async function addNewStudent() {
-    if (newStudent.value.id) {
-      if (!isStudentExist(newStudent.value)) {
-        await addDoc(collection(db, database), newStudent.value)
-      }
-    }
+    console.log(newStudent.value)
+    await addDoc(collection(db, database), newStudent.value)
+    router.push('/')
   }
 
   return {
     newStudent,
     studentList,
-    addNewStudent,
-    getAllStudents,
+    loading,
+    completeRegister,
   }
 }

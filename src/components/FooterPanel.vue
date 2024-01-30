@@ -14,7 +14,7 @@ const currentYear = new Date().getFullYear()
 <style scoped lang="scss">
 .footer-panel {
   background-color: #fff;
-  border-top: 1px solid #eaeaea;
+  border-top: 2px solid #484848;
   height: 60px;
   width: 100%;
   position: relative;

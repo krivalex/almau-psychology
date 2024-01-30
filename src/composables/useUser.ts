@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc, type DocumentData /* getDoc, doc, setDoc */ } from 'firebase/firestore'
+import { collection, getDocs, type DocumentData } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { ref, computed, reactive } from 'vue'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
@@ -39,18 +39,15 @@ export const useUser = () => {
         googleUser.value = userCredential.user
 
         // проверка первый ли раз он зашел
-        const result = await addUserToMainDatabase()
+        const result = await calculateLoginRegister()
 
-        // достаем данные если не первый раз
-        await getFromMainDatabase()
-
-        // добавляем в локал сторадж
-        addToLocalStorage()
-
-        if (result === 'already exist') {
+        if (result === 'new user') {
           router.push('/login')
         } else {
-          router.push('/')
+          // достаем данные если не первый раз
+          await getFromMainDatabase()
+          // добавляем в локал сторадж
+          addToLocalStorage()
         }
 
         // пуш на страницу логина
@@ -60,13 +57,12 @@ export const useUser = () => {
       })
   }
 
-  async function addUserToMainDatabase() {
+  async function calculateLoginRegister() {
     loading.googleUser = true
     try {
       if (userToObject.value) {
-        await getAllUsers()
         if (!checkUserInDatabase()) {
-          await addDoc(collection(db, yourDatabase), userToObject.value)
+          return 'new user'
         } else {
           return 'already exist'
         }
@@ -98,7 +94,7 @@ export const useUser = () => {
 
   // получить данные из базы данных
   async function getFromMainDatabase() {
-    await getAllUsers()
+    if (googleUserList.value.length === 0) return
     googleUser.value = googleUserList.value.find((item: any) => item.uid === googleUser.value?.uid)
   }
 
