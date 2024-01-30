@@ -1,6 +1,11 @@
 export interface User extends GoogleUser {
   phone: string
-  studentBiletNumber: string
+  yearAdmission: number
+  courseRegister: number | 'not_a_student'
+  name: string
+  surname: string
+  patronymic: string
+  specialty: string
   status: 'student' | 'psychologist'
   completedTests: [] | CompletedTest[]
 }
