@@ -16,7 +16,7 @@ import PDatatable from 'primevue/datatable';
 import PColumn from 'primevue/column';
 
 
-const {user, isAdmin} = useUser()
+const { isAdmin} = useUser()
 const {getAllContent, allCompletedTests} = useCurrentTest()
 
 const columns = [
