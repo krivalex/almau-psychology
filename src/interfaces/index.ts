@@ -18,8 +18,9 @@ export interface GoogleUser {
 }
 
 export interface CompletedTest {
+  firebaseId?: string
   id: string
-  name: string
+  student: User | null
   scoreValue: number
   scoreName: string
   answers: AnswersMap[]
@@ -28,6 +29,7 @@ export interface CompletedTest {
 export interface AnswersMap {
   question: string
   answer: string
+  value: number
 }
 
 export interface Test {
@@ -58,6 +60,7 @@ export interface Result {
   id: string
   name: string
   description: string
+  image: string
   min: number
   max: number
 }

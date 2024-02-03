@@ -1,4 +1,4 @@
-import { Test, User } from '../interfaces'
+import { CompletedTest, Test, User } from '../interfaces'
 
 export const initNewUser: User = {
   phone: '',
@@ -26,6 +26,14 @@ export const initNewTest: Test = {
   questions: [],
   firebaseId: '',
   image: '',
+}
+
+export const initNewCurrentTest: CompletedTest = {
+  id: '',
+  student: null,
+  scoreValue: 0,
+  scoreName: '',
+  answers: [],
 }
 
 export const initNewQuestion = {

@@ -1,40 +1,62 @@
 <template>
-  <section class="test">
-    <div class="info">
-      <span class="about-test"> Психологический тест: </span>
-      <span class="naming">
-        <strong>"{{ selectedTest?.name }}"</strong>
-      </span>
-    </div>
-    <div class="queston">
-      <QuestionCard :question="selectedTest?.questions[currentIndex]" :index="currentIndex" :count="selectedTest?.questions.length" />
-    </div>
-    <div class="control" v-if="currentIndex !== selectedTest?.questions.length">
-      <div class="answers">
-        <p-button label="Да" class="control-button yes" @click="nextQuestion" />
-        <p-button label="Иногда" class="control-button sometimes" @click="nextQuestion" />
-        <p-button label="Нет" class="control-button no" @click="nextQuestion" />
+  <template v-if="loading.currentTest">
+    <LoadSpinner />
+  </template>
+
+  <template v-else>
+    <section class="test">
+      <!-- just an info -->
+      <div class="info">
+        <span class="about-test"> Психологический тест: </span>
+        <span class="naming">
+          <strong>"{{ selectedTest?.name }}"</strong>
+        </span>
       </div>
-      <div class="actions">
-        <p-button icon="pi pi-arrow-left" class="action-button" @click="prevQuestion" />
-        <div class="counter">{{ currentIndex + 1 }} / {{ selectedTest?.questions.length }}</div>
-        <p-button icon="pi pi-refresh" class="action-button" @click="clearTestAnswers" />
+
+      <!-- question block -->
+      <div class="queston">
+        <QuestionCard :question="selectedTest?.questions[currentIndex]" />
       </div>
-    </div>
-    <div v-else>
-      <p-button label="Посмотреть результаты" class="control-button" @click="goToResultPage" />
-    </div>
-  </section>
+
+      <!-- control block -->
+      <template v-if="!isTestCompleted">
+        <div class="control">
+          <div class="answers">
+            <template v-if="selectedTest?.questions[currentIndex]?.answers">
+              <template v-for="answer in selectedTest?.questions[currentIndex]?.answers" :key="answer.id">
+                <p-button :label="answer.text" class="control-button" @click="nextQuestion(answer)" />
+              </template>
+            </template>
+          </div>
+          <div class="actions">
+            <p-button icon="pi pi-arrow-left" class="action-button" @click="prevQuestion" />
+            <div class="counter">{{ currentIndex + 1 }} / {{ selectedTest?.questions.length }}</div>
+            <p-button icon="pi pi-refresh" class="action-button" @click="clearTestAnswers" />
+          </div>
+        </div>
+      </template>
+
+      <!-- result block -->
+      <template v-else>
+        <div>
+          <p-button label="Посмотреть результаты" class="control-button" @click="completeTest" />
+        </div>
+      </template>
+    </section>
+  </template>
 </template>
 
 <script setup lang="ts">
 import { useTest } from '../composables/useTest'
 import QuestionCard from '../components/QuestionCard.vue'
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import PButton from 'primevue/button'
 import { useRouter } from 'vue-router'
+import { useCurrentTest } from '../composables/useCurrentTest'
+import LoadSpinner from '../components/LoadSpinner.vue'
 
 const { selectedTest, getContentById } = useTest()
+const { currentIndex, clearTestAnswers, nextQuestion, prevQuestion, isTestCompleted, loading, completeTest } = useCurrentTest()
 const router = useRouter()
 
 onMounted(async () => {
@@ -42,30 +64,6 @@ onMounted(async () => {
     await getContentById(router.currentRoute.value.params.id as string)
   }
 })
-
-function goToResultPage() {
-  router.push(`/result/${selectedTest.value?.firebaseId}`)
-}
-
-function clearTestAnswers() {
-  currentIndex.value = 0
-}
-
-function nextQuestion() {
-  if (selectedTest.value) {
-    if (currentIndex.value < selectedTest.value?.questions.length) {
-      currentIndex.value++
-    }
-  }
-}
-
-function prevQuestion() {
-  if (currentIndex.value > 0) {
-    currentIndex.value--
-  }
-}
-
-const currentIndex = ref(0)
 </script>
 
 <style lang="scss" scoped>
@@ -149,6 +147,10 @@ const currentIndex = ref(0)
       justify-content: space-between;
       align-items: center;
       width: 50%;
+
+      .counter {
+        font-size: 1.2rem;
+      }
     }
   }
 }
