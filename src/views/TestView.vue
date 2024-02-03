@@ -65,6 +65,9 @@ const router = useRouter()
 onMounted(async () => {
   if (!selectedTest.value) {
     await getContentById(router.currentRoute.value.params.id as string)
+    if (!selectedTest.value) {
+      router.push('/')
+    }
   }
 })
 </script>

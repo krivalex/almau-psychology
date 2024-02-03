@@ -75,6 +75,7 @@ onMounted(() => {
   align-items: center;
   flex-direction: column;
   color: black;
+  margin-top: 10px;
   .about-all-tests {
     font-size: 1.5rem;
     font-weight: bold;
