@@ -121,7 +121,6 @@ export const useCurrentTest = () => {
     if (googleUser.value) {
       currentTest.value.student = googleUser.value as User
     }
-    console.log(currentTest.value.scoreValue)
     currentTest.value.scoreName = selectedTest.value?.results.find((result) => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max)?.name as string
   }
 
@@ -151,6 +150,7 @@ export const useCurrentTest = () => {
     load,
     allCompletedTests,
     loading,
+    calculateResult,
     currentResult,
   }
 }

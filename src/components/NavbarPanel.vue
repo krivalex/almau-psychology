@@ -47,17 +47,18 @@ const isLoginPage = computed(() => {
 <style scoped lang="scss">
 .navbar-panel {
   background-color: #fff;
-  border-bottom: 2px solid #484848;
+  border-bottom: 1px solid #484848;
   height: 60px;
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 400;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.6);
 
   .admin-panel {
     width: 100%;

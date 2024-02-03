@@ -45,7 +45,13 @@ export const useTest = () => {
     loading.test = true
     try {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
-      test.value = querySnapshot.docs.map((doc) => doc.data()).find((item: any) => item.id === id)
+      test.value = querySnapshot.docs.map((doc) => {
+        if (doc.id === id) {
+          return doc.data()
+        }
+      })
+
+      selectedTest.value = test.value[0] as Test
       loading.test = false
     } catch (error) {
       console.error(error)

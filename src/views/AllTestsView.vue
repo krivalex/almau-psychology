@@ -47,6 +47,9 @@ onMounted(() => {
   font-size: 1rem;
   font-weight: 600;
   width: 100vw;
+  z-index: 100;
+  padding-top: 15px;
+  position: relative;
 
   .admin-panel {
     display: flex;
@@ -67,13 +70,11 @@ onMounted(() => {
 
 .all-tests {
   height: 100vh;
-  margin-top: 100px;
-  margin-bottom: 60px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-
+  color: black;
   .about-all-tests {
     font-size: 1.5rem;
     font-weight: bold;

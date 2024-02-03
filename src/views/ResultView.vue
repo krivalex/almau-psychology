@@ -1,20 +1,37 @@
 <template>
-  <section class="result-page">
-    <img class="result" :src="currentResult?.image" />
-    <h1 class="title">{{ currentResult?.name }}</h1>
-    <p class="description">{{ currentResult?.description }}</p>
-    <p-button label="Поговорить с психологом" class="control-button" @click="goToWhatsapp" />
-    <p-button class="another-test-button" label="Пройти еще один тест" icon="pi pi-arrow-top" @click="goToMain" />
-  </section>
+  <template v-if="loading.test">
+    <LoadSpinner />
+  </template>
+  <template v-else>
+    <section class="result-page">
+      <img class="result" :src="currentResult?.image" />
+      <h1 class="title">{{ currentResult?.name }}</h1>
+      <p class="description">{{ currentResult?.description }}</p>
+      <p-button label="Поговорить с психологом" class="control-button" @click="goToWhatsapp" />
+      <p-button class="another-test-button" label="Пройти еще один тест" icon="pi pi-arrow-top" @click="goToMain" />
+    </section>
+  </template>
 </template>
 
 <script setup lang="ts">
 import { useCurrentTest } from '../composables/useCurrentTest'
 import PButton from 'primevue/button'
 import { useRouter } from 'vue-router'
+import { useTest } from '../composables/useTest'
+import { onMounted } from 'vue'
+import LoadSpinner from '../components/LoadSpinner.vue'
 
-const { currentResult } = useCurrentTest()
+const { selectedTest, getContentById, loading } = useTest()
+
+const { currentResult, calculateResult } = useCurrentTest()
 const router = useRouter()
+
+onMounted(async () => {
+  if (!selectedTest.value) {
+    await getContentById(router.currentRoute.value.params.id as string)
+    calculateResult()
+  }
+})
 
 function goToWhatsapp() {
   window.open('https://wa.me/+77052020771')
