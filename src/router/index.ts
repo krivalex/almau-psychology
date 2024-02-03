@@ -29,6 +29,11 @@ const router = createRouter({
       name: 'not-found',
       component: () => import('../views/NotFoundView.vue'),
     },
+    {
+      path: '/admin/completed-tests',
+      name: 'not-found',
+      component: () => import('../views/AllCompletedTestsView.vue'),
+    },
   ],
 })
 

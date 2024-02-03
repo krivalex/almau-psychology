@@ -2,7 +2,7 @@
   <template v-if="isAdmin">
     <section class="admin">
       <div class="admin-panel">
-        <p-button class="admin-button p-button-sm" label="Результаты" icon="pi pi-book" />
+        <p-button class="admin-button p-button-sm" label="Результаты" icon="pi pi-book" @click="redirectToResults" />
         <p-button class="admin-button p-button-sm" label="Создать тест" icon="pi pi-plus" />
       </div>
     </section>
@@ -27,13 +27,19 @@ import { onMounted } from 'vue'
 import TestCard from '../components/TestCard.vue'
 import LoadSpinner from '../components/LoadSpinner.vue'
 import PButton from 'primevue/button'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const { testList, getAllContent, loading } = useTest()
 const { isAdmin } = useUser()
 
 onMounted(() => {
   getAllContent()
 })
+
+function redirectToResults() {
+  router.push('/admin/completed-tests')
+}
 </script>
 
 <style lang="scss">

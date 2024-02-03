@@ -68,10 +68,6 @@ export const useCurrentTest = () => {
     }
   }
 
-  async function load() {
-    await getAllContent()
-  }
-
   function clearTestAnswers() {
     currentIndex.value = 0
     currentTest.value = initNewCurrentTest
@@ -147,10 +143,10 @@ export const useCurrentTest = () => {
     completeTest,
     getContentById,
     addContent,
-    load,
     allCompletedTests,
     loading,
     calculateResult,
     currentResult,
+    getAllContent,
   }
 }
