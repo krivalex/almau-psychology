@@ -1,5 +1,5 @@
 import { reactive, ref } from 'vue'
-import { Answer, CompletedTest, User } from '../interfaces'
+import { Answer, CompletedTest, Result, User } from '../interfaces'
 import { useTest } from './useTest'
 import { useUser } from './useUser'
 import { initNewCurrentTest } from '../utils/init'
@@ -12,6 +12,7 @@ const currentTest = ref<CompletedTest>(initNewCurrentTest)
 const isTestCompleted = ref(false)
 const allCompletedTests = ref<CompletedTest[]>([])
 const completedTests = ref<CompletedTest | DocumentData>()
+const currentResult = ref<Result>()
 
 const loading = reactive({
   allCompletedTests: false,
@@ -120,11 +121,17 @@ export const useCurrentTest = () => {
     if (googleUser.value) {
       currentTest.value.student = googleUser.value as User
     }
+    console.log(currentTest.value.scoreValue)
     currentTest.value.scoreName = selectedTest.value?.results.find((result) => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max)?.name as string
+  }
+
+  function calculateResult() {
+    currentResult.value = selectedTest.value?.results.find((result) => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max)
   }
 
   async function completeTest() {
     makeTestBody()
+    calculateResult()
     await addContent()
     isTestCompleted.value = false
     clearTestAnswers()
@@ -144,5 +151,6 @@ export const useCurrentTest = () => {
     load,
     allCompletedTests,
     loading,
+    currentResult,
   }
 }

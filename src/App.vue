@@ -24,8 +24,6 @@ onMounted(async () => {
 <style scoped>
 main {
   margin-top: 60px;
-  margin-bottom: 60px;
-  min-height: 100vh - 120px;
   position: relative;
 }
 </style>
