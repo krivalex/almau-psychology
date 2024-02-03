@@ -1,4 +1,12 @@
 <template>
+  <template v-if="isAdmin">
+    <section class="admin">
+      <div class="admin-panel">
+        <p-button class="admin-button p-button-sm" label="Результаты" icon="pi pi-book" />
+        <p-button class="admin-button p-button-sm" label="Создать тест" icon="pi pi-plus" />
+      </div>
+    </section>
+  </template>
   <section class="all-tests">
     <template v-if="!loading.testList">
       <span class="about-all-tests"> Список тестов </span>
@@ -14,11 +22,14 @@
 
 <script setup lang="ts">
 import { useTest } from '../composables/useTest'
+import { useUser } from '../composables/useUser'
 import { onMounted } from 'vue'
 import TestCard from '../components/TestCard.vue'
 import LoadSpinner from '../components/LoadSpinner.vue'
+import PButton from 'primevue/button'
 
 const { testList, getAllContent, loading } = useTest()
+const { isAdmin } = useUser()
 
 onMounted(() => {
   getAllContent()
@@ -26,9 +37,37 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.admin {
+  color: black;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100vw;
+
+  .admin-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    gap: 7px;
+
+    .admin-button {
+      background-color: white;
+      color: black;
+      padding: 10px;
+      width: 100%;
+    }
+  }
+}
+
 .all-tests {
   height: 100vh;
-  margin-top: 60px;
+  margin-top: 100px;
   margin-bottom: 60px;
   display: flex;
   justify-content: flex-start;

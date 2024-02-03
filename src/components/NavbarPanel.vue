@@ -15,6 +15,7 @@
         <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
       </template>
     </div>
+
     <!-- <div class="navbar-actions">
       <p-button class="nav-buttons" label="Тесты" />
       <p-button class="nav-buttons" label="Психологи" />
@@ -57,6 +58,11 @@ const isLoginPage = computed(() => {
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+
+  .admin-panel {
+    width: 100%;
+    height: 40px;
+  }
 
   .standart-navbar {
     display: flex;

@@ -2,10 +2,10 @@ import { collection, getDocs, type DocumentData } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { ref, computed, reactive } from 'vue'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
-import type { GoogleUser } from '../interfaces'
+import type { GoogleUser, User } from '../interfaces'
 import { useRouter } from 'vue-router'
 
-const googleUser = ref<GoogleUser | DocumentData | null>()
+const googleUser = ref<User | DocumentData | null>()
 const googleUserList = ref([] as DocumentData)
 
 const loading = reactive({
@@ -29,6 +29,10 @@ export const useUser = () => {
   const router = useRouter()
   const auth = getAuth()
   const yourDatabase = 'users'
+
+  const isAdmin = computed(() => {
+    return googleUser.value?.status === 'admin'
+  })
 
   // войти с помощью окна гугл
   function googleRegister() {
@@ -135,5 +139,6 @@ export const useUser = () => {
     addToLocalStorage,
     getUserFromLocalStorage,
     removeFromLocalStorage,
+    isAdmin,
   }
 }
