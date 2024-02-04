@@ -10,6 +10,9 @@
             <span v-else-if="col.field === 'surname'">
               {{data.student.surname}}
             </span>
+            <span v-else-if="col.field === 'phone'">
+              {{data.student.phone}}
+            </span>
             <span v-else-if="col.field === 'created'">
               {{transformDate(data.created)}}
             </span>
@@ -63,6 +66,7 @@ function openAnswersModal(answers: any): void {
 const columns = [
   { field: 'name', header: 'Имя' },
   { field: 'surname', header: 'Фамилия' },
+  {field: 'phone', header: 'Телефон' },
   {field: 'testName', header: 'Тест'},
   { field: 'scoreValue', header: 'Очки' },
   { field: 'scoreName', header: 'Результат' },

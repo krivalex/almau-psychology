@@ -2,13 +2,17 @@
   <div class="footer-panel">
     <div class="author">
       <span class="copyright"> &copy; {{ currentYear }} <strong>AlmaU Psychology</strong> </span>
-      <span class="author-name">powered by <strong>@krivalex</strong></span>
+      <span class="author-name">developed by <strong @click="redirectToKrivalex">@krivalex</strong></span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const currentYear = new Date().getFullYear()
+
+function redirectToKrivalex() {
+  window.open('https://www.instagram.com/_krivalex_/?hl=ru')
+}
 </script>
 
 <style scoped lang="scss">

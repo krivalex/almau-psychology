@@ -119,7 +119,8 @@ export const useCurrentTest = () => {
     }
     currentTest.value.created = new Date()
     currentTest.value.testName = selectedTest.value?.name as string
-    currentTest.value.scoreName = selectedTest.value?.results.find((result) => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max)?.name as string
+    currentTest.value.scoreName =
+      (selectedTest.value?.results.find((result) => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max)?.name as string) ?? 'Ошибка при записи'
   }
 
   function calculateResult() {
