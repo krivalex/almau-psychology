@@ -47,6 +47,12 @@ function redirectToKrivalex() {
       vertical-align: middle;
       color: black;
       font-style: italic;
+
+      strong {
+        cursor: pointer;
+        color: #3f69ff;
+        font-weight: 600;
+      }
     }
   }
 }
