@@ -1,34 +1,77 @@
 <template>
   <template v-if="isAdmin">
     <section class="completed-tests">
-      <p-datatable :value="allCompletedTests" :paginator="true" :rows="10" :rowsPerPageOptions="[5, 10, 20]">
-        <p-column v-for="col in columns" :field="col.field" :header="col.header" />
+      <p-datatable :value="allCompletedTests" :paginator="true" :rows="10" :rowsPerPageOptions="[5, 10, 20]" filter sort>
+        <p-column v-for="col in columns" :field="col.field" :header="col.header" sortable >
+          <template #body="{data, field}">
+            <span v-if="col.field === 'name'">
+              {{data.student.name}}
+            </span>
+            <span v-else-if="col.field === 'surname'">
+              {{data.student.surname}}
+            </span>
+            <span v-else-if="col.field === 'created'">
+              {{transformDate(data.created)}}
+            </span>
+            <span v-else-if="col.field === 'answers'">
+                <p-button label="Ответы" @click="openAnswersModal(data)"></p-button>
+            </span>
+            <span v-else>{{data[field]}}</span>
+          </template>
+        </p-column>
       </p-datatable>
     </section>
+  </template>
+  <template v-else>
+    <your-have-no-permission />
   </template>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import {onMounted} from 'vue';
 import {useCurrentTest} from '../composables/useCurrentTest'
 import { useUser } from '../composables/useUser';
 import PDatatable from 'primevue/datatable';
 import PColumn from 'primevue/column';
-
+import PButton from 'primevue/button';
+import { useDialog } from 'primevue/usedialog'
+import AnswersModal from '../components/modals/AnswersModal.vue'
+import {transformDate} from '../utils/date'
+import YourHaveNoPermission from '../components/YourHaveNoPermission.vue'
 
 const { isAdmin} = useUser()
 const {getAllContent, allCompletedTests} = useCurrentTest()
 
+const dialog = useDialog()
+
+function openAnswersModal(answers: any): void {
+  dialog.open(AnswersModal, {
+    props: {
+      header: `Карта ответов ${answers.student.name} ${answers.student.surname}`,
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+      modal: true,
+    },
+    data: {
+      answers,
+    },
+  })
+}
+
 const columns = [
-  { field: 'student.name', header: 'Имя' },
-  { field: 'student.surname', header: 'Фамилия' },
+  { field: 'name', header: 'Имя' },
+  { field: 'surname', header: 'Фамилия' },
+  {field: 'testName', header: 'Тест'},
   { field: 'scoreValue', header: 'Очки' },
   { field: 'scoreName', header: 'Результат' },
-  // { field: 'answers', header: 'Тест' },
+  { field: 'created', header: 'Дата прохождения' },
+  { field: 'answers', header: 'Карта ответов' }
 ]
 
-onMounted(() => {
-  getAllContent()
+onMounted(async () => {
+  await getAllContent()
 })
 
 </script>

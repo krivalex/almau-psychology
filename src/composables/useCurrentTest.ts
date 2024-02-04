@@ -117,6 +117,8 @@ export const useCurrentTest = () => {
     if (googleUser.value) {
       currentTest.value.student = googleUser.value as User
     }
+    currentTest.value.created = new Date()
+    currentTest.value.testName = selectedTest.value?.name as string
     currentTest.value.scoreName = selectedTest.value?.results.find((result) => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max)?.name as string
   }
 

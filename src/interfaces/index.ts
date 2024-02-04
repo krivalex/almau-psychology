@@ -23,7 +23,9 @@ export interface CompletedTest {
   student: User | null
   scoreValue: number
   scoreName: string
+  created: Date | null
   answers: AnswersMap[]
+  testName: string
 }
 
 export interface AnswersMap {

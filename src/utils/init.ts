@@ -1,4 +1,4 @@
-import { CompletedTest, Test, User } from '../interfaces'
+import { CompletedTest, Test, User, Question, Answer } from '../interfaces'
 
 export const initNewUser: User = {
   phone: '',
@@ -33,16 +33,18 @@ export const initNewCurrentTest: CompletedTest = {
   student: null,
   scoreValue: 0,
   scoreName: '',
+  created: null,
+  testName: '',
   answers: [],
 }
 
-export const initNewQuestion = {
+export const initNewQuestion: Question = {
   id: '',
   text: '',
   answers: [],
 }
 
-export const initNewAnswer = {
+export const initNewAnswer: Answer = {
   id: '',
   text: '',
   value: 0,
