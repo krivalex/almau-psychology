@@ -1,7 +1,7 @@
 import { collection, getDocs, type DocumentData } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { ref, computed, reactive } from 'vue'
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth'
 import type { GoogleUser, User } from '../interfaces'
 import { useRouter } from 'vue-router'
 
@@ -38,14 +38,15 @@ export const useUser = () => {
   function googleRegister() {
     const provider = new GoogleAuthProvider()
 
+    const auth = getAuth()
     signInWithPopup(auth, provider)
-      .then(async (userCredential) => {
-        googleUser.value = userCredential.user
-
-        // проверка первый ли раз он зашел
-        const result = await calculateLoginRegister()
-
-        if (result === 'new user') {
+      .then(async (result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const token = credential?.accessToken
+        const user = result.user
+        googleUser.value = user
+        const calculate = await calculateLoginRegister()
+        if (calculate === 'new user') {
           router.push('/login')
         } else {
           // достаем данные если не первый раз
@@ -53,12 +54,33 @@ export const useUser = () => {
           // добавляем в локал сторадж
           addToLocalStorage()
         }
-
-        // пуш на страницу логина
+        console.log('user', user)
       })
       .catch((error) => {
         console.error(error)
       })
+
+    // signInWithPopup(auth, provider)
+    //   .then(async (userCredential) => {
+    //     googleUser.value = userCredential.user
+
+    //     // проверка первый ли раз он зашел
+    //     const result = await calculateLoginRegister()
+
+    //     if (result === 'new user') {
+    //       router.push('/login')
+    //     } else {
+    //       // достаем данные если не первый раз
+    //       await getFromMainDatabase()
+    //       // добавляем в локал сторадж
+    //       addToLocalStorage()
+    //     }
+
+    //     // пуш на страницу логина
+    //   })
+    //   .catch((error) => {
+    //     console.error(error)
+    //   })
   }
 
   async function calculateLoginRegister() {
