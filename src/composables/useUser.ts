@@ -39,14 +39,38 @@ export const useUser = () => {
     const provider = new GoogleAuthProvider()
 
     const auth = getAuth()
+
+    // signInWithRedirect(auth, provider)
+    //   .then((result) => {
+    //     // This gives you a Google Access Token. You can use it to access the Google API.
+    //     const credential = GoogleAuthProvider.credentialFromResult(result)
+    //     const token = credential.accessToken
+    //     // The signed-in user info.
+    //     const user = result.user
+    //     googleUser.value = user
+    //     console.log('user', user)
+    //     console.log('token', token)
+    //     // ...
+    //   })
+    //   .catch((error) => {
+    //     // Handle Errors here.
+    //     const errorCode = error.code
+    //     const errorMessage = error.message
+    //     // The email of the user's account used.
+    //     const email = error.email
+    //     // The AuthCredential type that was used.
+    //     const credential = GoogleAuthProvider.credentialFromError(error)
+    //     // ...
+    //   })
+
     signInWithPopup(auth, provider)
-      .then(async (result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result)
-        const token = credential?.accessToken
-        const user = result.user
-        googleUser.value = user
-        const calculate = await calculateLoginRegister()
-        if (calculate === 'new user') {
+      .then(async (userCredential) => {
+        googleUser.value = userCredential.user
+
+        // проверка первый ли раз он зашел
+        const result = await calculateLoginRegister()
+
+        if (result === 'new user') {
           router.push('/login')
         } else {
           // достаем данные если не первый раз
@@ -54,33 +78,12 @@ export const useUser = () => {
           // добавляем в локал сторадж
           addToLocalStorage()
         }
-        console.log('user', user)
+
+        // пуш на страницу логина
       })
       .catch((error) => {
         console.error(error)
       })
-
-    // signInWithPopup(auth, provider)
-    //   .then(async (userCredential) => {
-    //     googleUser.value = userCredential.user
-
-    //     // проверка первый ли раз он зашел
-    //     const result = await calculateLoginRegister()
-
-    //     if (result === 'new user') {
-    //       router.push('/login')
-    //     } else {
-    //       // достаем данные если не первый раз
-    //       await getFromMainDatabase()
-    //       // добавляем в локал сторадж
-    //       addToLocalStorage()
-    //     }
-
-    //     // пуш на страницу логина
-    //   })
-    //   .catch((error) => {
-    //     console.error(error)
-    //   })
   }
 
   async function calculateLoginRegister() {

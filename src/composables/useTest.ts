@@ -35,6 +35,7 @@ export const useTest = () => {
         }
         testList.value.push(compressive as Test)
       })
+
       loading.testList = false
     } catch (error) {
       console.error(error)

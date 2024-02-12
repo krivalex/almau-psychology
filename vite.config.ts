@@ -1,9 +1,8 @@
-import { defineConfig } from 'vite'
+import { ConfigEnv, UserConfig, defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { fileURLToPath, URL } from 'node:url'
 
-// https://vitejs.dev/config/
-export default defineConfig({
+const baseConfig = {
   plugins: [vue()],
   resolve: {
     extensions: ['.js', '.ts', '.vue', '.json'],
@@ -16,4 +15,18 @@ export default defineConfig({
       scss: {},
     },
   },
+  define: {
+    __APP_MODE__: JSON.stringify('development'),
+    __APP_ENV__: JSON.stringify('development'),
+  },
+}
+
+export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
+  const envFile = loadEnv(mode, process.cwd())
+  baseConfig.define.__APP_MODE__ = JSON.stringify(mode)
+  baseConfig.define.__APP_ENV__ = JSON.stringify(envFile.VITE_APP_BUILD_ENV)
+
+  return {
+    ...baseConfig,
+  }
 })

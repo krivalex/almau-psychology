@@ -5,12 +5,12 @@ import { initializeApp } from 'firebase/app'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyC8oKlXm8viK4dVZt4xo4T0AWSnACVMM_M',
-  authDomain: 'almau-psychologist.firebaseapp.com',
-  projectId: 'almau-psychologist',
-  storageBucket: 'almau-psychologist.appspot.com',
-  messagingSenderId: '291718757462',
-  appId: '1:291718757462:web:8c60f6b6efef12ef100ff7',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
 const app = initializeApp(firebaseConfig)
