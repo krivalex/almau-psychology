@@ -53,7 +53,7 @@ export const useUser = () => {
     const auth = getAuth()
     const provider = new GoogleAuthProvider()
 
-    signInWithRedirect(auth, provider)
+    await signInWithRedirect(auth, provider)
 
     const redirectResult = await getRedirectResult(auth)
 
