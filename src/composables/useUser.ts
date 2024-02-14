@@ -1,7 +1,7 @@
 import { collection, getDocs, type DocumentData } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { ref, computed, reactive } from 'vue'
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth'
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithRedirect, signInWithCredential, PopupRedirectResolver, getRedirectResult } from 'firebase/auth'
 import type { GoogleUser, User } from '../interfaces'
 import { useRouter } from 'vue-router'
 
@@ -34,56 +34,66 @@ export const useUser = () => {
     return googleUser.value?.status === 'admin'
   })
 
+  async function userChecker() {
+    const result = await calculateLoginRegister()
+
+    if (result === 'new user') {
+      router.push('/login')
+    } else {
+      // достаем данные если не первый раз
+      await getFromMainDatabase()
+      // добавляем в локал сторадж
+      addToLocalStorage()
+    }
+  }
+
   // войти с помощью окна гугл
-  function googleRegister() {
+  async function googleRegister() {
+    // googUser = gapi.auth2.getAuthInstance().currentUser.get()
+    const auth = getAuth()
     const provider = new GoogleAuthProvider()
 
-    const auth = getAuth()
+    signInWithRedirect(auth, provider)
 
-    // signInWithRedirect(auth, provider)
-    //   .then((result) => {
-    //     // This gives you a Google Access Token. You can use it to access the Google API.
-    //     const credential = GoogleAuthProvider.credentialFromResult(result)
-    //     const token = credential.accessToken
-    //     // The signed-in user info.
-    //     const user = result.user
-    //     googleUser.value = user
-    //     console.log('user', user)
-    //     console.log('token', token)
-    //     // ...
+    const redirectResult = await getRedirectResult(auth)
+
+    if (redirectResult) {
+      googleUser.value = {
+        uid: redirectResult.user.uid,
+        email: redirectResult.user.email,
+        displayName: redirectResult.user.displayName,
+        photoURL: redirectResult.user.photoURL,
+      }
+      await userChecker()
+      return
+    }
+
+    // const credential = await signInWithRedirect(auth, provider)
+    // console.log(credential)
+    // const result = await signInWithCredential(auth, credential)
+    // console.log(result)
+
+    // signInWithPopup(auth, provider)
+    //   .then(async (userCredential) => {
+    //     googleUser.value = userCredential.user
+
+    //     // проверка первый ли раз он зашел
+    //     const result = await calculateLoginRegister()
+
+    //     if (result === 'new user') {
+    //       router.push('/login')
+    //     } else {
+    //       // достаем данные если не первый раз
+    //       await getFromMainDatabase()
+    //       // добавляем в локал сторадж
+    //       addToLocalStorage()
+    //     }
+
+    //     // пуш на страницу логина
     //   })
     //   .catch((error) => {
-    //     // Handle Errors here.
-    //     const errorCode = error.code
-    //     const errorMessage = error.message
-    //     // The email of the user's account used.
-    //     const email = error.email
-    //     // The AuthCredential type that was used.
-    //     const credential = GoogleAuthProvider.credentialFromError(error)
-    //     // ...
+    //     console.error(error)
     //   })
-
-    signInWithPopup(auth, provider)
-      .then(async (userCredential) => {
-        googleUser.value = userCredential.user
-
-        // проверка первый ли раз он зашел
-        const result = await calculateLoginRegister()
-
-        if (result === 'new user') {
-          router.push('/login')
-        } else {
-          // достаем данные если не первый раз
-          await getFromMainDatabase()
-          // добавляем в локал сторадж
-          addToLocalStorage()
-        }
-
-        // пуш на страницу логина
-      })
-      .catch((error) => {
-        console.error(error)
-      })
   }
 
   async function calculateLoginRegister() {
