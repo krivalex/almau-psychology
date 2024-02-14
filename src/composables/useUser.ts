@@ -1,7 +1,7 @@
 import { collection, getDocs, type DocumentData } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { ref, computed, reactive } from 'vue'
-import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from 'firebase/auth'
 import type { GoogleUser, User } from '../interfaces'
 import { useRouter } from 'vue-router'
 
@@ -53,7 +53,20 @@ export const useUser = () => {
     const auth = getAuth()
     const provider = new GoogleAuthProvider()
 
-    await signInWithRedirect(auth, provider)
+    signInWithRedirect(auth, provider)
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        googleUser.value = {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+        }
+        await userChecker()
+        return
+      }
+    })
 
     const redirectResult = await getRedirectResult(auth)
 
