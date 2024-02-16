@@ -10,8 +10,12 @@
             <span v-else-if="col.field === 'surname'">
               {{data.student.surname}}
             </span>
-            <span v-else-if="col.field === 'phone'">
-              {{data.student.phone}}
+            <span v-else-if="col.field === 'student'">
+              <div class="info-student-container">
+                <span class="specialty">{{isHasData(data.student.specialty)}}({{isHasData(data.student.yearAdmission)}})</span>
+                <span class="email">{{isHasData(data.student.email)}}</span>
+                <span class="phone">{{isHasData(data.student.phone)}}</span>
+              </div>
             </span>
             <span v-else-if="col.field === 'created'">
               {{transformDate(data.created)}}
@@ -66,13 +70,17 @@ function openAnswersModal(answers: any): void {
 const columns = [
   { field: 'name', header: 'Имя' },
   { field: 'surname', header: 'Фамилия' },
-  {field: 'phone', header: 'Телефон' },
+  {field: 'student', header: 'Инфо'},
   {field: 'testName', header: 'Тест'},
   { field: 'scoreValue', header: 'Очки' },
   { field: 'scoreName', header: 'Результат' },
   { field: 'created', header: 'Дата прохождения' },
   { field: 'answers', header: 'Карта ответов' }
 ]
+
+function isHasData(data: string | number) {
+  return data || "Нет данных"
+}
 
 onMounted(async () => {
   await getAllContent()
@@ -98,6 +106,25 @@ onMounted(async () => {
   z-index: 100;
   position: relative;
   padding-top: 15px;
+}
+
+.info-student-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  .specialty {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .email {
+    font-size: 0.7rem;
+  }
+
+  .phone {
+    font-size: 0.9rem;
+  }
 }
 
 </style

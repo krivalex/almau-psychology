@@ -7,7 +7,7 @@
       <img class="result" :src="currentResult?.image" />
       <h1 class="title">{{ currentResult?.name }}</h1>
       <p class="description">{{ currentResult?.description }}</p>
-      <p-button label="Поговорить с психологом" class="control-button" @click="goToWhatsapp" />
+      <p-button label="Записаться на консультацию" class="control-button" @click="goToWhatsapp" />
       <p-button class="another-test-button" label="Пройти еще один тест" icon="pi pi-arrow-top" @click="goToMain" />
     </section>
   </template>
