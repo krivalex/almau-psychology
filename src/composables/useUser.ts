@@ -1,9 +1,9 @@
 import { collection, getDocs, type DocumentData } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { ref, computed, reactive } from 'vue'
-// import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, getRedirectResult } from 'firebase/auth'
 
-import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from 'firebase/auth'
+// import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from 'firebase/auth'
 import type { GoogleUser, User } from '../interfaces'
 import { useRouter } from 'vue-router'
 
@@ -15,7 +15,7 @@ const loading = reactive({
   googleUserList: false,
 })
 
-const isSuccessAuth = ref(false)
+// const isSuccessAuth = ref(false)
 
 const userToObject = computed((): GoogleUser | null => {
   if (googleUser.value) {
