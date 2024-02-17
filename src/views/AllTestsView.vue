@@ -10,6 +10,7 @@
   <section class="all-tests">
     {{ test }}
     {{ result }}
+    {{ final }}
     <template v-if="!loading.testList">
       <span class="about-all-tests"> Список тестов </span>
       <template v-for="test in testList" :key="test.id">
@@ -42,6 +43,7 @@ onMounted(() => {
 
 const test = ref(localStorage.getItem('test') ?? 12)
 const result = ref(localStorage.getItem('result') ?? 44)
+const final = ref(localStorage.getItem('finally') ?? 56)
 
 function redirectToResults() {
   router.push('/admin/completed-tests')
