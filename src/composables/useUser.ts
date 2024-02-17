@@ -1,6 +1,6 @@
 import { collection, getDocs, type DocumentData } from 'firebase/firestore'
 import { db } from '../firebase-config'
-import { ref, computed, reactive } from 'vue'
+import { ref, computed, reactive, onMounted } from 'vue'
 import { GoogleAuthProvider, getAuth, getRedirectResult, signInWithRedirect } from 'firebase/auth'
 
 // import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from 'firebase/auth'
@@ -72,12 +72,27 @@ export const useUser = () => {
   //   }
   // }
 
+  onMounted(async () => {
+    const redirectResult = await getRedirectResult(auth)
+
+    if (redirectResult) {
+      googleUser.value = {
+        uid: redirectResult.user.uid,
+        email: redirectResult.user.email,
+        displayName: redirectResult.user.displayName,
+        photoURL: redirectResult.user.photoURL,
+      }
+      await userChecker()
+      return
+    }
+  })
+
   async function googleRegister() {
     // googUser = gapi.auth2.getAuthInstance().currentUser.get()
     const auth = getAuth()
     const provider = new GoogleAuthProvider()
 
-    signInWithRedirect(auth, provider)
+    await signInWithRedirect(auth, provider)
 
     // onAuthStateChanged(auth, async (user) => {
     //   if (user) {
@@ -97,25 +112,25 @@ export const useUser = () => {
     //   return
     // }
 
-    const redirectResult = await getRedirectResult(auth)
-    console.log(redirectResult)
-    localStorage.setItem('redirectResult', JSON.stringify(redirectResult))
+    // const redirectResult = await getRedirectResult(auth)
+    // console.log(redirectResult)
+    // localStorage.setItem('redirectResult', JSON.stringify(redirectResult))
 
-    if (redirectResult) {
-      const credential = GoogleAuthProvider.credentialFromResult(redirectResult)
-      console.log(credential)
+    // if (redirectResult) {
+    //   const credential = GoogleAuthProvider.credentialFromResult(redirectResult)
+    //   console.log(credential)
 
-      localStorage.setItem('credential', JSON.stringify(credential))
+    //   localStorage.setItem('credential', JSON.stringify(credential))
 
-      googleUser.value = {
-        uid: redirectResult.user.uid,
-        email: redirectResult.user.email,
-        displayName: redirectResult.user.displayName,
-        photoURL: redirectResult.user.photoURL,
-      }
-      await userChecker()
-      return
-    }
+    //   googleUser.value = {
+    //     uid: redirectResult.user.uid,
+    //     email: redirectResult.user.email,
+    //     displayName: redirectResult.user.displayName,
+    //     photoURL: redirectResult.user.photoURL,
+    //   }
+    //   await userChecker()
+    //   return
+    // }
 
     // const credential = await signInWithRedirect(auth, provider)
     // console.log(credential)
