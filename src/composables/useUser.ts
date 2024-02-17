@@ -1,7 +1,7 @@
 import { collection, getDocs, type DocumentData } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { ref, computed, reactive } from 'vue'
-import { getAuth, getRedirectResult } from 'firebase/auth'
+import { GoogleAuthProvider, getAuth, getRedirectResult, signInWithRedirect } from 'firebase/auth'
 
 // import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from 'firebase/auth'
 import type { GoogleUser, User } from '../interfaces'
@@ -75,9 +75,9 @@ export const useUser = () => {
   async function googleRegister() {
     // googUser = gapi.auth2.getAuthInstance().currentUser.get()
     const auth = getAuth()
-    // const provider = new GoogleAuthProvider()
+    const provider = new GoogleAuthProvider()
 
-    // signInWithRedirect(auth, provider)
+    signInWithRedirect(auth, provider)
 
     // onAuthStateChanged(auth, async (user) => {
     //   if (user) {
@@ -99,8 +99,14 @@ export const useUser = () => {
 
     const redirectResult = await getRedirectResult(auth)
     console.log(redirectResult)
+    localStorage.setItem('redirectResult', JSON.stringify(redirectResult))
 
     if (redirectResult) {
+      const credential = GoogleAuthProvider.credentialFromResult(redirectResult)
+      console.log(credential)
+
+      localStorage.setItem('credential', JSON.stringify(credential))
+
       googleUser.value = {
         uid: redirectResult.user.uid,
         email: redirectResult.user.email,
