@@ -13,6 +13,8 @@ const loading = reactive({
   googleUserList: false,
 })
 
+const isSuccessAuth = ref(false)
+
 const userToObject = computed((): GoogleUser | null => {
   if (googleUser.value) {
     return {
@@ -64,9 +66,14 @@ export const useUser = () => {
           photoURL: user.photoURL,
         }
         await userChecker()
+        isSuccessAuth.value = true
         return
       }
     })
+
+    if (isSuccessAuth.value) {
+      return
+    }
 
     const redirectResult = await getRedirectResult(auth)
 
