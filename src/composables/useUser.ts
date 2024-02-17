@@ -77,25 +77,25 @@ export const useUser = () => {
     const auth = getAuth()
     const provider = new GoogleAuthProvider()
 
-    signInWithRedirect(auth, provider)
+    // signInWithRedirect(auth, provider)
 
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        googleUser.value = {
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-        }
-        await userChecker()
-        isSuccessAuth.value = true
-        return
-      }
-    })
+    // onAuthStateChanged(auth, async (user) => {
+    //   if (user) {
+    //     googleUser.value = {
+    //       uid: user.uid,
+    //       email: user.email,
+    //       displayName: user.displayName,
+    //       photoURL: user.photoURL,
+    //     }
+    //     await userChecker()
+    //     isSuccessAuth.value = true
+    //     return
+    //   }
+    // })
 
-    if (isSuccessAuth.value) {
-      return
-    }
+    // if (isSuccessAuth.value) {
+    //   return
+    // }
 
     const redirectResult = await getRedirectResult(auth)
     console.log(redirectResult)
