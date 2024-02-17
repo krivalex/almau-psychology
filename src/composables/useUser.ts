@@ -40,6 +40,7 @@ export const useUser = () => {
 
   async function userChecker() {
     const result = await calculateLoginRegister()
+    console.log(result)
 
     if (result === 'new user') {
       router.push('/login')
@@ -75,6 +76,9 @@ export const useUser = () => {
   onMounted(async () => {
     const redirectResult = await getRedirectResult(auth)
 
+    localStorage.setItem('redirectResult', JSON.stringify(redirectResult))
+    console.log(redirectResult)
+
     if (redirectResult) {
       googleUser.value = {
         uid: redirectResult.user.uid,
@@ -87,12 +91,18 @@ export const useUser = () => {
     }
   })
 
-  async function googleRegister() {
+  function googleRegister() {
     // googUser = gapi.auth2.getAuthInstance().currentUser.get()
     const auth = getAuth()
     const provider = new GoogleAuthProvider()
 
-    await signInWithRedirect(auth, provider)
+    setTimeout(() => {
+      signInWithRedirect(auth, provider)
+
+      setTimeout(() => {
+        router.push('/')
+      }, 3000)
+    }, 1000)
 
     // onAuthStateChanged(auth, async (user) => {
     //   if (user) {
