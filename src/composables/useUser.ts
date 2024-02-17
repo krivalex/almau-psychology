@@ -75,7 +75,7 @@ export const useUser = () => {
   async function googleRegister() {
     // googUser = gapi.auth2.getAuthInstance().currentUser.get()
     const auth = getAuth()
-    const provider = new GoogleAuthProvider()
+    // const provider = new GoogleAuthProvider()
 
     // signInWithRedirect(auth, provider)
 
