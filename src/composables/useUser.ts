@@ -1,7 +1,7 @@
 import { collection, getDocs, type DocumentData } from 'firebase/firestore'
 import { db } from '../firebase-config'
-import { ref, computed, reactive, onMounted } from 'vue'
-import { GoogleAuthProvider, getAuth, getRedirectResult, signInWithRedirect } from 'firebase/auth'
+import { ref, computed, reactive } from 'vue'
+import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
 
 // import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from 'firebase/auth'
 import type { GoogleUser, User } from '../interfaces'
@@ -50,125 +50,127 @@ export const useUser = () => {
     }
   }
 
-  // async function googleRegister() {
-  //   const auth = getAuth()
-  //   const provider = new GoogleAuthProvider()
+  async function googleRegister() {
+    const auth = getAuth()
+    const provider = new GoogleAuthProvider()
 
-  //   try {
-  //     const result = await signInWithPopup(auth, provider)
-  //     const user = result.user
+    try {
+      localStorage.setItem('test', '12')
+      const result = await signInWithPopup(auth, provider)
+      localStorage.setItem('result', JSON.stringify(result))
+      const user = result.user
 
+      googleUser.value = {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      }
+
+      await userChecker()
+      // isSuccessAuth.value = true
+    } catch (error) {
+      console.error(error)
+      // Handle error
+    }
+  }
+
+  // onMounted(async () => {
+  //   const redirectResult = await getRedirectResult(auth)
+
+  //   localStorage.setItem('redirectResult', JSON.stringify(redirectResult))
+  //   console.log(redirectResult)
+
+  //   if (redirectResult) {
+  //     googleUser.value = {
+  //       uid: redirectResult.user.uid,
+  //       email: redirectResult.user.email,
+  //       displayName: redirectResult.user.displayName,
+  //       photoURL: redirectResult.user.photoURL,
+  //     }
+  //     await userChecker()
+  //     return
+  //   }
+  // })
+
+  // function googleRegister() {
+  // googUser = gapi.auth2.getAuthInstance().currentUser.get()
+  // const auth = getAuth()
+  // const provider = new GoogleAuthProvider()
+
+  // setTimeout(() => {
+  //   signInWithRedirect(auth, provider)
+
+  //   setTimeout(() => {
+  //     router.push('/')
+  //   }, 3000)
+  // }, 1000)
+
+  // onAuthStateChanged(auth, async (user) => {
+  //   if (user) {
   //     googleUser.value = {
   //       uid: user.uid,
   //       email: user.email,
   //       displayName: user.displayName,
   //       photoURL: user.photoURL,
   //     }
-
   //     await userChecker()
   //     isSuccessAuth.value = true
-  //   } catch (error) {
-  //     console.error(error)
-  //     // Handle error
+  //     return
   //   }
+  // })
+
+  // if (isSuccessAuth.value) {
+  //   return
   // }
 
-  onMounted(async () => {
-    const redirectResult = await getRedirectResult(auth)
+  // const redirectResult = await getRedirectResult(auth)
+  // console.log(redirectResult)
+  // localStorage.setItem('redirectResult', JSON.stringify(redirectResult))
 
-    localStorage.setItem('redirectResult', JSON.stringify(redirectResult))
-    console.log(redirectResult)
+  // if (redirectResult) {
+  //   const credential = GoogleAuthProvider.credentialFromResult(redirectResult)
+  //   console.log(credential)
 
-    if (redirectResult) {
-      googleUser.value = {
-        uid: redirectResult.user.uid,
-        email: redirectResult.user.email,
-        displayName: redirectResult.user.displayName,
-        photoURL: redirectResult.user.photoURL,
-      }
-      await userChecker()
-      return
-    }
-  })
+  //   localStorage.setItem('credential', JSON.stringify(credential))
 
-  function googleRegister() {
-    // googUser = gapi.auth2.getAuthInstance().currentUser.get()
-    const auth = getAuth()
-    const provider = new GoogleAuthProvider()
+  //   googleUser.value = {
+  //     uid: redirectResult.user.uid,
+  //     email: redirectResult.user.email,
+  //     displayName: redirectResult.user.displayName,
+  //     photoURL: redirectResult.user.photoURL,
+  //   }
+  //   await userChecker()
+  //   return
+  // }
 
-    setTimeout(() => {
-      signInWithRedirect(auth, provider)
+  // const credential = await signInWithRedirect(auth, provider)
+  // console.log(credential)
+  // const result = await signInWithCredential(auth, credential)
+  // console.log(result)
 
-      setTimeout(() => {
-        router.push('/')
-      }, 3000)
-    }, 1000)
+  //   signInWithPopup(auth, provider)
+  //     .then(async (userCredential) => {
+  //       googleUser.value = userCredential.user
 
-    // onAuthStateChanged(auth, async (user) => {
-    //   if (user) {
-    //     googleUser.value = {
-    //       uid: user.uid,
-    //       email: user.email,
-    //       displayName: user.displayName,
-    //       photoURL: user.photoURL,
-    //     }
-    //     await userChecker()
-    //     isSuccessAuth.value = true
-    //     return
-    //   }
-    // })
+  //       // проверка первый ли раз он зашел
+  //       const result = await calculateLoginRegister()
 
-    // if (isSuccessAuth.value) {
-    //   return
-    // }
+  //       if (result === 'new user') {
+  //         router.push('/login')
+  //       } else {
+  //         // достаем данные если не первый раз
+  //         await getFromMainDatabase()
+  //         // добавляем в локал сторадж
+  //         addToLocalStorage()
+  //       }
 
-    // const redirectResult = await getRedirectResult(auth)
-    // console.log(redirectResult)
-    // localStorage.setItem('redirectResult', JSON.stringify(redirectResult))
-
-    // if (redirectResult) {
-    //   const credential = GoogleAuthProvider.credentialFromResult(redirectResult)
-    //   console.log(credential)
-
-    //   localStorage.setItem('credential', JSON.stringify(credential))
-
-    //   googleUser.value = {
-    //     uid: redirectResult.user.uid,
-    //     email: redirectResult.user.email,
-    //     displayName: redirectResult.user.displayName,
-    //     photoURL: redirectResult.user.photoURL,
-    //   }
-    //   await userChecker()
-    //   return
-    // }
-
-    // const credential = await signInWithRedirect(auth, provider)
-    // console.log(credential)
-    // const result = await signInWithCredential(auth, credential)
-    // console.log(result)
-
-    // signInWithPopup(auth, provider)
-    //   .then(async (userCredential) => {
-    //     googleUser.value = userCredential.user
-
-    //     // проверка первый ли раз он зашел
-    //     const result = await calculateLoginRegister()
-
-    //     if (result === 'new user') {
-    //       router.push('/login')
-    //     } else {
-    //       // достаем данные если не первый раз
-    //       await getFromMainDatabase()
-    //       // добавляем в локал сторадж
-    //       addToLocalStorage()
-    //     }
-
-    //     // пуш на страницу логина
-    //   })
-    //   .catch((error) => {
-    //     console.error(error)
-    //   })
-  }
+  //       // пуш на страницу логина
+  //     })
+  //     .catch((error) => {
+  //       console.error(error)
+  //     })
+  // }
 
   async function calculateLoginRegister() {
     loading.googleUser = true

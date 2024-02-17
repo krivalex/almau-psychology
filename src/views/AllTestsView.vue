@@ -8,7 +8,8 @@
     </section>
   </template>
   <section class="all-tests">
-    {{ redirectResult }}
+    {{ test }}
+    {{ result }}
     <template v-if="!loading.testList">
       <span class="about-all-tests"> Список тестов </span>
       <template v-for="test in testList" :key="test.id">
@@ -39,7 +40,8 @@ onMounted(() => {
   getAllContent()
 })
 
-const redirectResult = ref(localStorage.getItem('redirectResult') ?? false)
+const test = ref(localStorage.getItem('test') ?? 12)
+const result = ref(localStorage.getItem('result') ?? 44)
 
 function redirectToResults() {
   router.push('/admin/completed-tests')
