@@ -57,7 +57,7 @@ export const useUser = () => {
     try {
       localStorage.setItem('test', '12')
       const result = await signInWithPopup(auth, provider).finally(() => {
-        localStorage.setItem('finally', '13')
+        localStorage.setItem('finally', JSON.stringify(result))
       })
       localStorage.setItem('result', JSON.stringify(result))
       const user = result.user
