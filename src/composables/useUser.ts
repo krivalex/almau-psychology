@@ -1,7 +1,7 @@
 import { collection, getDocs, type DocumentData } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { ref, computed, reactive } from 'vue'
-import { getAuth, GoogleAuthProvider, getRedirectResult } from 'firebase/auth'
+import { getAuth, getRedirectResult } from 'firebase/auth'
 
 // import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from 'firebase/auth'
 import type { GoogleUser, User } from '../interfaces'
