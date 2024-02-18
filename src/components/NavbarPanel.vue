@@ -7,7 +7,8 @@
       </div>
       <template v-if="!isLoginPage">
         <div class="login-control">
-          <p-button class="enter p-button-sm" v-if="!googleUser" @click="redirectToBrowserToReg" label="Войти" icon="pi pi-sign"></p-button>
+          <a href="https://almau-psychology.netlify.app/login-options" target="_blank" class="enter p-button-sm" v-if="!googleUser">Войти</a>
+          <!-- <p-button class="enter p-button-sm" v-if="!googleUser" @click="redirectToBrowserToReg" label="Войти" icon="pi pi-sign"></p-button> -->
           <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
         </div>
       </template>
@@ -25,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import PButton from 'primevue/button'
+// import PButton from 'primevue/button'
 import { useUser } from '../composables/useUser'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
@@ -37,9 +38,10 @@ function goToMain() {
   router.push('/')
 }
 
-async function redirectToBrowserToReg() {
-  window.location.href = 'https://almau-psychology.netlify.app/login-options'
-}
+// async function redirectToBrowserToReg() {
+//   window.location.href = 'https://almau-psychology.netlify.app/login-options'
+//   window.location.reload()
+// }
 
 const { googleUser } = useUser()
 
