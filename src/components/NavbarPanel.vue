@@ -7,8 +7,8 @@
       </div>
       <template v-if="!isLoginPage">
         <div class="login-control">
-          <a href="https://localhost:5173/login-options" target="_blank" class="enter p-button-sm" v-if="!googleUser">Войти</a>
-          <!-- <a href="https://almau-psychology.netlify.app/login-options" target="_blank" class="enter p-button-sm" v-if="!googleUser">Войти</a> -->
+          <!-- <a href="https://localhost:5173/login-options" target="_blank" class="enter p-button-sm" v-if="!googleUser">Войти</a> -->
+          <a href="https://almau-psychology.netlify.app/login-options" target="_blank" class="enter p-button-sm" v-if="!googleUser">Войти</a>
           <!-- <p-button class="enter p-button-sm" v-if="!googleUser" @click="redirectToBrowserToReg" label="Войти" icon="pi pi-sign"></p-button> -->
           <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
         </div>
