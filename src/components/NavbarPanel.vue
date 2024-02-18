@@ -30,10 +30,14 @@
 // import PButton from 'primevue/button'
 import { useUser } from '../composables/useUser'
 import { useRouter } from 'vue-router'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import PAvatar from 'primevue/avatar'
 
 const router = useRouter()
+
+onMounted(() => {
+  console.log(window?.Telegram?.WebApp)
+})
 
 function goToMain() {
   router.push('/')
