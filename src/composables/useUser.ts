@@ -53,22 +53,15 @@ export const useUser = () => {
   async function googleRegister() {
     const auth = getAuth()
     const provider = new GoogleAuthProvider()
-
     try {
-      localStorage.setItem('test', '12')
-      const result = await signInWithPopup(auth, provider).finally(() => {
-        localStorage.setItem('finally', JSON.stringify(result))
-      })
-      localStorage.setItem('result', JSON.stringify(result))
+      const result = await signInWithPopup(auth, provider)
       const user = result.user
-
       googleUser.value = {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,
       }
-
       await userChecker()
       // isSuccessAuth.value = true
     } catch (error) {
