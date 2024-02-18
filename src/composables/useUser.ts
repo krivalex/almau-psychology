@@ -64,7 +64,9 @@ export const useUser = () => {
         displayName: user.displayName,
         photoURL: user.photoURL,
       }
-      await userChecker()
+      await userChecker().finally(() => {
+        router.go(-1)
+      })
       // isSuccessAuth.value = true
     } catch (error) {
       console.error(error)
