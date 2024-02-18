@@ -51,6 +51,8 @@ export const useUser = () => {
   }
 
   async function googleRegister() {
+    console.log('googleRegister')
+
     const auth = getAuth()
     const provider = new GoogleAuthProvider()
     try {

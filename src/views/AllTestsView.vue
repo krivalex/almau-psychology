@@ -8,9 +8,6 @@
     </section>
   </template>
   <section class="all-tests">
-    {{ test }}
-    {{ result }}
-    {{ final }}
     <template v-if="!loading.testList">
       <span class="about-all-tests"> Список тестов </span>
       <template v-for="test in testList" :key="test.id">
@@ -31,7 +28,6 @@ import TestCard from '../components/TestCard.vue'
 import LoadSpinner from '../components/LoadSpinner.vue'
 import PButton from 'primevue/button'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
 
 const router = useRouter()
 const { testList, getAllContent, loading } = useTest()
@@ -40,10 +36,6 @@ const { isAdmin } = useUser()
 onMounted(() => {
   getAllContent()
 })
-
-const test = ref(localStorage.getItem('test') ?? 12)
-const result = ref(localStorage.getItem('result') ?? 44)
-const final = ref(localStorage.getItem('finally') ?? 56)
 
 function redirectToResults() {
   router.push('/admin/completed-tests')

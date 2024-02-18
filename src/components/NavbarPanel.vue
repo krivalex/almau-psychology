@@ -7,7 +7,7 @@
       </div>
       <template v-if="!isLoginPage">
         <div class="login-control">
-          <p-button class="enter p-button-sm" v-if="!googleUser" @click="googleRegister" label="Войти" icon="pi pi-sign"></p-button>
+          <p-button class="enter p-button-sm" v-if="!googleUser" @click="redirectToBrowserToReg" label="Войти" icon="pi pi-sign"></p-button>
           <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
         </div>
       </template>
@@ -37,7 +37,11 @@ function goToMain() {
   router.push('/')
 }
 
-const { googleRegister, googleUser } = useUser()
+async function redirectToBrowserToReg() {
+  window.location.href = 'https://almau-psychology.netlify.app/login-options'
+}
+
+const { googleUser } = useUser()
 
 const isLoginPage = computed(() => {
   return router.currentRoute.value.name === 'login'
