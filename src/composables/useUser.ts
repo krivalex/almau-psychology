@@ -64,10 +64,10 @@ export const useUser = () => {
         displayName: user.displayName,
         photoURL: user.photoURL,
       }
-      await userChecker().finally(() => {
-        window.history.go(-1)
-        // router.go(-1)
-      })
+      await userChecker()
+      // await userChecker().finally(() => {
+      //   window.history.go(-1)
+      // })
       // isSuccessAuth.value = true
     } catch (error) {
       console.error(error)
