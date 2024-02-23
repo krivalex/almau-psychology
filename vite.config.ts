@@ -1,10 +1,9 @@
 import { ConfigEnv, UserConfig, defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { fileURLToPath, URL } from 'node:url'
-import mkcert from 'vite-plugin-mkcert'
 
 const baseConfig = {
-  plugins: [vue(), mkcert()],
+  plugins: [vue()],
   resolve: {
     extensions: ['.js', '.ts', '.vue', '.json'],
     alias: {
@@ -20,7 +19,7 @@ const baseConfig = {
     __APP_MODE__: JSON.stringify('development'),
     __APP_ENV__: JSON.stringify('development'),
   },
-  server: { https: true },
+  server: {},
 }
 
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
