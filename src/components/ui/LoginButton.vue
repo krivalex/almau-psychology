@@ -1,4 +1,5 @@
 <template>
+  {{ isWebview }}
   <template v-if="isWebview">
     <a :href="redirectRoute" target="_blank" class="enter p-button-sm" v-if="!googleUser">Войти</a>
     <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
@@ -18,7 +19,8 @@ import { ref } from 'vue'
 const { googleRegister, googleUser } = useUser()
 
 // is loading from webview
-const isWebview = ref(navigator.userAgent.includes('wv'))
+const isWebview = ref(navigator.userAgent)
+console.log(navigator.userAgent)
 
 const redirectRoute = 'https://almau-psychology.netlify.app/login-options'
 </script>

@@ -17,7 +17,7 @@
             <p-button label="Начать тест" class="contol-button" @click="enjoyTest" />
           </template>
           <template v-else>
-            <p-button label="Войти" class="contol-button" @click="googleRegister" />
+            <login-button />
           </template>
         </div>
         <span class="author">{{ test.author }}</span>
@@ -34,6 +34,7 @@
 import PCard from 'primevue/card'
 import PButton from 'primevue/button'
 import PDivider from 'primevue/divider'
+import LoginButton from './ui/LoginButton.vue'
 import { defineProps } from 'vue'
 import { Test } from '../interfaces'
 import { useUser } from '../composables/useUser'
@@ -42,7 +43,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const { googleUser, googleRegister } = useUser()
+const { googleUser } = useUser()
 const { selectedTest } = useTest()
 
 function enjoyTest() {
