@@ -56,7 +56,7 @@ import { onMounted } from 'vue'
 import PButton from 'primevue/button'
 import { useRouter } from 'vue-router'
 import { useCurrentTest } from '../composables/useCurrentTest'
-import LoadSpinner from '../components/LoadSpinner.vue'
+import LoadSpinner from '../components/ui/LoadSpinner.vue'
 
 const { selectedTest, getContentById, loading: testLoading } = useTest()
 const { currentIndex, clearTestAnswers, nextQuestion, prevQuestion, isTestCompleted, completeTest } = useCurrentTest()

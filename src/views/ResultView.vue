@@ -19,7 +19,7 @@ import PButton from 'primevue/button'
 import { useRouter } from 'vue-router'
 import { useTest } from '../composables/useTest'
 import { onMounted } from 'vue'
-import LoadSpinner from '../components/LoadSpinner.vue'
+import LoadSpinner from '../components/ui/LoadSpinner.vue'
 
 const { selectedTest, getContentById, loading } = useTest()
 
