@@ -25,7 +25,7 @@ import { useTest } from '../composables/useTest'
 import { useUser } from '../composables/useUser'
 import { onMounted } from 'vue'
 import TestCard from '../components/TestCard.vue'
-import LoadSpinner from '../components/LoadSpinner.vue'
+import LoadSpinner from '../components/ui/LoadSpinner.vue'
 import PButton from 'primevue/button'
 import { useRouter } from 'vue-router'
 

@@ -51,8 +51,6 @@ export const useUser = () => {
   }
 
   async function googleRegister() {
-    console.log('googleRegister')
-
     const auth = getAuth()
     const provider = new GoogleAuthProvider()
     try {
@@ -65,13 +63,8 @@ export const useUser = () => {
         photoURL: user.photoURL,
       }
       await userChecker()
-      // await userChecker().finally(() => {
-      //   window.history.go(-1)
-      // })
-      // isSuccessAuth.value = true
     } catch (error) {
       console.error(error)
-      // Handle error
     }
   }
 
