@@ -19,5 +19,6 @@ const { googleRegister, googleUser } = useUser()
 
 // is loading from webview
 const isWebview = ref(navigator.userAgent.includes('wv'))
+
 const redirectRoute = 'https://almau-psychology.netlify.app/login-options'
 </script>

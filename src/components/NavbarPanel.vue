@@ -7,10 +7,7 @@
       </div>
       <template v-if="!isLoginPage">
         <div class="login-control">
-          <!-- <a href="https://localhost:5173/login-options" target="_blank" class="enter p-button-sm" v-if="!googleUser">Войти</a> -->
-          <!-- <a href="https://almau-psychology.netlify.app/login-options" target="_blank" class="enter p-button-sm" v-if="!googleUser">Войти</a> -->
-          <p-button class="enter p-button-sm" v-if="!googleUser" @click="googleRegister" label="Войти" icon="pi pi-sign"></p-button>
-          <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
+          <login-button />
         </div>
       </template>
       <template v-else>
@@ -27,11 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import PButton from 'primevue/button'
 import { useUser } from '../composables/useUser'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
 import PAvatar from 'primevue/avatar'
+import LoginButton from './ui/LoginButton.vue'
 
 const router = useRouter()
 
@@ -48,7 +45,7 @@ function goToMain() {
 //   window.location.reload()
 // }
 
-const { googleUser, googleRegister } = useUser()
+const { googleUser } = useUser()
 
 const isLoginPage = computed(() => {
   return router.currentRoute.value.name === 'login'
