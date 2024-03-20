@@ -28,7 +28,7 @@ import ConfirmDialog from 'primevue/confirmdialog'
 import Toast from 'primevue/toast'
 
 const { getAllUsers, getUserFromLocalStorage } = useUser()
-const { redirectToBrowser, isAndroid, isIOS, textForIOS, textForAndroid } = useUserDevice()
+const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
 
 onMounted(async () => {
   await getAllUsers()
