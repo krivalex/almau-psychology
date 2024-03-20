@@ -47,6 +47,7 @@ export const useUser = () => {
     } else {
       await getFromMainDatabase()
       addToLocalStorage()
+      router.push('/')
     }
   }
 

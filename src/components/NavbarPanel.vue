@@ -29,26 +29,19 @@ import { useRouter } from 'vue-router'
 import { computed } from 'vue'
 import PAvatar from 'primevue/avatar'
 import LoginButton from './ui/LoginButton.vue'
+import { useUserDevice } from '../composables/useUserDevice'
 
 const router = useRouter()
-
-// onMounted(() => {
-//   console.log(window?.Telegram?.WebApp)
-// })
+const { redirectToBrowser } = useUserDevice()
 
 function goToMain() {
   router.push('/')
 }
 
-// async function redirectToBrowserToReg() {
-//   window.location.href = 'https://almau-psychology.netlify.app/login-options'
-//   window.location.reload()
-// }
-
 const { googleUser } = useUser()
 
 const isLoginPage = computed(() => {
-  return router.currentRoute.value.name === 'login'
+  return router.currentRoute.value.name === 'login' || router.currentRoute.value.name === 'login-options' || redirectToBrowser.value
 })
 </script>
 

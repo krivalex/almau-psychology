@@ -23,6 +23,10 @@
             <span v-else-if="col.field === 'answers'">
                 <p-button label="Ответы" @click="openAnswersModal(data)"></p-button>
             </span>
+            <span v-else-if="col.field === 'messages'">
+              <p-button icon="pi pi-telegram" @click="writeToTelegram(data)" class="p-button-text"></p-button>
+              <p-button icon="pi pi-whatsapp" @click="writeToWhatsapp(data)" class="p-button-text"></p-button>
+            </span>
             <span v-else>{{data[field]}}</span>
           </template>
         </p-column>
@@ -45,16 +49,30 @@ import { useDialog } from 'primevue/usedialog'
 import AnswersModal from '../components/modals/AnswersModal.vue'
 import {transformDate} from '../utils/date'
 import YourHaveNoPermission from '../components/YourHaveNoPermission.vue'
+import type {CompletedTest} from '../interfaces'
+import {pretifierPhone} from '../utils/phone'
 
 const { isAdmin} = useUser()
 const {getAllContent, allCompletedTests} = useCurrentTest()
 
 const dialog = useDialog()
 
-function openAnswersModal(answers: any): void {
+
+
+function writeToTelegram(completedTest: CompletedTest) {
+  const phone = pretifierPhone(completedTest.student?.phone)
+  window.open(`https://t.me/${phone}`, '_blank')
+}
+
+function writeToWhatsapp(completedTest: CompletedTest) {
+  const phone = pretifierPhone(completedTest.student?.phone)
+  window.open(`https://wa.me/${phone}`, '_blank')
+}
+
+function openAnswersModal(answers: CompletedTest): void {
   dialog.open(AnswersModal, {
     props: {
-      header: `Карта ответов ${answers.student.name} ${answers.student.surname}`,
+      header: `Карта ответов ${answers?.student?.name} ${answers?.student?.surname}`,
       breakpoints: {
         '960px': '75vw',
         '640px': '90vw',
@@ -75,7 +93,8 @@ const columns = [
   { field: 'scoreValue', header: 'Очки' },
   { field: 'scoreName', header: 'Результат' },
   { field: 'created', header: 'Дата прохождения' },
-  { field: 'answers', header: 'Карта ответов' }
+  { field: 'answers', header: 'Карта ответов' },
+  {field: 'messages', header: 'Связаться'}
 ]
 
 function isHasData(data: string | number) {
