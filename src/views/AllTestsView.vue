@@ -1,5 +1,4 @@
 <template>
-  <pre style="color: black">{{ telegramWindow?.initDataUnsafe ?? 'Нет данных' }}</pre>
   <template v-if="isAdmin">
     <section class="admin">
       <div class="admin-panel">
@@ -9,6 +8,7 @@
     </section>
   </template>
   <section class="all-tests">
+    <pre style="color: black">{{ telegramWindow?.initDataUnsafe ? 'Да' : 'Нет' }}</pre>
     <template v-if="!loading.testList">
       <span class="about-all-tests"> Список тестов </span>
       <template v-for="test in testList" :key="test.id">
