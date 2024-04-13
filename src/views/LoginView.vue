@@ -36,6 +36,11 @@
           После регистрации вход будет выполнятся автоматически, через ваш телеграм <strong>@{{ getTelegramLogin() || 'Который не найден' }}</strong>
         </span>
       </template>
+      <template v-else">
+        <span class="telegram-info">
+          Чтобы подключить автоматический вход через телеграм, добавьте себе логин в телеграме - @example
+        </span>
+      </template>
     </div>
     <div class="contols">
       {{isValidate}}
