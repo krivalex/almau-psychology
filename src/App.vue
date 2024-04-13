@@ -36,7 +36,6 @@ onMounted(async () => {
   await getAllUsers()
   getUserFromLocalStorage()
   telegramWindow.value = (window as any)?.Telegram?.WebApp
-  console.log(telegramWindow.value)
 })
 </script>
 

@@ -1,8 +1,7 @@
 import { ref } from 'vue'
 
+const telegramWindow = ref<any>()
 export function useTelegram() {
-  const telegramWindow = ref<Record<string, unknown> | null>(null)
-
   return {
     telegramWindow,
   }
