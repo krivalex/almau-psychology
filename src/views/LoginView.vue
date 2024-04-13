@@ -112,4 +112,11 @@ const isValidate = computed(() => {
     }
   }
 }
+
+.telegram-info {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #000000;
+  font-weight: 600;
+}
 </style>
