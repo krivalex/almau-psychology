@@ -31,7 +31,7 @@ const userToObject = computed((): GoogleUser | null => {
 })
 
 export const useUser = () => {
-  const { telegramUser } = useTelegram()
+  const { telegramUser, expandWindow } = useTelegram()
 
   const router = useRouter()
   const auth = getAuth()
@@ -130,13 +130,16 @@ export const useUser = () => {
     const isNotTelegramEntry = telegramUser.value?.user?.username
     if (!isNotTelegramEntry) return
 
-    const user = googleUserList.value.find((item: User) => {
+    const user = googleUserList.value.filter((item: User) => {
       const isEmptyTelegramLogin = item?.telegramLogin
       if (!isNotTelegramEntry || !isEmptyTelegramLogin) return false
-      return isEmptyTelegramLogin === isNotTelegramEntry
+      return isNotTelegramEntry.includes(item.telegramLogin) || isNotTelegramEntry.length + 1 === item.telegramLogin.length
     })
 
-    if (user) googleUser.value = user
+    if (user?.[0]) {
+      googleUser.value = user[0]
+      expandWindow()
+    }
   }
 
   function removeFromLocalStorage() {

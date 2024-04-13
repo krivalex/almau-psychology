@@ -31,6 +31,10 @@ export function useTelegram() {
     return localStorage.getItem('telegramUser')
   }
 
+  function expandWindow() {
+    telegramWindow.value?.expand()
+  }
+
   return {
     telegramWindow,
     telegramUser,
@@ -40,5 +44,6 @@ export function useTelegram() {
     encodeTelegramUser,
     saveTelegramLogin,
     getTelegramLogin,
+    expandWindow,
   }
 }
