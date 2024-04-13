@@ -10,15 +10,15 @@ export function useTelegram() {
   }
 
   function decodeTelegramUser() {
-    return JSON.parse(atob(telegramUser.value?.user?.username || ''))
+    return telegramUser.value?.user?.username
   }
 
-  function encodeTelegramUser(user: any) {
-    return btoa(JSON.stringify(user))
+  function encodeTelegramUser() {
+    return telegramUser.value?.user?.username
   }
 
   function saveTelegramLogin() {
-    localStorage.setItem('telegramUser', encodeTelegramUser(telegramUser.value))
+    localStorage.setItem('telegramUser', encodeTelegramUser() || '')
   }
 
   function getTelegramLogin() {
