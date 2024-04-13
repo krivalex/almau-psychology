@@ -98,6 +98,7 @@ export const useCurrentTest = () => {
     if (currentIndex.value === selectedTest.value?.questions.length) {
       isTestCompleted.value = true
     }
+    clickAnswerAnimation()
   }
 
   function prevQuestion() {
@@ -125,6 +126,23 @@ export const useCurrentTest = () => {
 
   function calculateResult() {
     currentResult.value = selectedTest.value?.results.find((result) => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max)
+  }
+
+  function clickAnswerAnimation() {
+    const buttons = document.querySelectorAll('.control-button')
+    const text = document.querySelector('.queston')
+
+    text?.classList.add('animation-question-text')
+    setTimeout(() => {
+      text?.classList.remove('animation-question-text')
+    }, 500)
+
+    buttons.forEach((button) => {
+      button.classList.add('clicked')
+      setTimeout(() => {
+        button.classList.remove('clicked')
+      }, 500)
+    })
   }
 
   async function completeTest() {

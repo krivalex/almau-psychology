@@ -1,7 +1,7 @@
 <template>
   <template v-if="question">
     <div class="question">
-      <span class="text">
+      <span class="question-text">
         {{ question.text }}
       </span>
     </div>
@@ -25,7 +25,7 @@ defineProps<{
   font-weight: 500;
   text-align: center;
 
-  .text {
+  .question-text {
     font-size: 1.3rem;
     font-weight: 500;
     padding: 0 5px;

@@ -26,7 +26,7 @@
             <div class="answers">
               <template v-if="selectedTest?.questions[currentIndex]?.answers">
                 <template v-for="answer in selectedTest?.questions[currentIndex]?.answers" :key="answer.id">
-                  <p-button :label="answer.text" class="control-button" @click="nextQuestion(answer)" />
+                  <p-button :label="answer.text" class="control-button" @click="nextQuestion(answer)" :id="answer.id" />
                 </template>
               </template>
             </div>
@@ -83,7 +83,7 @@ onMounted(async () => {
 
   .test-request {
     height: 67vh;
-    width: 100%;
+    width: 95%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -170,6 +170,28 @@ onMounted(async () => {
         font-weight: 500;
       }
     }
+  }
+}
+
+.clicked {
+  opacity: 0.5;
+  animation: clicked 0.5s;
+}
+
+.animation-question-text {
+  color: #10b981;
+  animation: clicked 0.5s;
+}
+
+@keyframes clicked {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>
