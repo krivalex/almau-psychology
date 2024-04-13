@@ -34,11 +34,11 @@ import Toast from 'primevue/toast'
 const { getAllUsers, getUserFromLocalStorage } = useUser()
 const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
 const { telegramWindow, isTelegramLoading } = useTelegram()
-telegramWindow.value = (window as any)?.Telegram?.WebApp
 
 onMounted(async () => {
   await getAllUsers()
   getUserFromLocalStorage()
+  telegramWindow.value = (window as any)?.Telegram?.WebApp
 })
 </script>
 
