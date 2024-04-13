@@ -39,6 +39,7 @@ onMounted(async () => {
   await getAllUsers()
   getUserFromLocalStorage()
   initTelegram()
+  console.log(window)
 })
 </script>
 

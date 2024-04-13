@@ -14,12 +14,14 @@ import PButton from 'primevue/button'
 import PAvatar from 'primevue/avatar'
 import { useUser } from '../../composables/useUser'
 import { useUserDevice } from '../../composables/useUserDevice'
+import { useTelegram } from '../../composables/useTelegram'
 
 const { googleRegister, googleUser } = useUser()
 const { isBrowserMounted, toggleRedirectPosition } = useUserDevice()
+const { decodeTelegramUser } = useTelegram()
 
-const redirectRoute = 'https://almau-psychology.netlify.app/login-options'
-// const redirectRoute = 'http://localhost:5173/login-options'
+const redirectRoute = `https://almau-psychology.netlify.app/login-options?redirect=true&redirectLogin=${decodeTelegramUser()}`
+// const redirectRoute = `http://localhost:5173/login-options?redirect=true&redirectLogin=${decodeTelegramUser()}`
 </script>
 
 <style scoped lang="scss">

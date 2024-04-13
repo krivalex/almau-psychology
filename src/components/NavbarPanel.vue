@@ -14,12 +14,6 @@
         <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
       </template>
     </div>
-
-    <!-- <div class="navbar-actions">
-      <p-button class="nav-buttons" label="Тесты" />
-      <p-button class="nav-buttons" label="Психологи" />
-      <p-button class="nav-buttons" label="О нас" />
-    </div> -->
   </div>
 </template>
 
