@@ -127,12 +127,15 @@ export const useUser = () => {
   }
 
   function checkUserTelegram() {
+    const isNotTelegramEntry = telegramUser.value?.user?.username
+    if (!isNotTelegramEntry) return
+
     const user = googleUserList.value.find((item: User) => {
-      const isNotTelegramEntry = telegramUser.value?.user?.username
       const isEmptyTelegramLogin = item?.telegramLogin
       if (!isNotTelegramEntry || !isEmptyTelegramLogin) return false
       return isEmptyTelegramLogin === isNotTelegramEntry
     })
+
     if (user) googleUser.value = user
   }
 

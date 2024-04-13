@@ -35,8 +35,10 @@ const { initTelegram } = useTelegram()
 onMounted(async () => {
   await getAllUsers()
   initTelegram()
-  checkUserTelegram()
-  getUserFromLocalStorage()
+  setTimeout(() => {
+    checkUserTelegram()
+    getUserFromLocalStorage()
+  }, 500)
 })
 </script>
 
