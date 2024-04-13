@@ -128,12 +128,12 @@ export const useUser = () => {
 
   function checkUserTelegram() {
     const user = googleUserList.value.find((item: User) => {
-      if (telegramUser.value?.user?.username === '') return false
-      return item.telegramLogin === telegramUser.value?.user?.username
+      const isNotTelegramEntry = telegramUser.value?.user?.username
+      const isEmptyTelegramLogin = item?.telegramLogin
+      if (!isNotTelegramEntry || !isEmptyTelegramLogin) return false
+      return isEmptyTelegramLogin === isNotTelegramEntry
     })
-    if (user) {
-      googleUser.value = user
-    }
+    if (user) googleUser.value = user
   }
 
   function removeFromLocalStorage() {
