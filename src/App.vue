@@ -65,20 +65,7 @@ main {
   border-bottom: 1px solid #06c78a;
   border-top: 1px solid #06c78a;
   border-radius: 0.5rem;
-  animation: blink 4s infinite;
   flex-direction: column;
   gap: 2rem;
-}
-
-@keyframes blink {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.9;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 </style>
