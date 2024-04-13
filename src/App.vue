@@ -28,14 +28,15 @@ import DynamicDialog from 'primevue/dynamicdialog'
 import ConfirmDialog from 'primevue/confirmdialog'
 import Toast from 'primevue/toast'
 
-const { getAllUsers, getUserFromLocalStorage } = useUser()
+const { getAllUsers, getUserFromLocalStorage, checkUserTelegram } = useUser()
 const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
 const { initTelegram } = useTelegram()
 
 onMounted(async () => {
   await getAllUsers()
-  getUserFromLocalStorage()
   initTelegram()
+  checkUserTelegram()
+  getUserFromLocalStorage()
 })
 </script>
 

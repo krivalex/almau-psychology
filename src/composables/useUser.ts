@@ -6,6 +6,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
 // import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from 'firebase/auth'
 import type { GoogleUser, User } from '../interfaces'
 import { useRouter } from 'vue-router'
+import { useTelegram } from './useTelegram'
 
 const googleUser = ref<User | DocumentData | null>()
 const googleUserList = ref([] as DocumentData)
@@ -30,6 +31,8 @@ const userToObject = computed((): GoogleUser | null => {
 })
 
 export const useUser = () => {
+  const { telegramUser } = useTelegram()
+
   const router = useRouter()
   const auth = getAuth()
   const yourDatabase = 'users'
@@ -68,103 +71,6 @@ export const useUser = () => {
       console.error(error)
     }
   }
-
-  // onMounted(async () => {
-  //   const redirectResult = await getRedirectResult(auth)
-
-  //   localStorage.setItem('redirectResult', JSON.stringify(redirectResult))
-  //   console.log(redirectResult)
-
-  //   if (redirectResult) {
-  //     googleUser.value = {
-  //       uid: redirectResult.user.uid,
-  //       email: redirectResult.user.email,
-  //       displayName: redirectResult.user.displayName,
-  //       photoURL: redirectResult.user.photoURL,
-  //     }
-  //     await userChecker()
-  //     return
-  //   }
-  // })
-
-  // function googleRegister() {
-  // googUser = gapi.auth2.getAuthInstance().currentUser.get()
-  // const auth = getAuth()
-  // const provider = new GoogleAuthProvider()
-
-  // setTimeout(() => {
-  //   signInWithRedirect(auth, provider)
-
-  //   setTimeout(() => {
-  //     router.push('/')
-  //   }, 3000)
-  // }, 1000)
-
-  // onAuthStateChanged(auth, async (user) => {
-  //   if (user) {
-  //     googleUser.value = {
-  //       uid: user.uid,
-  //       email: user.email,
-  //       displayName: user.displayName,
-  //       photoURL: user.photoURL,
-  //     }
-  //     await userChecker()
-  //     isSuccessAuth.value = true
-  //     return
-  //   }
-  // })
-
-  // if (isSuccessAuth.value) {
-  //   return
-  // }
-
-  // const redirectResult = await getRedirectResult(auth)
-  // console.log(redirectResult)
-  // localStorage.setItem('redirectResult', JSON.stringify(redirectResult))
-
-  // if (redirectResult) {
-  //   const credential = GoogleAuthProvider.credentialFromResult(redirectResult)
-  //   console.log(credential)
-
-  //   localStorage.setItem('credential', JSON.stringify(credential))
-
-  //   googleUser.value = {
-  //     uid: redirectResult.user.uid,
-  //     email: redirectResult.user.email,
-  //     displayName: redirectResult.user.displayName,
-  //     photoURL: redirectResult.user.photoURL,
-  //   }
-  //   await userChecker()
-  //   return
-  // }
-
-  // const credential = await signInWithRedirect(auth, provider)
-  // console.log(credential)
-  // const result = await signInWithCredential(auth, credential)
-  // console.log(result)
-
-  //   signInWithPopup(auth, provider)
-  //     .then(async (userCredential) => {
-  //       googleUser.value = userCredential.user
-
-  //       // проверка первый ли раз он зашел
-  //       const result = await calculateLoginRegister()
-
-  //       if (result === 'new user') {
-  //         router.push('/login')
-  //       } else {
-  //         // достаем данные если не первый раз
-  //         await getFromMainDatabase()
-  //         // добавляем в локал сторадж
-  //         addToLocalStorage()
-  //       }
-
-  //       // пуш на страницу логина
-  //     })
-  //     .catch((error) => {
-  //       console.error(error)
-  //     })
-  // }
 
   async function calculateLoginRegister() {
     loading.googleUser = true
@@ -220,6 +126,13 @@ export const useUser = () => {
     }
   }
 
+  function checkUserTelegram() {
+    const user = googleUserList.value.find((item: User) => item.telegramLogin === telegramUser.value?.user?.username)
+    if (user) {
+      googleUser.value = user
+    }
+  }
+
   function removeFromLocalStorage() {
     localStorage.removeItem('user')
   }
@@ -245,5 +158,6 @@ export const useUser = () => {
     getUserFromLocalStorage,
     removeFromLocalStorage,
     isAdmin,
+    checkUserTelegram,
   }
 }
