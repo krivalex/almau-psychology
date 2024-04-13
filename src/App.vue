@@ -5,7 +5,6 @@
       <span class="description">{{ isIOS() ? textForIOS.description : textForAndroid.description }}</span>
     </div>
   </template>
-
   <dynamic-dialog />
   <confirm-dialog />
   <toast position="bottom-left" />
@@ -23,16 +22,21 @@ import FooterPanel from './components/FooterPanel.vue'
 import { onMounted } from 'vue'
 import { useUser } from './composables/useUser'
 import { useUserDevice } from './composables/useUserDevice'
+import { useTelegram } from './composables/useTelegram'
+
 import DynamicDialog from 'primevue/dynamicdialog'
 import ConfirmDialog from 'primevue/confirmdialog'
 import Toast from 'primevue/toast'
 
 const { getAllUsers, getUserFromLocalStorage } = useUser()
 const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
+const { telegramWindow } = useTelegram()
 
 onMounted(async () => {
   await getAllUsers()
   getUserFromLocalStorage()
+  telegramWindow.value = (window as any)?.Telegram?.WebApp
+  console.log(telegramWindow.value)
 })
 </script>
 

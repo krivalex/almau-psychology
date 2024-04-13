@@ -23,7 +23,6 @@ export const useRegistration = () => {
       ...newStudent.value,
       ...userToObject.value,
     }
-    console.log(newStudent.value)
     await addDoc(collection(db, database), newStudent.value)
     router.push('/')
   }

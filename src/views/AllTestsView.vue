@@ -1,4 +1,5 @@
 <template>
+  <pre style="color: black">{{ telegramWindow ?? 'Нет данных' }}</pre>
   <template v-if="isAdmin">
     <section class="admin">
       <div class="admin-panel">
@@ -28,9 +29,11 @@ import TestCard from '../components/TestCard.vue'
 import LoadSpinner from '../components/ui/LoadSpinner.vue'
 import PButton from 'primevue/button'
 import { useRouter } from 'vue-router'
+import { useTelegram } from '../composables/useTelegram'
 
 const router = useRouter()
 const { testList, getAllContent, loading } = useTest()
+const { telegramWindow } = useTelegram()
 const { isAdmin } = useUser()
 
 onMounted(() => {
