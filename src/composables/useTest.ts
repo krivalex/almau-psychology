@@ -5,7 +5,7 @@ import { ref, reactive } from 'vue'
 import * as firebase from 'firebase/storage'
 import { getStorage, uploadBytes } from 'firebase/storage'
 import type { Test } from '../interfaces'
-import { initNewTest } from '../utils/init'
+import { initNewTest } from '../utils/business.init'
 
 const test = ref<Test | DocumentData>()
 const selectedTest = ref<Test>()

@@ -47,10 +47,9 @@ import PColumn from 'primevue/column';
 import PButton from 'primevue/button';
 import { useDialog } from 'primevue/usedialog'
 import AnswersModal from '../components/modals/AnswersModal.vue'
-import {transformDate} from '../utils/date'
 import YourHaveNoPermission from '../components/YourHaveNoPermission.vue'
 import type {CompletedTest} from '../interfaces'
-import {pretifierPhone} from '../utils/phone'
+import {pretifierPhone, transformDate} from '../utils'
 
 const { isAdmin} = useUser()
 const {getAllContent, allCompletedTests} = useCurrentTest()
@@ -147,3 +146,4 @@ onMounted(async () => {
 }
 
 </style
+../utils/date.logic../utils/phone.logic

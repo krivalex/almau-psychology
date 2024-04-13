@@ -1,5 +1,5 @@
 import { reactive, ref } from 'vue'
-import { initNewUser } from '../utils/init'
+import { initNewUser } from '../utils/business.init'
 import { User } from '../interfaces'
 import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../firebase-config'

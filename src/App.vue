@@ -1,18 +1,21 @@
 <template>
-  <template v-if="redirectToBrowser">
-    <div class="warning-message-absolute">
-      <span class="title">{{ isIOS() ? textForIOS.title : textForAndroid.title }}</span>
-      <span class="description">{{ isIOS() ? textForIOS.description : textForAndroid.description }}</span>
-    </div>
+  <template v-if="isTelegramLoading"> 123 </template>
+  <template v-else>
+    <template v-if="redirectToBrowser">
+      <div class="warning-message-absolute">
+        <span class="title">{{ isIOS() ? textForIOS.title : textForAndroid.title }}</span>
+        <span class="description">{{ isIOS() ? textForIOS.description : textForAndroid.description }}</span>
+      </div>
+    </template>
+    <dynamic-dialog />
+    <confirm-dialog />
+    <toast position="bottom-left" />
+    <navbar-panel />
+    <main>
+      <router-view />
+    </main>
+    <footer-panel />
   </template>
-  <dynamic-dialog />
-  <confirm-dialog />
-  <toast position="bottom-left" />
-  <navbar-panel />
-  <main>
-    <router-view />
-  </main>
-  <footer-panel />
 </template>
 
 <script setup lang="ts">
@@ -30,12 +33,12 @@ import Toast from 'primevue/toast'
 
 const { getAllUsers, getUserFromLocalStorage } = useUser()
 const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
-const { telegramWindow } = useTelegram()
+const { telegramWindow, isTelegramLoading } = useTelegram()
+telegramWindow.value = (window as any)?.Telegram?.WebApp
 
 onMounted(async () => {
   await getAllUsers()
   getUserFromLocalStorage()
-  telegramWindow.value = (window as any)?.Telegram?.WebApp
 })
 </script>
 
