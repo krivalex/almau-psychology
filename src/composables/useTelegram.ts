@@ -10,7 +10,7 @@ export function useTelegram() {
   }
 
   function decodeTelegramUser() {
-    return JSON.parse(atob(telegramUser.value?.user?.usernames || ''))
+    return JSON.parse(atob(telegramUser.value?.user?.username || ''))
   }
 
   function encodeTelegramUser(user: any) {
