@@ -34,6 +34,7 @@
       <template v-if="getTelegramLogin()">
         <span class="telegram-info">После регистрации вход будет выполнятся автоматически через ваш телеграм {{ getTelegramLogin() }}</span>
       </template>
+      <template v-else> Пусто </template>
     </div>
     <div class="contols">
       <button class="p-button" :disabled="!isValidate" @click="completeRegister">Зарегистрироваться</button>
