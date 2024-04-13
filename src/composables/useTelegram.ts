@@ -17,6 +17,14 @@ export function useTelegram() {
     return btoa(JSON.stringify(user))
   }
 
+  function saveTelegramLogin() {
+    localStorage.setItem('telegramUser', encodeTelegramUser(telegramUser.value))
+  }
+
+  function getTelegramLogin() {
+    return localStorage.getItem('telegramUser')
+  }
+
   return {
     telegramWindow,
     telegramUser,
@@ -24,5 +32,7 @@ export function useTelegram() {
     isTelegramLoading,
     decodeTelegramUser,
     encodeTelegramUser,
+    saveTelegramLogin,
+    getTelegramLogin,
   }
 }

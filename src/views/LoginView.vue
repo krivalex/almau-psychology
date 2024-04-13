@@ -31,6 +31,12 @@
         <p-dropdown v-model="newStudent.courseRegister" :options="courses" id="courseRegister" optionLabel="label" optionValue="value" @change="calculateYear" />
         <label for="courseRegister">Курс</label>
       </span>
+      <template v-if="getTelegramLogin()">
+        <span class="p-float-label">
+          <p-checkbox v-model="newStudent.enableTelegramEnter" id="telegram" />
+          <label for="telegram">Разрешить вход через телеграм?</label>
+        </span>
+      </template>
     </div>
     <div class="contols">
       <button class="p-button" :disabled="!isValidate" @click="completeRegister">Зарегистрироваться</button>
@@ -45,9 +51,12 @@ import PInputText from 'primevue/inputtext'
 import { useUser } from '../composables/useUser'
 import { useRegistration } from '../composables/useRegistration'
 import { computed, onMounted } from 'vue'
+import PCheckbox from 'primevue/checkbox'
+import { useTelegram } from '../composables/useTelegram'
 
 const { googleUser } = useUser()
 const { newStudent, completeRegister } = useRegistration()
+const { getTelegramLogin } = useTelegram()
 
 onMounted(() => {
   newStudent.value.name = googleUser.value?.displayName.split(' ')[0]

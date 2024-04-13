@@ -14,6 +14,8 @@ export const initNewUser: User = {
   email: '',
   displayName: '',
   photoURL: '',
+  telegramLogin: '',
+  enableTelegramEnter: false,
 }
 
 export const initNewTest: Test = {

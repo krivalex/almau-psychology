@@ -8,6 +8,8 @@ export interface User extends GoogleUser {
   specialty: string
   status: 'student' | 'psychologist'
   completedTests: [] | CompletedTest[]
+  telegramLogin: string
+  enableTelegramEnter: boolean
 }
 
 export interface GoogleUser {
