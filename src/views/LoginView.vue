@@ -33,11 +33,12 @@
       </span>
       <template v-if="getTelegramLogin()">
         <span class="telegram-info">
-          После регистрации вход будет выполнятся автоматически, через ваш телеграм <strong>{{ getTelegramLogin() || 'Который не найден' }}</strong>
+          После регистрации вход будет выполнятся автоматически, через ваш телеграм <strong>@{{ getTelegramLogin() || 'Который не найден' }}</strong>
         </span>
       </template>
     </div>
     <div class="contols">
+      {{isValidate}}
       <button class="p-button" :disabled="!isValidate" @click="completeRegister">Зарегистрироваться</button>
     </div>
   </section>
@@ -76,7 +77,7 @@ function calculateYear() {
 }
 
 const isValidate = computed(() => {
-  return !!newStudent.value.name && !!newStudent.value.surname && !!newStudent.value.specialty && !!newStudent.value.yearAdmission && newStudent.value.phone
+  return !!newStudent.value.name && !!newStudent.value.surname && !!newStudent.value.specialty && !!newStudent.value.yearAdmission && !!newStudent.value.phone
 })
 </script>
 
