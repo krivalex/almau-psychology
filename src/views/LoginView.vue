@@ -32,10 +32,7 @@
         <label for="courseRegister">Курс</label>
       </span>
       <template v-if="getTelegramLogin()">
-        <span class="p-float-label">
-          <p-checkbox v-model="newStudent.enableTelegramEnter" id="telegram" />
-          <label for="telegram">Разрешить вход через телеграм?</label>
-        </span>
+        <span class="telegram-info">После регистрации вход будет выполнятся автоматически через ваш телеграм {{ getTelegramLogin() }}</span>
       </template>
     </div>
     <div class="contols">
@@ -51,7 +48,6 @@ import PInputText from 'primevue/inputtext'
 import { useUser } from '../composables/useUser'
 import { useRegistration } from '../composables/useRegistration'
 import { computed, onMounted } from 'vue'
-import PCheckbox from 'primevue/checkbox'
 import { useTelegram } from '../composables/useTelegram'
 
 const { googleUser } = useUser()

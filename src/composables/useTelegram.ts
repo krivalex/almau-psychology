@@ -1,4 +1,5 @@
 import { computed, ref } from 'vue'
+import { decode, encode } from '../utils'
 
 const telegramWindow = ref<typeof Telegram.WebApp>()
 const isTelegramLoading = computed(() => telegramWindow.value?.ready())
@@ -10,11 +11,11 @@ export function useTelegram() {
   }
 
   function decodeTelegramUser() {
-    return telegramUser.value?.user?.username
+    return decode(telegramUser.value?.user?.username || '')
   }
 
   function encodeTelegramUser() {
-    return telegramUser.value?.user?.username
+    return encode(telegramUser.value?.user?.username || '')
   }
 
   function saveTelegramLogin() {
