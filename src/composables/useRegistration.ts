@@ -5,12 +5,14 @@ import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { useUser } from './useUser'
 import { useRouter } from 'vue-router'
+import { useTelegram } from './useTelegram'
 
 const newStudent = ref<User>(initNewUser)
 const studentList = ref<User[]>([])
 
 export const useRegistration = () => {
   const { userToObject } = useUser()
+  const { getTelegramLogin } = useTelegram()
   const router = useRouter()
   const database = 'users'
 
@@ -19,6 +21,9 @@ export const useRegistration = () => {
   })
 
   async function completeRegister() {
+    newStudent.value.telegramLogin = getTelegramLogin() || ''
+    if (newStudent.value.telegramLogin) newStudent.value.enableTelegramEnter = true
+
     newStudent.value = {
       ...newStudent.value,
       ...userToObject.value,
