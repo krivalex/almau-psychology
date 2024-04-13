@@ -1,5 +1,5 @@
 <template>
-  <pre style="color: black">{{ telegramWindow.initDataUnsafe ?? 'Нет данных' }}</pre>
+  <pre style="color: black">{{ telegramWindow?.initDataUnsafe ?? 'Нет данных' }}</pre>
   <template v-if="isAdmin">
     <section class="admin">
       <div class="admin-panel">
