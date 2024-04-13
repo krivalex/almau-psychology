@@ -2,7 +2,7 @@
   <section class="login-view">
     <div class="info-container">
       <span class="welcome">
-        Добро пожаловать, <strong>{{ googleUser?.displayName }}</strong
+        Добро пожаловать, <strong>{{ googleUser?.displayName || 'Неизвестный пользователь' }}</strong
         >! Вы здесь впервые, давайте закончим регистрацию
       </span>
     </div>
@@ -28,13 +28,14 @@
         <label for="specialty">Специальность</label>
       </span>
       <span class="p-float-label">
-        <p-dropdown v-model="newStudent.courseRegister" :options="courses" id="courseRegister" optionLabel="label" optionValue="value" @change="calculateYear" />
+        <p-dropdown v-model="newStudent.courseRegister" :options="courses" id="courseRegister" optionLabel="label" optionValue="value" @change="calculateYear" :showClear="true" />
         <label for="courseRegister">Курс</label>
       </span>
       <template v-if="getTelegramLogin()">
-        <span class="telegram-info">После регистрации вход будет выполнятся автоматически через ваш телеграм {{ getTelegramLogin() }}</span>
+        <span class="telegram-info">
+          После регистрации вход будет выполнятся автоматически, через ваш телеграм <strong>{{ getTelegramLogin() || 'Который не найден' }}</strong>
+        </span>
       </template>
-      <template v-else> Пусто </template>
     </div>
     <div class="contols">
       <button class="p-button" :disabled="!isValidate" @click="completeRegister">Зарегистрироваться</button>
@@ -96,18 +97,31 @@ const isValidate = computed(() => {
     flex-direction: column;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px 0;
+    width: 85%;
   }
 
   .input-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 85%;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
 
     .p-float-label {
       width: 100%;
       font-size: 0.8rem;
 
       :deep(.p-dropdown) {
+        width: 100%;
+      }
+
+      :deep(.p-inputmask) {
+        width: 100%;
+      }
+
+      :deep(.p-inputtext) {
         width: 100%;
       }
     }
@@ -118,6 +132,6 @@ const isValidate = computed(() => {
   text-align: center;
   font-size: 0.8rem;
   color: #000000;
-  font-weight: 600;
+  max-width: 80%;
 }
 </style>
