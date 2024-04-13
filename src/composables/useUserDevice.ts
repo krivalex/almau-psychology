@@ -16,17 +16,9 @@ export const useUserDevice = () => {
     description: 'Ваше устройство не поддерживает технологию WebViewApi, мы перебросили вас в ваш основной браузер, чтобы все функции работали корректно',
   }
 
-  const isBrowserMounted = () => {
-    console.log('isWindows', isWindows())
-    return isWindows()
-  }
-  const isWebViewMounted = () => {
-    return isIOS() || isAndroid()
-  }
-
-  const toggleRedirectPosition = () => {
-    redirectToBrowser.value = !redirectToBrowser.value
-  }
+  const isBrowserMounted = () => isWindows()
+  const isWebViewMounted = () => isIOS() || isAndroid()
+  const toggleRedirectPosition = () => (redirectToBrowser.value = !redirectToBrowser.value)
 
   return {
     isIOS,

@@ -1,5 +1,5 @@
 <template>
-  <template v-if="isTelegramLoading"> 123 </template>
+  <template v-if="telegramWindow?.ready()"> 123 </template>
   <template v-else>
     <template v-if="redirectToBrowser">
       <div class="warning-message-absolute">
@@ -33,12 +33,12 @@ import Toast from 'primevue/toast'
 
 const { getAllUsers, getUserFromLocalStorage } = useUser()
 const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
-const { telegramWindow, isTelegramLoading } = useTelegram()
+const { initTelegram, telegramWindow } = useTelegram()
 
 onMounted(async () => {
   await getAllUsers()
   getUserFromLocalStorage()
-  telegramWindow.value = (window as any)?.Telegram?.WebApp
+  initTelegram()
 })
 </script>
 
