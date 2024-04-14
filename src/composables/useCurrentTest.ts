@@ -71,6 +71,7 @@ export const useCurrentTest = () => {
   function clearTestAnswers() {
     currentIndex.value = 0
     currentTest.value = initNewCurrentTest
+    clickAnswerAnimation()
   }
 
   function saveAnswer(answer: Answer) {
@@ -108,6 +109,7 @@ export const useCurrentTest = () => {
       currentTest.value?.answers.pop()
       currentIndex.value--
     }
+    clickAnswerAnimation()
   }
 
   function goToResultPage() {
