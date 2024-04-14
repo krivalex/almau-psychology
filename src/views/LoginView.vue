@@ -24,22 +24,22 @@
         <label for="phone">Телефон</label>
       </span>
       <span class="p-float-label">
-        <p-input-text v-model="newStudent.specialty" id="specialty" />
-        <label for="specialty">Специальность</label>
-      </span>
-      <span class="p-float-label">
         <p-dropdown v-model="newStudent.courseRegister" :options="courses" id="courseRegister" optionLabel="label" optionValue="value" @change="calculateYear" :showClear="true" />
         <label for="courseRegister">Курс</label>
       </span>
+      <template v-if="!isNotAStudent">
+        <span class="p-float-label">
+          <p-dropdown v-model="newStudent.specialty" :options="schools" id="specialty" optionLabel="label" optionValue="value" :showClear="true" />
+          <label for="specialty">Специальность</label>
+        </span>
+      </template>
       <template v-if="getTelegramLogin()">
         <span class="telegram-info">
           После регистрации вход будет выполнятся автоматически, через ваш телеграм <strong>@{{ getTelegramLogin() || 'Который не найден' }}</strong>
         </span>
       </template>
-      <template v-else">
-        <span class="telegram-info">
-          Чтобы подключить автоматический вход через телеграм, добавьте себе логин в телеграме - @example
-        </span>
+      <template v-else>
+        <span class="telegram-info"> Чтобы подключить автоматический вход через телеграм, добавьте себе логин в телеграме - @example </span>
       </template>
     </div>
     <div class="contols">
@@ -56,6 +56,7 @@ import { useUser } from '../composables/useUser'
 import { useRegistration } from '../composables/useRegistration'
 import { computed, onMounted } from 'vue'
 import { useTelegram } from '../composables/useTelegram'
+import { courses, schools } from '../utils'
 
 const { googleUser } = useUser()
 const { newStudent, completeRegister } = useRegistration()
@@ -66,23 +67,31 @@ onMounted(() => {
   newStudent.value.surname = googleUser.value?.displayName.split(' ')[1]
 })
 
-const courses = [
-  { label: '1 курс', value: 1 },
-  { label: '2 курс', value: 2 },
-  { label: '3 курс', value: 3 },
-  { label: '4 курс', value: 4 },
-  { label: 'Я не студент', value: 'not_a_student' },
-]
-
-function calculateYear() {
-  if (newStudent.value.courseRegister == 'not_a_student') return (newStudent.value.yearAdmission = NaN)
-  const currentYear = new Date().getFullYear()
-  newStudent.value.yearAdmission = currentYear - newStudent.value.courseRegister
-}
+const isNotAStudent = computed(() => newStudent.value.courseRegister == 'not_a_student')
 
 const isValidate = computed(() => {
-  return !!newStudent.value.name && !!newStudent.value.surname && !!newStudent.value.specialty && !!newStudent.value.yearAdmission && !!newStudent.value.phone
+  const name = !!newStudent.value.name
+  const surname = !!newStudent.value.surname
+  const specialty = isNotAStudent.value || !!newStudent.value.specialty
+  const yearAdmission = isNotAStudent.value || !!newStudent.value.yearAdmission
+  const phone = !!newStudent.value.phone
+
+  console.log({
+    name,
+    surname,
+    specialty,
+    yearAdmission,
+    phone,
+  })
+
+  return name && surname && specialty && yearAdmission && phone
 })
+
+function calculateYear() {
+  if (isNotAStudent.value) return (newStudent.value.yearAdmission = NaN)
+  const currentYear = new Date().getFullYear()
+  newStudent.value.yearAdmission = currentYear - Number(newStudent.value.courseRegister)
+}
 </script>
 
 <style scoped lang="scss">
