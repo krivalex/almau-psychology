@@ -76,14 +76,6 @@ const isValidate = computed(() => {
   const yearAdmission = isNotAStudent.value || !!newStudent.value.yearAdmission
   const phone = !!newStudent.value.phone
 
-  console.log({
-    name,
-    surname,
-    specialty,
-    yearAdmission,
-    phone,
-  })
-
   return name && surname && specialty && yearAdmission && phone
 })
 
