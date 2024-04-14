@@ -43,7 +43,6 @@
       </template>
     </div>
     <div class="contols">
-      {{isValidate}}
       <button class="p-button" :disabled="!isValidate" @click="completeRegister">Зарегистрироваться</button>
     </div>
   </section>
