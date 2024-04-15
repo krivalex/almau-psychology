@@ -133,7 +133,8 @@ export const useUser = () => {
     const user = googleUserList.value.filter((item: User) => {
       const isEmptyTelegramLogin = item?.telegramLogin
       if (!isNotTelegramEntry || !isEmptyTelegramLogin) return false
-      return isNotTelegramEntry.includes(item.telegramLogin) && isNotTelegramEntry.length - 1 === item.telegramLogin.length
+
+      return item.telegramLogin.includes(isNotTelegramEntry) && isNotTelegramEntry.length + 1 === item.telegramLogin.length
     })
 
     if (user?.[0]) {
