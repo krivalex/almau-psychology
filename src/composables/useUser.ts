@@ -139,8 +139,8 @@ export const useUser = () => {
 
     if (user?.[0]) {
       googleUser.value = user[0]
-      expandWindow()
     }
+    expandWindow()
   }
 
   function removeFromLocalStorage() {
