@@ -140,4 +140,8 @@ function calculateYear() {
   color: #000000;
   max-width: 80%;
 }
+
+.contols {
+  margin-bottom: 30px;
+}
 </style>
