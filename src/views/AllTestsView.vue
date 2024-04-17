@@ -8,10 +8,10 @@
     </section>
   </template>
   <section class="all-tests">
-    <pre>
-      {{ telegramWindow }}
-    </pre>
     <template v-if="!loading.testList">
+      <pre>
+        {{ telegramWindow }}
+      </pre>
       <span class="about-all-tests"> Список тестов </span>
       <template v-for="test in testList" :key="test.id">
         <TestCard :test="test" />
