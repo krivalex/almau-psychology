@@ -13,7 +13,7 @@ const studentList = ref<User[]>([])
 
 export const useRegistration = () => {
   const { userToObject, googleUser, addToLocalStorage } = useUser()
-  const { getTelegramID } = useTelegram()
+  const { getTelegramID, getTelegramNickname } = useTelegram()
   const { isWebViewMounted } = useUserDevice()
 
   const router = useRouter()
@@ -24,8 +24,9 @@ export const useRegistration = () => {
   })
 
   async function completeRegister() {
-    newStudent.value.telegramLogin = getTelegramID() || ''
-    if (newStudent.value.telegramLogin) newStudent.value.enableTelegramEnter = true
+    newStudent.value.telegramID = getTelegramID()
+    newStudent.value.telegramLogin = getTelegramNickname()
+    if (newStudent.value.telegramID) newStudent.value.enableTelegramEnter = true
 
     newStudent.value = {
       ...newStudent.value,
