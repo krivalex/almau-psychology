@@ -20,25 +20,16 @@
         <label for="patronymic">Отчество</label>
       </span>
       <span class="p-float-label">
-        <p-input-mask id="phone" mask="+7(999)999-99-99" v-model="newStudent.phone" @change="validate" />
+        <p-input-mask id="phone" mask="+7(999)999-99-99" v-model="newStudent.phone" />
         <label for="phone">Телефон</label>
       </span>
       <span class="p-float-label">
-        <p-dropdown
-          v-model="newStudent.courseRegister"
-          :options="courses"
-          @update:modelValue="validate"
-          id="courseRegister"
-          optionLabel="label"
-          optionValue="value"
-          @change="calculateYear"
-          :showClear="true"
-        />
+        <p-dropdown v-model="newStudent.courseRegister" :options="courses" id="courseRegister" optionLabel="label" optionValue="value" @change="calculateYear" :showClear="true" />
         <label for="courseRegister">Курс</label>
       </span>
       <template v-if="!isNotAStudent">
         <span class="p-float-label">
-          <p-dropdown v-model="newStudent.specialty" :options="schools" @change="validate" id="specialty" optionLabel="label" optionValue="value" :showClear="true" />
+          <p-dropdown v-model="newStudent.specialty" :options="schools" id="specialty" optionLabel="label" optionValue="value" :showClear="true" />
           <label for="specialty">Специальность</label>
         </span>
       </template>
@@ -105,7 +96,6 @@ function validate() {
   const specialty = isNotAStudent.value || !!newStudent.value.specialty
   const yearAdmission = isNotAStudent.value || !!newStudent.value.yearAdmission
   const phone = !!newStudent.value.phone
-  const courseRegister = !!newStudent.value.courseRegister
 
   const noValidFields = Object.entries(loginFields)
     .filter(([field]: [string, string]) => !newStudent.value[field as keyof User])
@@ -116,7 +106,7 @@ function validate() {
   }
 
   return {
-    valid: name && surname && specialty && yearAdmission && phone && courseRegister,
+    valid: name && surname && specialty && yearAdmission && phone,
     noValidFields,
   }
 }

@@ -3,6 +3,7 @@
     <div class="warning-message-absolute">
       <span class="title">{{ isIOS() ? textForIOS.title : textForAndroid.title }}</span>
       <span class="description">{{ isIOS() ? textForIOS.description : textForAndroid.description }}</span>
+      <p-button label="Обновить" @click="reloadPage" />
     </div>
   </template>
   <dynamic-dialog />
@@ -27,10 +28,13 @@ import { useTelegram } from './composables/useTelegram'
 import DynamicDialog from 'primevue/dynamicdialog'
 import ConfirmDialog from 'primevue/confirmdialog'
 import Toast from 'primevue/toast'
+import PButton from 'primevue/button'
 
 const { getAllUsers, getUserFromLocalStorage, checkUserTelegram } = useUser()
 const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
-const { initTelegram } = useTelegram()
+const { initTelegram, reloadPage } = useTelegram()
+
+// if redirect here from another site
 
 onMounted(async () => {
   initTelegram()
