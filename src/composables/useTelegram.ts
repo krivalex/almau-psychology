@@ -24,11 +24,11 @@ export function useTelegram() {
   }
 
   function decodeTelegramUser() {
-    return decode(String(telegramWindow.value?.initDataUnsafe?.user?.id) || telegramID.value)
+    return telegramWindow.value?.initDataUnsafe?.user?.id || telegramID.value
   }
 
   function encodeTelegramUser(telegramLogin: string) {
-    return encode(telegramLogin)
+    return telegramLogin
   }
 
   function saveTelegramLogin() {
