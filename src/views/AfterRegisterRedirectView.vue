@@ -1,9 +1,9 @@
 <template>
   <section class="after-redirect">
     <span class="status"> Вы успешно зарегистрировались </span>
-    <template v-if="getTelegramID()">
+    <template v-if="getTelegramNickname()">
       <span class="text">
-        Теперь вам доступен, авто-вход с телеграма <strong>@{{ getTelegramID() }}</strong>
+        Теперь вам доступен, авто-вход с телеграма <strong>@{{ getTelegramNickname() }}</strong>
       </span>
     </template>
     <template v-else>
@@ -17,7 +17,7 @@
 import PButton from 'primevue/button'
 import { useTelegram } from '../composables/useTelegram'
 
-const { goBackToTelegramBot, getTelegramID } = useTelegram()
+const { goBackToTelegramBot, getTelegramNickname } = useTelegram()
 </script>
 
 <style scoped lang="scss">

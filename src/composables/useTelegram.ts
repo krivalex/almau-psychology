@@ -48,6 +48,9 @@ export function useTelegram() {
 
   function goBackToTelegramBot() {
     window.location.href = 'https://t.me/AlmaU_Psychology_BOT'
+    setTimeout(() => {
+      window.location.reload()
+    }, 1000)
   }
 
   return {
