@@ -27,8 +27,9 @@ export function useTelegram() {
   function saveTelegramLogin() {
     const telegramLogin = router.currentRoute.value.query.redirectLogin?.toLocaleString()
     if (!telegramLogin && telegramLogin === 'undefined') return
-    telegramNickname.value = telegramLogin || ''
-    localStorage.setItem('telegramUser', encodeTelegramUser(telegramLogin!) || '')
+    const encodeValue = encodeTelegramUser(telegramLogin!)
+    telegramNickname.value = encodeValue
+    localStorage.setItem('telegramUser', encodeValue || '')
   }
 
   function getTelegramLogin() {
