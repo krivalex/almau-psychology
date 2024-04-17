@@ -11,7 +11,7 @@ const newStudent = ref<User>(initNewUser)
 const studentList = ref<User[]>([])
 
 export const useRegistration = () => {
-  const { userToObject } = useUser()
+  const { userToObject, googleUser, addToLocalStorage } = useUser()
   const { getTelegramLogin } = useTelegram()
   const router = useRouter()
   const database = 'users'
@@ -29,6 +29,8 @@ export const useRegistration = () => {
       ...userToObject.value,
     }
     await addDoc(collection(db, database), newStudent.value)
+    googleUser.value = newStudent.value
+    addToLocalStorage()
     router.push('/')
   }
 

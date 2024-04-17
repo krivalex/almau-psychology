@@ -38,7 +38,7 @@ onMounted(async () => {
   setTimeout(() => {
     checkUserTelegram()
     getUserFromLocalStorage()
-  }, 500)
+  }, 100)
 })
 </script>
 

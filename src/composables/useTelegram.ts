@@ -5,7 +5,9 @@ import { useRouter } from 'vue-router'
 const telegramWindow = ref<typeof Telegram.WebApp>()
 const telegramNickname = ref<string>()
 const isTelegramLoading = computed(() => telegramWindow.value?.ready())
-const telegramUser = computed(() => telegramWindow.value?.initDataUnsafe)
+const telegramUser = computed(() => {
+  if (telegramWindow.value) return telegramWindow.value?.initDataUnsafe
+})
 
 export function useTelegram() {
   const router = useRouter()
@@ -27,6 +29,7 @@ export function useTelegram() {
     if (!telegramLogin && telegramLogin === 'undefined') return
     telegramNickname.value = telegramLogin
     localStorage.setItem('telegramUser', encodeTelegramUser(telegramLogin!) || '')
+    telegramNickname.value = telegramLogin
   }
 
   function getTelegramLogin() {
