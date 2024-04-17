@@ -5,7 +5,7 @@
         <img class="logo" src="@/assets/logo.png" alt="logo" />
         <h1 class="name">AlmaU Psychology</h1>
       </div>
-      <template v-if="!isLoginPage || (!telegramUser && isWebViewMounted())">
+      <template v-if="!isLoginPage || (telegramUser && isWebViewMounted())">
         <div class="login-control">
           <login-button />
         </div>
