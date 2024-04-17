@@ -3,7 +3,7 @@ import { decode, encode } from '../utils'
 import { useRouter } from 'vue-router'
 
 const telegramWindow = ref<typeof Telegram.WebApp>()
-const telegramNickname = ref<string>()
+const telegramNickname = ref<string>('')
 const isTelegramLoading = computed(() => telegramWindow.value?.ready())
 const telegramUser = computed(() => {
   if (telegramWindow.value) return telegramWindow.value?.initDataUnsafe
@@ -17,7 +17,7 @@ export function useTelegram() {
   }
 
   function decodeTelegramUser() {
-    return decode(telegramUser.value?.user?.username || '')
+    return decode(telegramUser.value?.user?.username || telegramNickname.value)
   }
 
   function encodeTelegramUser(telegramLogin: string) {
@@ -27,13 +27,12 @@ export function useTelegram() {
   function saveTelegramLogin() {
     const telegramLogin = router.currentRoute.value.query.redirectLogin?.toLocaleString()
     if (!telegramLogin && telegramLogin === 'undefined') return
-    telegramNickname.value = telegramLogin
+    telegramNickname.value = telegramLogin || ''
     localStorage.setItem('telegramUser', encodeTelegramUser(telegramLogin!) || '')
-    telegramNickname.value = telegramLogin
   }
 
   function getTelegramLogin() {
-    return localStorage.getItem('telegramUser') || telegramNickname.value
+    return telegramNickname.value || localStorage.getItem('telegramUser')
   }
 
   function expandWindow() {

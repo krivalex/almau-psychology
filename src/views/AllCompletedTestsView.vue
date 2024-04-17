@@ -12,7 +12,12 @@
             </span>
             <span v-else-if="col.field === 'student'">
               <div class="info-student-container">
-                <span class="specialty">{{isHasData(data.student.specialty)}}({{isHasData(data.student.yearAdmission)}})</span>
+                <template v-if="data.student.courseRegister !== 'not_a_student'">
+                  <span class="specialty">{{isHasData(data.student.specialty)}}({{isHasData(data.student.yearAdmission)}})</span>
+                </template>
+                <template v-else>
+                  <span class="specialty">Не студент</span>
+                </template>
                 <span class="email">{{isHasData(data.student.email)}}</span>
                 <span class="phone">{{isHasData(data.student.phone)}}</span>
               </div>
