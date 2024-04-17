@@ -22,7 +22,6 @@
       <span class="p-float-label">
         <p-input-mask id="phone" mask="+7(999)999-99-99" v-model="newStudent.phone" @change="validate" />
         <label for="phone">Телефон</label>
-        <i class="pi pi-asterisk absolute" />
       </span>
       <span class="p-float-label">
         <p-dropdown
@@ -84,7 +83,7 @@ import { useUser } from '../composables/useUser'
 import { useRegistration } from '../composables/useRegistration'
 import { computed, onMounted, ref } from 'vue'
 import { useTelegram } from '../composables/useTelegram'
-import { courses, schools } from '../utils'
+import { courses, loginFields, schools } from '../utils'
 import { useUserDevice } from '../composables/useUserDevice'
 import { User } from '../interfaces'
 
@@ -100,15 +99,6 @@ onMounted(() => {
   newStudent.value.surname = googleUser.value?.displayName.split(' ')[1]
 })
 
-const fields: Record<string, string> = {
-  name: 'Имя',
-  surname: 'Фамилия',
-  specialty: 'Специальность',
-  yearAdmission: 'Год поступления',
-  phone: 'Телефон',
-  courseRegister: 'Курс',
-}
-
 function validate() {
   const name = !!newStudent.value.name
   const surname = !!newStudent.value.surname
@@ -117,7 +107,7 @@ function validate() {
   const phone = !!newStudent.value.phone
   const courseRegister = !!newStudent.value.courseRegister
 
-  const noValidFields = Object.entries(fields)
+  const noValidFields = Object.entries(loginFields)
     .filter(([field]: [string, string]) => !newStudent.value[field as keyof User])
     .map(([, label]) => label)
 
