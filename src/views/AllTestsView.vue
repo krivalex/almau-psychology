@@ -10,7 +10,7 @@
   <section class="all-tests">
     <template v-if="!loading.testList">
       <pre>
-        {{ telegramWindow }}
+        {{ getTelegramID() }}
       </pre>
       <span class="about-all-tests"> Список тестов </span>
       <template v-for="test in testList" :key="test.id">
@@ -36,7 +36,7 @@ import { useTelegram } from '../composables/useTelegram'
 const router = useRouter()
 const { testList, getAllContent, loading } = useTest()
 const { isAdmin } = useUser()
-const { telegramWindow } = useTelegram()
+const { getTelegramID } = useTelegram()
 
 onMounted(() => {
   getAllContent()
