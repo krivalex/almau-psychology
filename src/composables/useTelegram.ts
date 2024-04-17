@@ -17,7 +17,7 @@ export function useTelegram() {
   }
 
   function decodeTelegramUser() {
-    return decode(telegramUser.value?.user?.username || telegramNickname.value)
+    return decode(telegramWindow.value?.initDataUnsafe?.user?.username || telegramNickname.value)
   }
 
   function encodeTelegramUser(telegramLogin: string) {

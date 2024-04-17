@@ -33,8 +33,8 @@ const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
 const { initTelegram } = useTelegram()
 
 onMounted(async () => {
-  await getAllUsers()
   initTelegram()
+  await getAllUsers()
   setTimeout(() => {
     checkUserTelegram()
     getUserFromLocalStorage()
