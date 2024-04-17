@@ -6,9 +6,9 @@
         <h1 class="name">AlmaU Psychology</h1>
       </div>
       <template v-if="!isLoginPage">
-        <div class="login-control">
+        <!-- <div class="login-control">
           <login-button />
-        </div>
+        </div> -->
       </template>
       <template v-else>
         <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
@@ -22,7 +22,7 @@ import { useUser } from '../composables/useUser'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
 import PAvatar from 'primevue/avatar'
-import LoginButton from './ui/LoginButton.vue'
+// import LoginButton from './ui/LoginButton.vue'
 import { useUserDevice } from '../composables/useUserDevice'
 
 const router = useRouter()
