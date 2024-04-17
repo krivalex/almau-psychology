@@ -1,5 +1,4 @@
 import { computed, ref } from 'vue'
-import { decode, encode } from '../utils'
 import { useRouter } from 'vue-router'
 
 const telegramWindow = ref<typeof Telegram.WebApp>()
