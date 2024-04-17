@@ -127,7 +127,7 @@ export const useUser = () => {
   }
 
   function checkUserTelegram() {
-    const isNotTelegramEntry = telegramUser.value?.user?.username
+    const isNotTelegramEntry = String(telegramUser.value?.user?.id)
     if (!isNotTelegramEntry) return
 
     const user = googleUserList.value.filter((item: User) => {

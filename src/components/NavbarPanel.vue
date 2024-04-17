@@ -36,8 +36,13 @@ function goToMain() {
 
 const { googleUser } = useUser()
 
+const noLoginButtonViews = ['login', 'login-options', 'after-register']
+
 const isLoginPage = computed(() => {
-  return router.currentRoute.value.name === 'login' || router.currentRoute.value.name === 'login-options' || redirectToBrowser.value
+  if (router.currentRoute?.value?.name) {
+    return noLoginButtonViews.includes(String(router.currentRoute.value.name)) || redirectToBrowser.value
+  }
+  return false
 })
 </script>
 

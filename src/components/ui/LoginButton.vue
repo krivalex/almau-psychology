@@ -18,9 +18,9 @@ import { useTelegram } from '../../composables/useTelegram'
 
 const { googleRegister, googleUser } = useUser()
 const { isBrowserMounted, toggleRedirectPosition } = useUserDevice()
-const { decodeTelegramUser } = useTelegram()
+const { decodeTelegramUser, telegramNickname } = useTelegram()
 
-const redirectRoute = `https://almau-psychology.netlify.app/login-options?redirect=true&redirectLogin=${decodeTelegramUser()}`
+const redirectRoute = `https://almau-psychology.netlify.app/login-options?redirect=true&redirectTeleramId=${decodeTelegramUser()}&redirectLogin=${telegramNickname}`
 // const redirectRoute = `http://localhost:5173/login-options?redirect=true&redirectLogin=${decodeTelegramUser()}`
 </script>
 
