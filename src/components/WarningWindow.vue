@@ -18,10 +18,10 @@ import { useTelegram } from '../composables/useTelegram'
 import { useUserDevice } from '../composables/useUserDevice'
 
 const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
-const { reloadPage, redirectRoute } = useTelegram()
+const { reloadPage, getRedirectRoute } = useTelegram()
 
 function redirectToBrowserHandler() {
-  window.open(redirectRoute, '_blank')
+  window.open(getRedirectRoute(), '_blank')
 }
 </script>
 

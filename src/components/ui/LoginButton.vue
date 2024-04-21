@@ -1,6 +1,6 @@
 <template>
   <template v-if="!isBrowserMounted()">
-    <a :href="redirectRoute" target="_blank" class="enter-link p-button-sm" v-if="!googleUser" @click="toggleRedirectPosition">Войти</a>
+    <a :href="getRedirectRoute()" target="_blank" class="enter-link p-button-sm" v-if="!googleUser" @click="toggleRedirectPosition">Войти</a>
     <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
   </template>
   <template v-else>
@@ -18,9 +18,7 @@ import { useTelegram } from '../../composables/useTelegram'
 
 const { googleRegister, googleUser } = useUser()
 const { isBrowserMounted, toggleRedirectPosition } = useUserDevice()
-const { redirectRoute } = useTelegram()
-
-=
+const { getRedirectRoute } = useTelegram()
 </script>
 
 <style scoped lang="scss">
