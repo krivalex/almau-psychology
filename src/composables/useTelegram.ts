@@ -16,6 +16,7 @@ export function useTelegram() {
 
   const getTelegramID = () => telegramID.value
   const getTelegramNickname = () => telegramNickname.value
+  const redirectRoute = `https://almau-psychology.netlify.app/login-options?redirect=true&redirectTeleramId=${decodeTelegramUser()}&redirectLogin=${telegramNickname.value}`
 
   function initTelegram() {
     telegramWindow.value = (window as any)?.Telegram?.WebApp
@@ -67,5 +68,6 @@ export function useTelegram() {
     telegramNickname,
     getTelegramNickname,
     reloadPage,
+    redirectRoute,
   }
 }

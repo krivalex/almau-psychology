@@ -1,15 +1,5 @@
 <template>
-  <template v-if="redirectToBrowser">
-    <div class="warning-message-absolute">
-      <span class="title">{{ isIOS() ? textForIOS.title : textForAndroid.title }}</span>
-      <span class="description">
-        У вас должен был открыться ваш основной браузер,
-        <a target="_blank" :link="redirectRoute">перейти в него</a>
-        - для регистрации
-      </span>
-      <p-button label="Обновить" @click="reloadPage" />
-    </div>
-  </template>
+  <warning-window />
   <dynamic-dialog />
   <confirm-dialog />
   <toast position="bottom-left" />
@@ -26,21 +16,15 @@ import NavbarPanel from './components/NavbarPanel.vue'
 import FooterPanel from './components/FooterPanel.vue'
 import { onMounted } from 'vue'
 import { useUser } from './composables/useUser'
-import { useUserDevice } from './composables/useUserDevice'
 import { useTelegram } from './composables/useTelegram'
+import WarningWindow from './components/WarningWindow.vue'
 
 import DynamicDialog from 'primevue/dynamicdialog'
 import ConfirmDialog from 'primevue/confirmdialog'
 import Toast from 'primevue/toast'
-import PButton from 'primevue/button'
 
 const { getAllUsers, getUserFromLocalStorage, checkUserTelegram } = useUser()
-const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
-const { initTelegram, reloadPage, decodeTelegramUser, telegramNickname } = useTelegram()
-
-const redirectRoute = `https://almau-psychology.netlify.app/login-options?redirect=true&redirectTeleramId=${decodeTelegramUser()}&redirectLogin=${telegramNickname.value}`
-
-// if redirect here from another site
+const { initTelegram } = useTelegram()
 
 onMounted(async () => {
   initTelegram()
@@ -83,8 +67,8 @@ main {
 
   .description {
     a {
-      color: #c70606;
-      text-decoration: none;
+      color: blue;
+      text-decoration: underline;
       font-weight: 600;
     }
   }
