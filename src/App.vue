@@ -1,7 +1,7 @@
 <template>
   <template v-if="redirectToBrowser">
     <div class="warning-message-absolute">
-      <span class="title">{{ !isIOS() ? textForIOS.title : textForAndroid.title }}</span>
+      <span class="title">{{ isIOS() ? textForIOS.title : textForAndroid.title }}</span>
       <span class="description">
         У вас должен был открыться ваш основной браузер,
         <a target="_blank" :link="redirectRoute">перейти в него</a>
@@ -52,7 +52,7 @@ onMounted(async () => {
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 main {
   margin-top: 60px;
   position: relative;
@@ -80,5 +80,13 @@ main {
   border-radius: 0.5rem;
   flex-direction: column;
   gap: 2rem;
+
+  .description {
+    a {
+      color: #c70606;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  }
 }
 </style>
