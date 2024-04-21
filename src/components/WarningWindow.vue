@@ -53,7 +53,7 @@ main {
   gap: 2rem;
 
   .description {
-    padding: 3rem;
+    padding: 0.75rem;
 
     a {
       color: blue;
