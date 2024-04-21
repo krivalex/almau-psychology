@@ -36,7 +36,7 @@ import PButton from 'primevue/button'
 
 const { getAllUsers, getUserFromLocalStorage, checkUserTelegram } = useUser()
 const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
-const { initTelegram, reloadPage } = useTelegram()
+const { initTelegram, reloadPage, decodeTelegramUser, telegramNickname } = useTelegram()
 
 const redirectRoute = `https://almau-psychology.netlify.app/login-options?redirect=true&redirectTeleramId=${decodeTelegramUser()}&redirectLogin=${telegramNickname.value}`
 
