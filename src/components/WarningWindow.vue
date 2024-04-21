@@ -1,13 +1,11 @@
 <template>
   <template v-if="redirectToBrowser">
     <div class="warning-message-absolute">
-      <span class="title">{{ isIOS() ? textForIOS.title : textForAndroid.title }}</span>
       <span class="description">
-        У вас должен был открыться ваш основной браузер,
-        <a target="_blank" @click="redirectToBrowserHandler">перейти в него</a>
-        - для регистрации
+        Для успешной регистрации
+        <a target="_blank" @click="redirectToBrowserHandler">нажмите</a>
       </span>
-      <p-button label="Обновить" @click="reloadPage" />
+      <p-button label="Продолжить" @click="reloadPage" />
     </div>
   </template>
 </template>
@@ -17,7 +15,7 @@ import PButton from 'primevue/button'
 import { useTelegram } from '../composables/useTelegram'
 import { useUserDevice } from '../composables/useUserDevice'
 
-const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
+const { redirectToBrowser } = useUserDevice()
 const { reloadPage, getRedirectRoute } = useTelegram()
 
 function redirectToBrowserHandler() {
