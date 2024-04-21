@@ -9,11 +9,9 @@ export const useUserDevice = () => {
 
   const textForIOS = {
     title: 'Похоже у вас iOS устройство и вы здесь впервые',
-    description: 'Нажмите на кнопку, перейти в браузер - для регистрации',
   }
   const textForAndroid = {
     title: 'Похоже у вас Android устройство и вы здесь впервые',
-    description: 'Нажмите на кнопку, перейти в браузер - для регистрации',
   }
 
   const isBrowserMounted = () => isWindows()

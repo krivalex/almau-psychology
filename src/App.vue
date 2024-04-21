@@ -1,8 +1,12 @@
 <template>
   <template v-if="redirectToBrowser">
     <div class="warning-message-absolute">
-      <span class="title">{{ isIOS() ? textForIOS.title : textForAndroid.title }}</span>
-      <span class="description">{{ isIOS() ? textForIOS.description : textForAndroid.description }}</span>
+      <span class="title">{{ !isIOS() ? textForIOS.title : textForAndroid.title }}</span>
+      <span class="description">
+        У вас должен был открыться ваш основной браузер,
+        <a target="_blank" :link="redirectRoute">перейти в него</a>
+        - для регистрации
+      </span>
       <p-button label="Обновить" @click="reloadPage" />
     </div>
   </template>
@@ -33,6 +37,8 @@ import PButton from 'primevue/button'
 const { getAllUsers, getUserFromLocalStorage, checkUserTelegram } = useUser()
 const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
 const { initTelegram, reloadPage } = useTelegram()
+
+const redirectRoute = `https://almau-psychology.netlify.app/login-options?redirect=true&redirectTeleramId=${decodeTelegramUser()}&redirectLogin=${telegramNickname.value}`
 
 // if redirect here from another site
 
