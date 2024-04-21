@@ -2,8 +2,8 @@
   <template v-if="redirectToBrowser">
     <div class="warning-message-absolute">
       <span class="description">
-        Для успешной регистрации
-        <a target="_blank" @click="redirectToBrowserHandler">нажмите</a>
+        Для успешной регистрации нажмите
+        <!-- <a target="_blank" @click="redirectToBrowserHandler"></a> -->
       </span>
       <p-button label="Продолжить" @click="reloadPage" />
     </div>
@@ -16,11 +16,11 @@ import { useTelegram } from '../composables/useTelegram'
 import { useUserDevice } from '../composables/useUserDevice'
 
 const { redirectToBrowser } = useUserDevice()
-const { reloadPage, getRedirectRoute } = useTelegram()
+const { reloadPage } = useTelegram()
 
-function redirectToBrowserHandler() {
-  window.open(getRedirectRoute(), '_blank')
-}
+// function redirectToBrowserHandler() {
+//   window.open(getRedirectRoute(), '_blank')
+// }
 </script>
 
 <style scoped lang="scss">
@@ -53,6 +53,8 @@ main {
   gap: 2rem;
 
   .description {
+    padding: 3rem;
+
     a {
       color: blue;
       text-decoration: underline;
