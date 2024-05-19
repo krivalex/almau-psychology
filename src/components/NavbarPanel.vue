@@ -5,7 +5,7 @@
         <img class="logo" src="@/assets/logo.png" alt="logo" />
         <h1 class="name">AlmaU Psychology</h1>
       </div>
-      <template v-if="!isLoginPage">
+      <template v-if="!isLoginPage && telegramUser && isWebViewMounted()">
         <div class="login-control">
           <login-button />
         </div>
@@ -24,9 +24,11 @@ import { computed } from 'vue'
 import PAvatar from 'primevue/avatar'
 import LoginButton from './ui/LoginButton.vue'
 import { useUserDevice } from '../composables/useUserDevice'
+import { useTelegram } from '../composables/useTelegram'
 
 const router = useRouter()
-const { redirectToBrowser } = useUserDevice()
+const { redirectToBrowser, isWebViewMounted } = useUserDevice()
+const { telegramUser } = useTelegram()
 
 function goToMain() {
   router.push('/')
@@ -34,8 +36,13 @@ function goToMain() {
 
 const { googleUser } = useUser()
 
+const noLoginButtonViews = ['login', 'login-options', 'after-register']
+
 const isLoginPage = computed(() => {
-  return router.currentRoute.value.name === 'login' || router.currentRoute.value.name === 'login-options' || redirectToBrowser.value
+  if (router.currentRoute?.value?.name) {
+    return noLoginButtonViews.includes(String(router.currentRoute.value.name)) || redirectToBrowser.value
+  }
+  return false
 })
 </script>
 

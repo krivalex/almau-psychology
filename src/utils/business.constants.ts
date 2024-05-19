@@ -17,3 +17,12 @@ export const schools = [
   { label: 'Школа гостеприимства и туризма', value: 'Школа гостеприимства и туризма' },
   { label: 'School of Transformative Humanities', value: 'School of Transformative Humanities' },
 ]
+
+export const loginFields: Record<string, string> = {
+  name: 'Имя',
+  surname: 'Фамилия',
+  specialty: 'Специальность',
+  yearAdmission: 'Год поступления',
+  phone: 'Телефон',
+  courseRegister: 'Курс',
+}

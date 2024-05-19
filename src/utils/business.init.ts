@@ -14,6 +14,7 @@ export const initNewUser: User = {
   email: '',
   displayName: '',
   photoURL: '',
+  telegramID: '',
   telegramLogin: '',
   enableTelegramEnter: false,
 }

@@ -9,6 +9,7 @@ export interface User extends GoogleUser {
   status: 'student' | 'psychologist'
   completedTests: [] | CompletedTest[]
   telegramLogin: string
+  telegramID: string
   enableTelegramEnter: boolean
 }
 

@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('@/modules/auth/LoginRedirectView.vue'),
     },
     {
+      path: '/after-register',
+      name: 'after-register',
+      component: () => import('../views/AfterRegisterRedirectView.vue'),
+    },
+    {
       path: '/test/:id',
       name: 'test',
       component: () => import('@/modules/tests/TestView.vue'),

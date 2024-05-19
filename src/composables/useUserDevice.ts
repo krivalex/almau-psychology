@@ -9,11 +9,9 @@ export const useUserDevice = () => {
 
   const textForIOS = {
     title: 'Похоже у вас iOS устройство и вы здесь впервые',
-    description: 'IOS система установленая на вашем устройстве не поддерживает технологию WebViewApi 3D Secure, мы перебросили вас в ваш основной браузер для регистрации',
   }
   const textForAndroid = {
     title: 'Похоже у вас Android устройство и вы здесь впервые',
-    description: 'Android система установленая на вашем устройстве не поддерживает технологию WebViewApi 3D Secure, мы перебросили вас в ваш основной браузер для регистрации',
   }
 
   const isBrowserMounted = () => isWindows()

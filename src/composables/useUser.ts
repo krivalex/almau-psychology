@@ -127,19 +127,19 @@ export const useUser = () => {
   }
 
   function checkUserTelegram() {
-    const isNotTelegramEntry = telegramUser.value?.user?.username
+    const isNotTelegramEntry = String(telegramUser.value?.user?.id)
     if (!isNotTelegramEntry) return
 
     const user = googleUserList.value.filter((item: User) => {
-      const isEmptyTelegramLogin = item?.telegramLogin
-      if (!isNotTelegramEntry || !isEmptyTelegramLogin) return false
-      return isNotTelegramEntry.includes(item.telegramLogin) || isNotTelegramEntry.length + 1 === item.telegramLogin.length
+      const isEmptyTelegramLogin = item?.telegramID
+      if (!isEmptyTelegramLogin) return false
+      return isNotTelegramEntry === isEmptyTelegramLogin
     })
 
     if (user?.[0]) {
       googleUser.value = user[0]
-      expandWindow()
     }
+    expandWindow()
   }
 
   function removeFromLocalStorage() {

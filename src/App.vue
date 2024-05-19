@@ -1,10 +1,5 @@
 <template>
-  <template v-if="redirectToBrowser">
-    <div class="warning-message-absolute">
-      <span class="title">{{ isIOS() ? textForIOS.title : textForAndroid.title }}</span>
-      <span class="description">{{ isIOS() ? textForIOS.description : textForAndroid.description }}</span>
-    </div>
-  </template>
+  <warning-window />
   <dynamic-dialog />
   <confirm-dialog />
   <toast position="bottom-left" />
@@ -21,28 +16,27 @@ import NavbarPanel from './components/NavbarPanel.vue'
 import FooterPanel from './components/FooterPanel.vue'
 import { onMounted } from 'vue'
 import { useUser } from './composables/useUser'
-import { useUserDevice } from './composables/useUserDevice'
 import { useTelegram } from './composables/useTelegram'
+import WarningWindow from './components/WarningWindow.vue'
 
 import DynamicDialog from 'primevue/dynamicdialog'
 import ConfirmDialog from 'primevue/confirmdialog'
 import Toast from 'primevue/toast'
 
 const { getAllUsers, getUserFromLocalStorage, checkUserTelegram } = useUser()
-const { redirectToBrowser, isIOS, textForIOS, textForAndroid } = useUserDevice()
 const { initTelegram } = useTelegram()
 
 onMounted(async () => {
-  await getAllUsers()
   initTelegram()
+  await getAllUsers()
   setTimeout(() => {
     checkUserTelegram()
     getUserFromLocalStorage()
-  }, 500)
+  }, 100)
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 main {
   margin-top: 60px;
   position: relative;
@@ -70,5 +64,13 @@ main {
   border-radius: 0.5rem;
   flex-direction: column;
   gap: 2rem;
+
+  .description {
+    a {
+      color: blue;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+  }
 }
 </style>

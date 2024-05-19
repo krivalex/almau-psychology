@@ -33,17 +33,35 @@
           <label for="specialty">Специальность</label>
         </span>
       </template>
-      <template v-if="getTelegramLogin()">
+      <template v-if="getTelegramNickname() && getTelegramID()">
+        <span class="status good"><strong>Авто-вход:</strong> доступен через телеграм</span>
         <span class="telegram-info">
-          После регистрации вход будет выполнятся автоматически, через ваш телеграм <strong>@{{ getTelegramLogin() || 'Который не найден' }}</strong>
+          После регистрации вход в бота будет выполнятся автоматически, через ваш телеграм <strong>@{{ getTelegramNickname() }}</strong>
         </span>
       </template>
+      <template v-else-if="getTelegramID() || getTelegramNickname()">
+        <span class="status good"><strong>Авто-вход:</strong> доступен через телеграм</span>
+        <span class="telegram-info"> После регистрации вход в бота будет выполнятся автоматически </span>
+      </template>
+      <template v-else-if="isBrowserMounted()">
+        <span class="status good"><strong>Авто-вход:</strong> доступен через браузер</span>
+        <span class="telegram-info"> При запуске сайта на вашем компьютере, вы будете заходить автоматически </span>
+      </template>
+      <template v-else-if="isWebViewMounted()">
+        <span class="status good"><strong>Авто-вход:</strong> доступен через браузер</span>
+        <span class="telegram-info"> При запуске сайта на вашем телефоне, вы будете заходить автоматически </span>
+      </template>
       <template v-else>
-        <span class="telegram-info"> Чтобы подключить автоматический вход через телеграм, добавьте себе логин в телеграме - @example </span>
+        <span class="status bad"><strong>Авто-вход:</strong> не доступен</span>
+        <span class="telegram-info"> Автоматический вход в бота не доступен. Чтобы подключить автоматический вход через телеграм, добавьте себе логин в телеграме - <strong>@example</strong> </span>
       </template>
     </div>
     <div class="contols">
-      <button class="p-button" :disabled="!isValidate" @click="completeRegister">Зарегистрироваться</button>
+      <template v-if="validationMesage">
+        <span class="contols-message">Вы не заполнили обязательные поля:</span>
+        <span class="valid-fields">{{ validationMesage }}</span>
+      </template>
+      <button class="p-button" @click="checkValidateToRegister">Зарегистрироваться</button>
     </div>
   </section>
 </template>
@@ -54,30 +72,54 @@ import PDropdown from 'primevue/dropdown'
 import PInputText from 'primevue/inputtext'
 import { useUser } from '@/composables/useUser'
 import { useRegistration } from '@/composables/useRegistration'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useTelegram } from '@/composables/useTelegram'
-import { courses, schools } from '@/utils'
+import { courses, loginFields, schools } from '@/utils'
+import { useUserDevice } from '@/composables/useUserDevice'
+import { User } from '@/interfaces'
 
 const { googleUser } = useUser()
 const { newStudent, completeRegister } = useRegistration()
-const { getTelegramLogin } = useTelegram()
+const { getTelegramNickname, getTelegramID } = useTelegram()
+const { isBrowserMounted, isWebViewMounted } = useUserDevice()
+
+const validationMesage = ref<string>('')
 
 onMounted(() => {
   newStudent.value.name = googleUser.value?.displayName.split(' ')[0]
   newStudent.value.surname = googleUser.value?.displayName.split(' ')[1]
 })
 
-const isNotAStudent = computed(() => newStudent.value.courseRegister == 'not_a_student')
-
-const isValidate = computed(() => {
+function validate() {
   const name = !!newStudent.value.name
   const surname = !!newStudent.value.surname
   const specialty = isNotAStudent.value || !!newStudent.value.specialty
   const yearAdmission = isNotAStudent.value || !!newStudent.value.yearAdmission
   const phone = !!newStudent.value.phone
 
-  return name && surname && specialty && yearAdmission && phone
-})
+  const noValidFields = Object.entries(loginFields)
+    .filter(([field]: [string, string]) => !newStudent.value[field as keyof User])
+    .map(([, label]) => label)
+
+  if (noValidFields) {
+    validationMesage.value = `${noValidFields.join(', ')}`
+  }
+
+  return {
+    valid: name && surname && specialty && yearAdmission && phone,
+    noValidFields,
+  }
+}
+
+async function checkValidateToRegister() {
+  const { valid } = validate()
+  if (valid) {
+    validationMesage.value = ''
+    await completeRegister()
+  }
+}
+
+const isNotAStudent = computed(() => newStudent.value.courseRegister == 'not_a_student')
 
 function calculateYear() {
   if (isNotAStudent.value) return (newStudent.value.yearAdmission = NaN)
@@ -91,9 +133,9 @@ function calculateYear() {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
   flex-direction: column;
   gap: 50px;
+  height: 100%;
   color: black;
 
   .info-container {
@@ -134,10 +176,51 @@ function calculateYear() {
   }
 }
 
+.status {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #000000;
+  max-width: 80%;
+
+  strong {
+    color: black;
+  }
+}
+
+.good {
+  color: #06c78a;
+  font-weight: 600;
+}
+
+.bad {
+  color: #ff4d4f;
+  font-weight: 600;
+}
+
 .telegram-info {
   text-align: center;
   font-size: 0.8rem;
   color: #000000;
   max-width: 80%;
+}
+
+.contols {
+  margin-bottom: 30px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .contols-message {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+  .valid-fields {
+    text-align: center;
+    font-size: 1rem;
+    color: #ff4d4f;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
 }
 </style>
