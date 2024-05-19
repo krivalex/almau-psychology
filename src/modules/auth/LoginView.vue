@@ -52,11 +52,11 @@
 import PInputMask from 'primevue/inputmask'
 import PDropdown from 'primevue/dropdown'
 import PInputText from 'primevue/inputtext'
-import { useUser } from '../composables/useUser'
-import { useRegistration } from '../composables/useRegistration'
+import { useUser } from '@/composables/useUser'
+import { useRegistration } from '@/composables/useRegistration'
 import { computed, onMounted } from 'vue'
-import { useTelegram } from '../composables/useTelegram'
-import { courses, schools } from '../utils'
+import { useTelegram } from '@/composables/useTelegram'
+import { courses, schools } from '@/utils'
 
 const { googleUser } = useUser()
 const { newStudent, completeRegister } = useRegistration()

@@ -40,16 +40,16 @@
 
 <script setup lang="ts">
 import {onMounted} from 'vue';
-import {useCurrentTest} from '../composables/useCurrentTest'
-import { useUser } from '../composables/useUser';
+import {useCurrentTest} from '@/composables/useCurrentTest'
+import { useUser } from '@/composables/useUser';
 import PDatatable from 'primevue/datatable';
 import PColumn from 'primevue/column';
 import PButton from 'primevue/button';
 import { useDialog } from 'primevue/usedialog'
-import AnswersModal from '../components/modals/AnswersModal.vue'
-import YourHaveNoPermission from '../components/YourHaveNoPermission.vue'
-import type {CompletedTest} from '../interfaces'
-import {pretifierPhone, transformDate} from '../utils'
+import AnswersModal from '@/components/modals/AnswersModal.vue'
+import YourHaveNoPermission from '@/components/YourHaveNoPermission.vue'
+import type {CompletedTest} from '@/interfaces'
+import {pretifierPhone, transformDate} from '@/utils'
 
 const { isAdmin} = useUser()
 const {getAllContent, allCompletedTests} = useCurrentTest()

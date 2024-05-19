@@ -14,12 +14,12 @@
 </template>
 
 <script setup lang="ts">
-import { useCurrentTest } from '../composables/useCurrentTest'
+import { useCurrentTest } from '@/composables/useCurrentTest'
 import PButton from 'primevue/button'
 import { useRouter } from 'vue-router'
-import { useTest } from '../composables/useTest'
+import { useTest } from '@/composables/useTest'
 import { onMounted } from 'vue'
-import LoadSpinner from '../components/ui/LoadSpinner.vue'
+import LoadSpinner from '@/components/ui/LoadSpinner.vue'
 
 const { selectedTest, getContentById, loading } = useTest()
 
