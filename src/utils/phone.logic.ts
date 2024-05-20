@@ -1,4 +1,6 @@
-export function pretifierPhone(phone: string | undefined) {
+import { User } from '@/interfaces'
+
+function pretifierPhone(phone: string | undefined) {
   if (!phone) return
   let _phone = phone?.replace('(', '').replace(')', '')
   _phone = _phone?.replace(/-/g, '').replace(/ /g, '')
@@ -10,4 +12,14 @@ export function pretifierPhone(phone: string | undefined) {
   }
 
   return _phone
+}
+
+export function writeToTelegram(student: User) {
+  const phone = pretifierPhone(student?.phone)
+  window.open(`https://t.me/${phone}`, '_blank')
+}
+
+export function writeToWhatsapp(student: User) {
+  const phone = pretifierPhone(student?.phone)
+  window.open(`https://wa.me/${phone}`, '_blank')
 }

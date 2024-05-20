@@ -11,6 +11,9 @@ export interface User extends GoogleUser {
   telegramLogin: string
   telegramID: string
   enableTelegramEnter: boolean
+  registerDate: Date
+  lastLogin: Date
+  firebaseId?: string
 }
 
 export interface GoogleUser {

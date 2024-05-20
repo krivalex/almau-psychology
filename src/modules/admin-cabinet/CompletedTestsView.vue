@@ -1,8 +1,7 @@
 <template>
-  <template v-if="isAdmin">
     <section class="completed-tests">
-      <p-datatable :value="allCompletedTests" :paginator="true" :rows="10" :rowsPerPageOptions="[5, 10, 20]" filter sort>
-        <p-column v-for="col in columns" :field="col.field" :header="col.header" sortable >
+      <p-datatable :value="allCompletedTests" :paginator="true" :rows="10" :rowsPerPageOptions="[5, 10, 20]" filter sort :loading="loading.allCompletedTests" style="width: 100%; height: 100%; min-height: 100vh;">
+        <p-column v-for="col in columns" :field="col.field" :header="col.header" sortable :key="col.field" >
           <template #body="{data, field}">
             <span v-if="col.field === 'name'">
               {{data.student.name}}
@@ -29,49 +28,32 @@
                 <p-button label="Ответы" @click="openAnswersModal(data)"></p-button>
             </span>
             <span v-else-if="col.field === 'messages'">
-              <p-button icon="pi pi-telegram" @click="writeToTelegram(data)" class="p-button-text"></p-button>
-              <p-button icon="pi pi-whatsapp" @click="writeToWhatsapp(data)" class="p-button-text"></p-button>
+              <p-button icon="pi pi-telegram" @click="writeToTelegram(data?.student)" class="p-button-text"></p-button>
+              <p-button icon="pi pi-whatsapp" @click="writeToWhatsapp(data?.student)" class="p-button-text"></p-button>
             </span>
             <span v-else>{{data[field]}}</span>
           </template>
         </p-column>
       </p-datatable>
     </section>
-  </template>
-  <template v-else>
-    <your-have-no-permission />
-  </template>
 </template>
 
 <script setup lang="ts">
 import {onMounted} from 'vue';
 import {useCurrentTest} from '@/composables/useCurrentTest'
-import { useUser } from '@/composables/useUser';
 import PDatatable from 'primevue/datatable';
 import PColumn from 'primevue/column';
 import PButton from 'primevue/button';
 import { useDialog } from 'primevue/usedialog'
 import AnswersModal from '@/components/modals/AnswersModal.vue'
-import YourHaveNoPermission from '@/components/YourHaveNoPermission.vue'
 import type {CompletedTest} from '@/interfaces'
-import {pretifierPhone, transformDate} from '@/utils'
+import {writeToTelegram, writeToWhatsapp, transformDate} from '@/utils'
 
-const { isAdmin} = useUser()
-const {getAllContent, allCompletedTests} = useCurrentTest()
+const {getAllContent, allCompletedTests, loading} = useCurrentTest()
 
 const dialog = useDialog()
 
 
-
-function writeToTelegram(completedTest: CompletedTest) {
-  const phone = pretifierPhone(completedTest.student?.phone)
-  window.open(`https://t.me/${phone}`, '_blank')
-}
-
-function writeToWhatsapp(completedTest: CompletedTest) {
-  const phone = pretifierPhone(completedTest.student?.phone)
-  window.open(`https://wa.me/${phone}`, '_blank')
-}
 
 function openAnswersModal(answers: CompletedTest): void {
   dialog.open(AnswersModal, {
@@ -106,7 +88,7 @@ function isHasData(data: string | number) {
 }
 
 onMounted(async () => {
-  await getAllContent()
+  if (!allCompletedTests.value.length) await getAllContent()
 })
 
 </script>
@@ -149,4 +131,4 @@ onMounted(async () => {
 }
 
 </style
-../utils/date.logic../utils/phone.logic
+
