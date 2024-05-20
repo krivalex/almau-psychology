@@ -38,14 +38,6 @@ export function useRedirect() {
     router.push('/admin-cabinet')
   }
 
-  function goToResults() {
-    router.push('/admin-cabinet/completed-tests')
-  }
-
-  function goToControlTests() {
-    router.push('/admin-cabinet/tests-control')
-  }
-
   return {
     isLoginPage,
     currentParamsID,
@@ -54,7 +46,5 @@ export function useRedirect() {
     goToMain,
     goToAdminView,
     goToResultPage,
-    goToResults,
-    goToControlTests,
   }
 }

@@ -118,17 +118,15 @@ onMounted(async () => {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100%;
   gap: 7px;
-  padding: 10px;
   background-color: white;
   color: black;
   font-size: 1rem;
   font-weight: 600;
-  width: 100vw;
+  width: 96vw;
+  margin: 0 auto;
   z-index: 100;
   position: relative;
-  padding-top: 15px;
 }
 
 .info-student-container {
