@@ -40,9 +40,21 @@ const router = createRouter({
       component: () => import('@/views/NotFoundView.vue'),
     },
     {
-      path: '/admin/completed-tests',
-      name: 'not-found',
-      component: () => import('@/modules/admin-cabinet/AllCompletedTestsView.vue'),
+      path: '/admin-cabinet',
+      name: 'admin-cabinet',
+      component: () => import('@/modules/admin-cabinet/AdminCabinetView.vue'),
+      children: [
+        {
+          path: '/tests-control',
+          name: 'tests-control',
+          component: () => import('@/modules/admin-cabinet/TestControlView.vue'),
+        },
+        {
+          path: '/completed-tests',
+          name: 'completed-tests',
+          component: () => import('@/modules/admin-cabinet/CompletedTestsView.vue'),
+        },
+      ],
     },
   ],
 })

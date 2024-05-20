@@ -5,34 +5,21 @@
         <img class="logo" src="@/assets/logo.png" alt="logo" />
         <h1 class="name">AlmaU Psychology</h1>
       </div>
-      <template v-if="!isLoginPage && telegramUser && isWebViewMounted()">
-        <div class="login-control">
-          <admin-button />
-          <login-button />
-        </div>
-      </template>
-      <template v-else>
-        <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
-      </template>
+      <div class="login-control">
+        <admin-button />
+        <login-button />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useUser } from '@/composables/useUser'
-import PAvatar from 'primevue/avatar'
-
-import { useUserDevice } from '@/composables/useUserDevice'
-import { useTelegram } from '@/composables/useTelegram'
 import { useRedirect } from '@/composables/useRedirect'
 
 import LoginButton from '@/components/ui/LoginButton.vue'
 import AdminButton from '@/components/ui/AdminButton.vue'
 
-const { isWebViewMounted } = useUserDevice()
-const { telegramUser } = useTelegram()
-const { googleUser } = useUser()
-const { isLoginPage, goToMain } = useRedirect()
+const { goToMain } = useRedirect()
 </script>
 
 <style scoped lang="scss">
@@ -89,6 +76,7 @@ const { isLoginPage, goToMain } = useRedirect()
       display: flex;
       justify-content: flex-end;
       align-items: center;
+      gap: 10px;
 
       .enter {
         margin: 0 10px;

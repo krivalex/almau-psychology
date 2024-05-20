@@ -1,6 +1,6 @@
 <template>
   <template v-if="isAdmin">
-    <p-button class="admin-link p-button-sm" label="Кабинет психолога" icon="pi pi-sign" @click="goToAdminView" />
+    <p-button class="admin-link p-button-sm" label="Кабинет психолога" @click="goToAdminView" />
   </template>
 </template>
 
@@ -15,7 +15,7 @@ const { isAdmin } = useUser()
 
 <style scoped lang="scss">
 .admin-link {
-  background: #06c78a;
+  background: black;
   text-decoration: none;
   color: white;
   font-family: var(--font-family);
