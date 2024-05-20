@@ -1,11 +1,12 @@
 import { reactive, ref } from 'vue'
-import { Answer, CompletedTest, Result, User } from '../interfaces'
-import { useTest } from './useTest'
-import { useUser } from './useUser'
-import { initNewCurrentTest } from '../utils/business.init'
-import { useRouter } from 'vue-router'
+import { Answer, CompletedTest, Result, User } from '@/interfaces'
+import { initNewCurrentTest } from '@/utils/business.init'
 import { DocumentData, addDoc, collection, getDocs } from 'firebase/firestore'
-import { db } from '../firebase-config'
+import { db } from '@/firebase-config'
+
+import { useTest } from '@/composables/useTest'
+import { useUser } from '@/composables/useUser'
+import { useRedirect } from '@/composables/useRedirect'
 
 const currentIndex = ref(0)
 const currentTest = ref<CompletedTest>(initNewCurrentTest)
@@ -21,7 +22,7 @@ const loading = reactive({
 })
 
 export const useCurrentTest = () => {
-  const router = useRouter()
+  const { goToResultPage } = useRedirect()
   const { selectedTest } = useTest()
   const { googleUser } = useUser()
   const yourDatabase = 'completedTests'
@@ -112,10 +113,6 @@ export const useCurrentTest = () => {
     clickAnswerAnimation()
   }
 
-  function goToResultPage() {
-    router.push(`/result/${selectedTest.value?.firebaseId}`)
-  }
-
   function makeTestBody() {
     if (googleUser.value) {
       currentTest.value.student = googleUser.value as User
@@ -153,7 +150,7 @@ export const useCurrentTest = () => {
     await addContent()
     isTestCompleted.value = false
     clearTestAnswers()
-    goToResultPage()
+    goToResultPage(selectedTest.value?.firebaseId)
   }
 
   return {

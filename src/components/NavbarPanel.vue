@@ -7,6 +7,7 @@
       </div>
       <template v-if="!isLoginPage && telegramUser && isWebViewMounted()">
         <div class="login-control">
+          <admin-button />
           <login-button />
         </div>
       </template>
@@ -18,32 +19,20 @@
 </template>
 
 <script setup lang="ts">
-import { useUser } from '../composables/useUser'
-import { useRouter } from 'vue-router'
-import { computed } from 'vue'
+import { useUser } from '@/composables/useUser'
 import PAvatar from 'primevue/avatar'
-import LoginButton from './ui/LoginButton.vue'
-import { useUserDevice } from '../composables/useUserDevice'
-import { useTelegram } from '../composables/useTelegram'
 
-const router = useRouter()
-const { redirectToBrowser, isWebViewMounted } = useUserDevice()
+import { useUserDevice } from '@/composables/useUserDevice'
+import { useTelegram } from '@/composables/useTelegram'
+import { useRedirect } from '@/composables/useRedirect'
+
+import LoginButton from '@/components/ui/LoginButton.vue'
+import AdminButton from '@/components/ui/AdminButton.vue'
+
+const { isWebViewMounted } = useUserDevice()
 const { telegramUser } = useTelegram()
-
-function goToMain() {
-  router.push('/')
-}
-
 const { googleUser } = useUser()
-
-const noLoginButtonViews = ['login', 'login-options', 'after-register']
-
-const isLoginPage = computed(() => {
-  if (router.currentRoute?.value?.name) {
-    return noLoginButtonViews.includes(String(router.currentRoute.value.name)) || redirectToBrowser.value
-  }
-  return false
-})
+const { isLoginPage, goToMain } = useRedirect()
 </script>
 
 <style scoped lang="scss">

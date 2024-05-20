@@ -14,32 +14,24 @@
 </template>
 
 <script setup lang="ts">
-import { useCurrentTest } from '@/composables/useCurrentTest'
 import PButton from 'primevue/button'
-import { useRouter } from 'vue-router'
-import { useTest } from '@/composables/useTest'
-import { onMounted } from 'vue'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
+import { onMounted } from 'vue'
+
+import { useCurrentTest } from '@/composables/useCurrentTest'
+import { useTest } from '@/composables/useTest'
+import { useRedirect } from '@/composables/useRedirect'
 
 const { selectedTest, getContentById, loading } = useTest()
-
 const { currentResult, calculateResult } = useCurrentTest()
-const router = useRouter()
+const { currentParamsID, goToMain } = useRedirect()
 
 onMounted(async () => {
   if (!selectedTest.value) {
-    await getContentById(router.currentRoute.value.params.id as string)
+    await getContentById(currentParamsID.value)
     calculateResult()
   }
 })
-
-// function goToWhatsapp() {
-//   window.open('https://wa.me/+77052020771')
-// }
-
-function goToMain() {
-  router.push('/')
-}
 </script>
 
 <style lang="scss" scoped>

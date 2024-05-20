@@ -2,7 +2,9 @@
   <div class="test-card">
     <p-card>
       <template #header>
-        <img class="preview-image" :src="test.image" alt="test image" />
+        <div class="image-block">
+          <img class="preview-image" :src="test.image" alt="test image" />
+        </div>
         <div class="preview-content">
           <h3>{{ test.name }}</h3>
           <p-divider />
@@ -86,13 +88,21 @@ const props = defineProps<{
     color: #ccc;
   }
 
-  .preview-image {
+  .image-block {
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
     width: 100%;
     max-width: inherit;
     height: 150px;
-    object-fit: cover;
-    border-top-right-radius: 30px;
-    border-top-left-radius: 30px;
+
+    .preview-image {
+      width: 100%;
+      max-width: inherit;
+      height: 150px;
+      object-fit: cover;
+      border-top-right-radius: 30px;
+      border-top-left-radius: 30px;
+    }
   }
 
   .preview-content {

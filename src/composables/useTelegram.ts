@@ -16,7 +16,6 @@ export function useTelegram() {
 
   const getTelegramID = () => telegramID.value
   const getTelegramNickname = () => telegramNickname.value
-  const getRedirectRoute = () => `https://almau-psychology.netlify.app/login-options?redirect=true&redirectTeleramId=${decodeTelegramUser()}&redirectLogin=${telegramNickname.value}`
 
   function initTelegram() {
     telegramWindow.value = (window as any)?.Telegram?.WebApp
@@ -46,10 +45,6 @@ export function useTelegram() {
     telegramWindow.value?.expand()
   }
 
-  function goBackToTelegramBot() {
-    window.location.href = 'https://t.me/AlmaU_Psychology_BOT'
-  }
-
   function reloadPage() {
     window.location.reload()
   }
@@ -64,10 +59,8 @@ export function useTelegram() {
     saveTelegramLogin,
     getTelegramID,
     expandWindow,
-    goBackToTelegramBot,
     telegramNickname,
     getTelegramNickname,
     reloadPage,
-    getRedirectRoute,
   }
 }

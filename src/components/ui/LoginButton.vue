@@ -12,13 +12,13 @@
 <script setup lang="ts">
 import PButton from 'primevue/button'
 import PAvatar from 'primevue/avatar'
-import { useUser } from '../../composables/useUser'
-import { useUserDevice } from '../../composables/useUserDevice'
-import { useTelegram } from '../../composables/useTelegram'
+import { useUser } from '@/composables/useUser'
+import { useUserDevice } from '@/composables/useUserDevice'
+import { useRedirect } from '@/composables/useRedirect'
 
 const { googleRegister, googleUser } = useUser()
 const { isBrowserMounted, toggleRedirectPosition } = useUserDevice()
-const { getRedirectRoute } = useTelegram()
+const { getRedirectRoute } = useRedirect()
 </script>
 
 <style scoped lang="scss">
