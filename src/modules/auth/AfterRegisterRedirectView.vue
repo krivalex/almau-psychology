@@ -15,9 +15,11 @@
 
 <script setup lang="ts">
 import PButton from 'primevue/button'
-import { useTelegram } from '../composables/useTelegram'
+import { useTelegram } from '@/composables/useTelegram'
+import { useRedirect } from '@/composables/useRedirect'
 
-const { goBackToTelegramBot, getTelegramNickname } = useTelegram()
+const { getTelegramNickname } = useTelegram()
+const { goBackToTelegramBot } = useRedirect()
 </script>
 
 <style scoped lang="scss">

@@ -22,7 +22,7 @@ const router = createRouter({
     {
       path: '/after-register',
       name: 'after-register',
-      component: () => import('../views/AfterRegisterRedirectView.vue'),
+      component: () => import('@/modules/auth/AfterRegisterRedirectView.vue'),
     },
     {
       path: '/test/:id',

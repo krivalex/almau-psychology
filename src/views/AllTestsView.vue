@@ -1,12 +1,4 @@
 <template>
-  <template v-if="isAdmin">
-    <section class="admin">
-      <div class="admin-panel">
-        <p-button class="admin-button p-button-sm" label="Результаты" icon="pi pi-book" @click="redirectToResults" />
-        <p-button class="admin-button p-button-sm" label="Создать тест" icon="pi pi-plus" />
-      </div>
-    </section>
-  </template>
   <section class="all-tests">
     <template v-if="!loading.testList">
       <span class="about-all-tests"> Список тестов </span>
@@ -21,25 +13,16 @@
 </template>
 
 <script setup lang="ts">
-import { useTest } from '../composables/useTest'
-import { useUser } from '../composables/useUser'
+import { useTest } from '@/composables/useTest'
 import { onMounted } from 'vue'
-import TestCard from '../components/TestCard.vue'
-import LoadSpinner from '../components/ui/LoadSpinner.vue'
-import PButton from 'primevue/button'
-import { useRouter } from 'vue-router'
+import TestCard from '@/components/TestCard.vue'
+import LoadSpinner from '@/components/ui/LoadSpinner.vue'
 
-const router = useRouter()
 const { testList, getAllContent, loading } = useTest()
-const { isAdmin } = useUser()
 
-onMounted(() => {
-  getAllContent()
+onMounted(async () => {
+  await getAllContent()
 })
-
-function redirectToResults() {
-  router.push('/admin/completed-tests')
-}
 </script>
 
 <style lang="scss">

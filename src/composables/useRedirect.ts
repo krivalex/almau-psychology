@@ -30,12 +30,20 @@ export function useRedirect() {
     router.push('/')
   }
 
+  function goToResultPage(id?: string) {
+    router.push(`/result/${id}`)
+  }
+
   function goToAdminView() {
     router.push('/admin-cabinet')
   }
 
-  function goToResultPage(id?: string) {
-    router.push(`/result/${id}`)
+  function goToResults() {
+    router.push('/admin-cabinet/completed-tests')
+  }
+
+  function goToControlTests() {
+    router.push('/admin-cabinet/tests-control')
   }
 
   return {
@@ -46,5 +54,7 @@ export function useRedirect() {
     goToMain,
     goToAdminView,
     goToResultPage,
+    goToResults,
+    goToControlTests,
   }
 }
