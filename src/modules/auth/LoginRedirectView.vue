@@ -7,8 +7,8 @@
 
 <script setup lang="ts">
 import PButton from 'primevue/button'
-import { useUser } from '../composables/useUser'
-import { useTelegram } from '../composables/useTelegram'
+import { useUser } from '@/composables/useUser'
+import { useTelegram } from '@/composables/useTelegram'
 import { onMounted } from 'vue'
 
 const { googleRegister } = useUser()
