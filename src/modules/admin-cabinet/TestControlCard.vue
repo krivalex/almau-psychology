@@ -83,6 +83,8 @@ async function onDeleteTest() {
   border-radius: 10px;
   border-top-left-radius: 30px !important;
   border-top-right-radius: 30px !important;
+  min-width: 505px;
+  min-height: 298px;
 
   :deep(.p-card) {
     border-radius: 10px;

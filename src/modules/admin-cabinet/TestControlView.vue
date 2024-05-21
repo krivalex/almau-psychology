@@ -2,7 +2,15 @@
   <section class="test-control">
     <template v-if="!loading.testList">
       <div class="tests">
+        <TestControlCreateCard />
         <template v-for="test in testList" :key="test.id">
+          <TestControlCard :test="test" />
+          <TestControlCard :test="test" />
+          <TestControlCard :test="test" />
+          <TestControlCard :test="test" />
+          <TestControlCard :test="test" />
+          <TestControlCard :test="test" />
+          <TestControlCard :test="test" />
           <TestControlCard :test="test" />
         </template>
       </div>
@@ -17,6 +25,7 @@
 import { useTest } from '@/composables/useTest'
 import { onMounted } from 'vue'
 import TestControlCard from '@/modules/admin-cabinet/TestControlCard.vue'
+import TestControlCreateCard from '@/modules/admin-cabinet/TestControlCreateCard.vue'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
 
 const { testList, getAllContent, loading } = useTest()
@@ -28,7 +37,7 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .test-control {
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -43,7 +52,7 @@ onMounted(async () => {
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 2rem;
   }
 }
 </style>
