@@ -25,38 +25,7 @@ onMounted(async () => {
 })
 </script>
 
-<style lang="scss">
-.admin {
-  color: black;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  font-size: 1rem;
-  font-weight: 600;
-  width: 100vw;
-  z-index: 100;
-  padding-top: 15px;
-  position: relative;
-
-  .admin-panel {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    gap: 7px;
-
-    .admin-button {
-      background-color: white;
-      color: black;
-      padding: 10px;
-      width: 100%;
-    }
-  }
-}
-
+<style lang="scss" scoped>
 .all-tests {
   height: 100vh;
   display: flex;

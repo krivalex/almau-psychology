@@ -34,6 +34,10 @@ export function useRedirect() {
     router.push(`/result/${id}`)
   }
 
+  function goToTest(id: string) {
+    router.push(`/test/${id}`)
+  }
+
   function goToAdminView() {
     router.push('/admin-cabinet')
   }
@@ -46,5 +50,6 @@ export function useRedirect() {
     goToMain,
     goToAdminView,
     goToResultPage,
+    goToTest,
   }
 }

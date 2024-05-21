@@ -28,7 +28,7 @@ export const useTest = () => {
     testList.value = []
     try {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach(doc => {
         const compressive = {
           firebaseId: doc.id,
           ...doc.data(),
@@ -46,7 +46,7 @@ export const useTest = () => {
     loading.test = true
     try {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
-      test.value = querySnapshot.docs.map((doc) => {
+      test.value = querySnapshot.docs.map(doc => {
         if (doc.id === id) {
           return doc.data()
         }
@@ -73,16 +73,6 @@ export const useTest = () => {
     }
   }
 
-  async function deleteDocById(firebaseId: string) {
-    loading.test = true
-    try {
-      await deleteDoc(doc(db, yourDatabase, firebaseId))
-      loading.test = false
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   async function uploadImage(file: any) {
     const storage = getStorage()
     const storageRef = firebase.ref(storage, 'courses/' + file.name)
@@ -93,16 +83,37 @@ export const useTest = () => {
 
         firebase
           .getDownloadURL(storageRef)
-          .then((downloadURL) => {
+          .then(downloadURL => {
             newTest.value.image = downloadURL
           })
-          .catch((error) => {
+          .catch(error => {
             console.error('Ошибка получения ссылки на загруженный файл:', error)
           })
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Ошибка загрузки файла:', error)
       })
+  }
+
+  async function deleteTest(test: Test) {
+    loading.testList = true
+    try {
+      // if (test.firebaseId) await deleteDoc(doc(db, yourDatabase, test.firebaseId))
+      loading.testList = false
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async function updateTest(test: Test) {
+    loading.testList = true
+    try {
+      if (test.firebaseId) await deleteDoc(doc(db, yourDatabase, test.firebaseId))
+      await addDoc(collection(db, yourDatabase), test)
+      loading.testList = false
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   async function load() {
@@ -128,10 +139,11 @@ export const useTest = () => {
     getAllContent,
     getContentById,
     addContent,
-    deleteDocById,
+    updateTest,
     load,
     uploadImage,
     clearContent,
+    deleteTest,
     selectedTest,
   }
 }

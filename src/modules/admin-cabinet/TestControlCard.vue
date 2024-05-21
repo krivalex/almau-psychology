@@ -7,20 +7,12 @@
         </div>
         <div class="preview-content">
           <h3>{{ test.name }}</h3>
-          <p-divider />
         </div>
-      </template>
-      <template #content>
-        <p class="desc">{{ test.description }}</p>
       </template>
       <template #footer>
         <div class="start-test-contol">
-          <template v-if="googleUser">
-            <p-button label="Начать тест" class="contol-button" @click="enjoyTest" />
-          </template>
-          <template v-else>
-            <login-button />
-          </template>
+          <p-button label="Редактировать" icon="pi pi-pencil" class="update-button" @click="openTestChangerModal" />
+          <p-button label="Удалить" severity="danger" icon="pi pi-trash" class="delete-button" @click="onDeleteTest" />
         </div>
         <span class="author">{{ test.author }}</span>
         <span class="time">
@@ -35,28 +27,52 @@
 <script setup lang="ts">
 import PCard from 'primevue/card'
 import PButton from 'primevue/button'
-import PDivider from 'primevue/divider'
-import LoginButton from './ui/LoginButton.vue'
 import { defineProps } from 'vue'
 import { Test } from '@/interfaces'
-import { onImageError } from '@/utils'
-
-import { useUser } from '@/composables/useUser'
 import { useTest } from '@/composables/useTest'
-import { useRedirect } from '@/composables/useRedirect'
-
-const { goToTest } = useRedirect()
-const { googleUser } = useUser()
-const { selectedTest } = useTest()
-
-function enjoyTest() {
-  selectedTest.value = props.test
-  goToTest(props.test.firebaseId as string)
-}
+import { useConfirm } from 'primevue/useconfirm'
+import { useDialog } from 'primevue/usedialog'
+import { onImageError } from '@/utils'
+import TestControlChangeModal from '@/modules/admin-cabinet/modals/TestControlChangeModal.vue'
 
 const props = defineProps<{
   test: Test
 }>()
+
+const confirm = useConfirm()
+const dialog = useDialog()
+
+const { deleteTest } = useTest()
+
+function openTestChangerModal() {
+  dialog.open(TestControlChangeModal, {
+    props: {
+      header: `Тест "${props?.test?.name}"`,
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+      modal: true,
+    },
+    data: {
+      test: props.test,
+    },
+  })
+}
+
+async function onDeleteTest() {
+  confirm.require({
+    message: `Вы уверены, что хотите удалить тест "${props?.test?.name}"?`,
+    header: 'Подтверждение',
+    icon: 'pi pi-exclamation-triangle',
+    accept: async () => await deleteTest(props.test),
+    reject: () => {},
+    acceptLabel: 'Да, удалить тест',
+    rejectLabel: 'Отмена',
+    acceptClass: 'p-button-danger',
+    rejectClass: 'p-button-secondary',
+  })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -123,9 +139,7 @@ const props = defineProps<{
     align-items: center;
     margin-bottom: 20px;
     width: inherit;
-    .contol-button {
-      width: 180px;
-    }
+    gap: 1rem;
   }
 
   .time {
@@ -144,5 +158,9 @@ const props = defineProps<{
 
 :deep(.p-card .p-card-content) {
   padding: 0 10px;
+}
+
+:deep(.p-card .p-card-body) {
+  padding: 0.25rem;
 }
 </style>
