@@ -33,7 +33,7 @@ import { useTest } from '@/composables/useTest'
 import { useConfirm } from 'primevue/useconfirm'
 import { useDialog } from 'primevue/usedialog'
 import { onImageError } from '@/utils'
-import TestControlChangeModal from '@/modules/admin-cabinet/modals/TestControlChangeModal.vue'
+import TestControlChangeModal from '@/modules/admin-cabinet/test-control/components/modals/TestControlChangeModal.vue'
 
 const props = defineProps<{
   test: Test

@@ -1,0 +1,39 @@
+.test-change-modal {
+  min-width: 90vw;
+  max-width: 90vw;
+
+  .contain {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 0.7rem;
+    justify-content: space-between;
+    align-items: center;
+
+    .condition {
+      display: flex;
+      align-items: center;
+      width: 45%;
+      gap: 1rem;
+
+      .label {
+        font-weight: bold;
+        min-width: 200px;
+      }
+
+      .input {
+        width: 100%;
+      }
+    }
+  }
+
+  .save-button {
+    margin-top: 20px;
+  }
+}
+
+:deep(.p-panel-header) {
+  background-color: white;
+  color: black;
+  font-size: 1.5rem;
+}

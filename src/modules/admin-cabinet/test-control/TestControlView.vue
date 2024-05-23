@@ -24,8 +24,8 @@
 <script setup lang="ts">
 import { useTest } from '@/composables/useTest'
 import { onMounted } from 'vue'
-import TestControlCard from '@/modules/admin-cabinet/TestControlCard.vue'
-import TestControlCreateCard from '@/modules/admin-cabinet/TestControlCreateCard.vue'
+import TestControlCard from '@/modules/admin-cabinet/test-control/components/TestControlCard.vue'
+import TestControlCreateCard from '@/modules/admin-cabinet/test-control/components/TestControlCreateCard.vue'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
 
 const { testList, getAllContent, loading } = useTest()
