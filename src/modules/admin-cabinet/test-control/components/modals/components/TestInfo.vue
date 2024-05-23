@@ -2,20 +2,31 @@
   <p-panel header="Вопросы и ответы" toggleable>
     <template v-for="condition in changeTestConditions" as="div">
       <template v-if="condition.position === 'test'">
-        <div class="contain">
-          <v-field v-slot="{ handleChange, errorMessage }" :name="condition.field">
-            <div class="condition">
-              <span class="label">{{ condition.localization }}:</span>
-              <p-input-text
-                :value="values[condition.field]"
-                type="text"
-                :class="{ 'p-invalid': errorMessage }"
-                @update:model-value="handleChange"
-                class="input"
-              />
-            </div>
-          </v-field>
-        </div>
+        <template v-for="(question, Qindex) in values.questions">
+          <p-panel :header="`${Qindex + 1}. ${values['questions'][Qindex].text}`" toggleable collapsed>
+            <template v-for="(_, Rindex) in question.answers">
+              <span class="number">Ответ №{{ Rindex + 1 }}</span>
+              <template v-for="questionCondition in condition.fields">
+                <template v-for="resultCondition in questionCondition.fields">
+                  <div class="contain">
+                    <v-field v-slot="{ handleChange, errorMessage }" :name="questionCondition.field">
+                      <div class="condition">
+                        <span class="label">{{ resultCondition.localization }}:</span>
+                        <p-input-text
+                          :value="values['questions'][Qindex]['answers']?.[Rindex]?.[resultCondition.field]"
+                          type="text"
+                          :class="{ 'p-invalid': errorMessage }"
+                          @update:model-value="handleChange"
+                          class="input"
+                        />
+                      </div>
+                    </v-field>
+                  </div>
+                </template>
+              </template>
+            </template>
+          </p-panel>
+        </template>
       </template>
     </template>
   </p-panel>

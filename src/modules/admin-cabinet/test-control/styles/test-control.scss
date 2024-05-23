@@ -2,6 +2,29 @@
   min-width: 90vw;
   max-width: 90vw;
 
+  .test-block {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+
+    .control-test {
+      display: flex;
+      gap: 1rem;
+      flex-direction: column;
+      width: 150%;
+    }
+
+    .preview-test {
+      display: flex;
+      gap: 1rem;
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
+
+
   .contain {
     display: flex;
     flex-wrap: wrap;
@@ -13,7 +36,7 @@
     .condition {
       display: flex;
       align-items: center;
-      width: 45%;
+      width: 100%;
       gap: 1rem;
 
       .label {
