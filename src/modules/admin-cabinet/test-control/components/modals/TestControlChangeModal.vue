@@ -12,13 +12,35 @@
       </div>
     </div>
 
-    <p-button
-      label="Сохранить"
-      icon="pi pi-save"
-      class="save-button"
-      @click="handleValidation"
-      :disabled="isDisabled"
-    />
+    <div class="actions">
+      <div class="adds">
+        <p-button
+          label="Опубликовать"
+          icon="pi pi-eye"
+          class="save-button"
+          @click="handleValidation"
+          :disabled="isDisabled"
+        />
+        <p-button
+          severity="secondary"
+          label="Сохранить"
+          icon="pi pi-save"
+          class="save-button"
+          @click="handleValidation"
+          :disabled="isDisabled"
+        />
+      </div>
+      <div class="dels">
+        <p-button
+          severity="danger"
+          label="Удалить"
+          icon="pi pi-trash"
+          class="save-button"
+          @click="handleValidation"
+          :disabled="isDisabled"
+        />
+      </div>
+    </div>
   </section>
 </template>
 

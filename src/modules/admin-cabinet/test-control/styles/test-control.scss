@@ -23,8 +23,6 @@
     }
   }
 
-
-
   .contain {
     display: flex;
     flex-wrap: wrap;
@@ -50,9 +48,25 @@
     }
   }
 
-  .save-button {
+  .actions {
+    display: flex;
+    justify-content: space-between;
     margin-top: 20px;
+    flex-direction: row;
+    width: 100%;
+
+    .adds {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .dels {
+      display: flex;
+      gap: 1rem;
+    }
+
   }
+
 }
 
 :deep(.p-panel-header) {
