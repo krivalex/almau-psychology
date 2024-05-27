@@ -49,6 +49,8 @@ export function useChangeTest() {
     {
       field: 'questions',
       position: 'test',
+      type: 'textarea',
+      validate: 'required',
       fields: [
         {
           field: 'text',
@@ -59,6 +61,8 @@ export function useChangeTest() {
         {
           field: 'answers',
           position: 'test',
+          type: 'textarea',
+          validate: 'required',
           fields: [
             {
               field: 'text',
@@ -114,15 +118,26 @@ export function useChangeTest() {
     },
   ]
 
-  const schema = changeTestConditions.reduce((acc, { field, validate }) => {
+  const schema = changeTestConditions.reduce((acc, { field, validate, fields }) => {
+    if (fields) {
+      fields.forEach(({ field, validate }) => {
+        if (validate) {
+          acc[field] = validate
+        }
+      })
+    }
     if (validate) acc[field] = validate
     return acc
   }, {} as Record<string, string>)
+
+  console.log(schema)
 
   const { validate, values } = useForm({
     initialValues: test,
     validationSchema: schema,
   })
+
+  console.log(values)
 
   const handleValidation = async () => {
     const valid = await validate()

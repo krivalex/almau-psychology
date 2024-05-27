@@ -6,13 +6,16 @@
           <v-field v-slot="{ handleChange, errorMessage }" :name="condition.field">
             <div class="condition">
               <span class="label">{{ condition.localization }}:</span>
-              <p-input-text
-                :value="values[condition.field]"
-                type="text"
-                :class="{ 'p-invalid': errorMessage }"
-                @update:model-value="handleChange"
-                class="input"
-              />
+              <div class="condition-body">
+                <p-input-text
+                  :value="values[condition.field]"
+                  type="text"
+                  :class="{ 'p-invalid': errorMessage }"
+                  @update:model-value="handleChange"
+                  class="input"
+                />
+                <small class="error-message">{{ errorMessage }}</small>
+              </div>
             </div>
           </v-field>
         </div>
