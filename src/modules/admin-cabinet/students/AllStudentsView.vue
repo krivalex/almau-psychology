@@ -109,6 +109,7 @@ const columns: AppColumn[] = [
   {
     field: 'completedTests',
     header: 'Пройденные тесты',
+
     transform: function (v: User) {
       return v['completedTests'].length
     },

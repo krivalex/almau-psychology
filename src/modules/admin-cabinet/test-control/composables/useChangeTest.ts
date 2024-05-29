@@ -11,6 +11,13 @@ export function useChangeTest() {
 
   const changeTestConditions: ConrolTestCondition[] = [
     {
+      field: 'image',
+      position: 'base',
+      type: 'file',
+      validate: '',
+      localization: 'Загрузите изображение',
+    },
+    {
       field: 'name',
       position: 'base',
       type: 'input',
@@ -27,22 +34,14 @@ export function useChangeTest() {
     {
       field: 'timeToComplete',
       position: 'base',
-      type: 'number',
+      type: 'input',
       validate: 'required',
       localization: 'Время на прохождение',
-    },
-    {
-      field: 'image',
-      position: 'base',
-      type: 'file',
-      validate: '',
-      localization: 'Загрузите изображение',
     },
     {
       field: 'author',
       position: 'base',
       type: 'input',
-      readonly: true,
       validate: 'required',
       localization: 'Автор теста',
     },
@@ -85,6 +84,12 @@ export function useChangeTest() {
       position: 'result',
       fields: [
         {
+          field: 'image',
+          type: 'file',
+          validate: '',
+          localization: 'Загрузите изображение',
+        },
+        {
           field: 'name',
           type: 'input',
           validate: 'required',
@@ -95,12 +100,6 @@ export function useChangeTest() {
           type: 'textarea',
           validate: 'required',
           localization: 'Описание результата',
-        },
-        {
-          field: 'image',
-          type: 'file',
-          validate: '',
-          localization: 'Загрузите изображение',
         },
         {
           field: 'min',
@@ -130,14 +129,10 @@ export function useChangeTest() {
     return acc
   }, {} as Record<string, string>)
 
-  console.log(schema)
-
-  const { validate, values } = useForm({
+  const { validate, values, setValues } = useForm({
     initialValues: test,
     validationSchema: schema,
   })
-
-  console.log(values)
 
   const handleValidation = async () => {
     const valid = await validate()
@@ -151,5 +146,7 @@ export function useChangeTest() {
     values,
     handleValidation,
     isDisabled,
+    setValues,
+    test,
   }
 }
