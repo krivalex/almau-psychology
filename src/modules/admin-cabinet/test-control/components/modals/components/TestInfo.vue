@@ -25,44 +25,38 @@
             </div>
             <template v-for="(_, Rindex) in question.answers">
               <span class="number">Ответ №{{ Rindex + 1 }}</span>
-              <template v-for="questionCondition in condition.fields">
-                <template v-for="resultCondition in questionCondition.fields">
-                  <div class="contain">
+              <div class="contain-horizontal">
+                <template v-for="questionCondition in condition.fields">
+                  <template v-for="resultCondition in questionCondition.fields">
                     <v-field v-slot="{ errorMessage }" :name="resultCondition.field">
-                      <div class="condition">
-                        <div class="condition-body">
-                          <span class="label">{{ resultCondition.localization }}:</span>
-                          <template v-if="resultCondition.type === 'textarea'">
-                            <p-text-area
-                              :model-value="values['questions'][Qindex]['answers']?.[Rindex]?.[resultCondition.field]"
-                              type="text"
-                              :class="{ 'p-invalid': errorMessage }"
-                              @update:model-value="
-                                handleValue($event, { Qindex, Rindex, field: resultCondition.field })
-                              "
-                              class="input"
-                              rows="1"
-                              cols="30"
-                              autoResize
-                            />
-                          </template>
-                          <template v-else-if="resultCondition.type === 'number'">
-                            <p-input-number
-                              :model-value="values['questions'][Qindex]['answers']?.[Rindex]?.[resultCondition.field]"
-                              :class="{ 'p-invalid': errorMessage }"
-                              class="input"
-                              @update:model-value="
-                                handleValue($event, { Qindex, Rindex, field: resultCondition.field })
-                              "
-                            />
-                          </template>
-                          <small class="error-message">{{ errorMessage }}</small>
-                        </div>
+                      <div class="condition-body">
+                        <span class="label">{{ resultCondition.localization }}:</span>
+                        <template v-if="resultCondition.type === 'textarea'">
+                          <p-text-area
+                            :model-value="values['questions'][Qindex]['answers']?.[Rindex]?.[resultCondition.field]"
+                            type="text"
+                            :class="{ 'p-invalid': errorMessage }"
+                            @update:model-value="handleValue($event, { Qindex, Rindex, field: resultCondition.field })"
+                            class="input"
+                            rows="1"
+                            cols="30"
+                            autoResize
+                          />
+                        </template>
+                        <template v-else-if="resultCondition.type === 'number'">
+                          <p-input-number
+                            :model-value="values['questions'][Qindex]['answers']?.[Rindex]?.[resultCondition.field]"
+                            :class="{ 'p-invalid': errorMessage }"
+                            class="input"
+                            @update:model-value="handleValue($event, { Qindex, Rindex, field: resultCondition.field })"
+                          />
+                        </template>
+                        <small class="error-message">{{ errorMessage }}</small>
                       </div>
                     </v-field>
-                  </div>
+                  </template>
                 </template>
-              </template>
+              </div>
             </template>
           </p-panel>
         </template>

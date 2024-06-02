@@ -41,13 +41,22 @@
                         />
                       </template>
                       <template v-else-if="resultCondition.type === 'file'">
-                        <p-file-upload
-                          mode="basic"
-                          :model-value="values['results'][RRindex][resultCondition.field]"
-                          :class="{ 'p-invalid': errorMessage }"
-                          @update:model-value="handleValue($event, { RRindex, field: resultCondition.field })"
-                          class="input"
-                        />
+                        <div class="input-file">
+                          <p-input-text
+                            :model-value="values[condition.field]"
+                            type="text"
+                            :class="{ 'p-invalid': errorMessage }"
+                            @update:model-value="handleValue($event, { RRindex, field: resultCondition.field })"
+                            class="input"
+                          />
+                          <p-file-upload
+                            mode="basic"
+                            :model-value="values['results'][RRindex][resultCondition.field]"
+                            :class="{ 'p-invalid': errorMessage }"
+                            @update:model-value="handleValue($event, { RRindex, field: resultCondition.field })"
+                            class="input"
+                          />
+                        </div>
                       </template>
                       <small class="error-message">{{ errorMessage }}</small>
                     </div>

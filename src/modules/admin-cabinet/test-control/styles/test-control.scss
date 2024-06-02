@@ -12,7 +12,7 @@
       display: flex;
       gap: 1rem;
       flex-direction: column;
-      width: 150%;
+      width: 300%;
     }
 
     .preview-test {
@@ -28,8 +28,9 @@
     gap: 1rem;
     flex-direction: row;
     width: 100%;
-    margin-top: 1rem;
-    font-size: 1.1rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.3rem;
+    font-size: 1.2rem;
 
     .label {
       font-weight: bold;
@@ -51,13 +52,18 @@
 
     .condition {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       width: 100%;
       gap: 1rem;
 
       .label {
+        height: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
         font-weight: bold;
-        min-width: 200px;
+        min-width: 210px;
+        padding-top: 0.5rem;
       }
 
       .condition-body {
@@ -66,8 +72,13 @@
         .input {
           width: 100%;
         }
-      }
 
+        .input-file {
+          display: flex;
+          align-items: center;
+          width: 100%;
+        }
+      }
     }
   }
 
@@ -107,4 +118,31 @@
   width: 100%;
   max-height: 300px;
   object-fit: cover;
+}
+
+.contain-horizontal {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+
+
+
+  .condition-body {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+
+    .input {
+      width: 100%;
+    }
+
+    .label {
+      font-weight: bold;
+      min-width: 140px;
+    }
+
+  }
 }
