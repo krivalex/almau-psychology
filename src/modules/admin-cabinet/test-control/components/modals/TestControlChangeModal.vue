@@ -48,12 +48,28 @@
 import BaseInfo from './components/BaseInfo.vue'
 import ResultInfo from './components/ResultInfo.vue'
 import TestInfo from './components/TestInfo.vue'
+import
 import ControlTestPreviewTest from '@/modules/admin-cabinet/test-control/components/modals/ControlTestPreviewTest.vue'
 
 import PButton from 'primevue/button'
 
 import { useChangeTest } from '@/modules/admin-cabinet/test-control/composables/useChangeTest'
 const { handleValidation, isDisabled } = useChangeTest()
+
+
+async function publishTest() {
+
+}
+
+async function deleteTestFromDraft() {
+
+}
+
+async function saveTestToDraft() {
+
+}
+
+async
 </script>
 
 <style lang="scss" src="@/modules/admin-cabinet/test-control/styles/test-control.scss" scoped />
