@@ -9,7 +9,7 @@ export interface AppColumn {
 export interface ConrolTestCondition {
   field: string
   position?: 'base' | 'result' | 'test'
-  validate?: '' | 'required'
+  validate?: string
   localization?: string
   type?: 'input' | 'number' | 'file' | 'textarea'
   readonly?: boolean

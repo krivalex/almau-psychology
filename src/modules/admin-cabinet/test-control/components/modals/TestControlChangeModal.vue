@@ -18,7 +18,7 @@
           label="Опубликовать"
           icon="pi pi-eye"
           class="save-button"
-          @click="handleValidation"
+          @click="publishTest"
           :disabled="isDisabled"
         />
         <p-button
@@ -26,7 +26,7 @@
           label="Сохранить"
           icon="pi pi-save"
           class="save-button"
-          @click="handleValidation"
+          @click="saveTestToDraft"
           :disabled="isDisabled"
         />
       </div>
@@ -36,7 +36,7 @@
           label="Удалить"
           icon="pi pi-trash"
           class="save-button"
-          @click="handleValidation"
+          @click="deleteTestFromDraft"
           :disabled="isDisabled"
         />
       </div>
@@ -48,28 +48,18 @@
 import BaseInfo from './components/BaseInfo.vue'
 import ResultInfo from './components/ResultInfo.vue'
 import TestInfo from './components/TestInfo.vue'
-import
 import ControlTestPreviewTest from '@/modules/admin-cabinet/test-control/components/modals/ControlTestPreviewTest.vue'
 
 import PButton from 'primevue/button'
 
 import { useChangeTest } from '@/modules/admin-cabinet/test-control/composables/useChangeTest'
-const { handleValidation, isDisabled } = useChangeTest()
+const { isDisabled } = useChangeTest()
 
+async function publishTest() {}
 
-async function publishTest() {
+async function deleteTestFromDraft() {}
 
-}
-
-async function deleteTestFromDraft() {
-
-}
-
-async function saveTestToDraft() {
-
-}
-
-async
+async function saveTestToDraft() {}
 </script>
 
 <style lang="scss" src="@/modules/admin-cabinet/test-control/styles/test-control.scss" scoped />

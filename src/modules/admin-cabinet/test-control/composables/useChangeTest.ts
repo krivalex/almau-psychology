@@ -3,6 +3,8 @@ import { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 import { useForm } from 'vee-validate'
 import { inject, Ref, ref } from 'vue'
 
+const isNotValidMessage = 'Обязательно для заполнения'
+
 export function useChangeTest() {
   const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
   const test = ref(dialogRef?.value?.data?.test)
@@ -14,65 +16,65 @@ export function useChangeTest() {
       field: 'image',
       position: 'base',
       type: 'file',
-      validate: '',
+      validate: isNotValidMessage,
       localization: 'Загрузите изображение',
     },
     {
       field: 'name',
       position: 'base',
       type: 'input',
-      validate: 'required',
+      validate: isNotValidMessage,
       localization: 'Название теста',
     },
     {
       field: 'description',
       position: 'base',
       type: 'textarea',
-      validate: 'required',
+      validate: isNotValidMessage,
       localization: 'Описание теста',
     },
     {
       field: 'timeToComplete',
       position: 'base',
       type: 'input',
-      validate: 'required',
+      validate: isNotValidMessage,
       localization: 'Время на прохождение',
     },
     {
       field: 'author',
       position: 'base',
       type: 'input',
-      validate: 'required',
+      validate: isNotValidMessage,
       localization: 'Автор теста',
     },
     {
       field: 'questions',
       position: 'test',
       type: 'textarea',
-      validate: 'required',
+      validate: isNotValidMessage,
       fields: [
         {
           field: 'text',
           type: 'input',
-          validate: 'required',
+          validate: isNotValidMessage,
           localization: 'Текст вопроса',
         },
         {
           field: 'answers',
           position: 'test',
           type: 'textarea',
-          validate: 'required',
+          validate: isNotValidMessage,
           fields: [
             {
               field: 'text',
               type: 'textarea',
-              validate: 'required',
+              validate: isNotValidMessage,
               localization: 'Текст ответа',
             },
             {
               field: 'value',
               type: 'number',
-              validate: 'required',
+              validate: isNotValidMessage,
               localization: 'Баллы за ответ',
             },
           ],
@@ -86,67 +88,45 @@ export function useChangeTest() {
         {
           field: 'image',
           type: 'file',
-          validate: '',
+          validate: isNotValidMessage,
           localization: 'Загрузите изображение',
         },
         {
           field: 'name',
           type: 'input',
-          validate: 'required',
+          validate: isNotValidMessage,
           localization: 'Название результата',
         },
         {
           field: 'description',
           type: 'textarea',
-          validate: 'required',
+          validate: isNotValidMessage,
           localization: 'Описание результата',
         },
         {
           field: 'min',
           type: 'number',
-          validate: 'required',
+          validate: isNotValidMessage,
           localization: 'Минимальное значение',
         },
         {
           field: 'max',
           type: 'number',
-          validate: 'required',
+          validate: isNotValidMessage,
           localization: 'Максимальное значение',
         },
       ],
     },
   ]
 
-  const schema = changeTestConditions.reduce((acc, { field, validate, fields }) => {
-    if (fields) {
-      fields.forEach(({ field, validate }) => {
-        if (validate) {
-          acc[field] = validate
-        }
-      })
-    }
-    if (validate) acc[field] = validate
-    return acc
-  }, {} as Record<string, string>)
-
-  const { validate, values, setValues } = useForm({
-    initialValues: test,
-    validationSchema: schema,
-  })
-
-  const handleValidation = async () => {
-    const valid = await validate()
-    isDisabled.value = !valid.valid
-    return isDisabled.value
+  function isValidData(value: unknown) {
+    return value !== null && value !== undefined && value !== ''
   }
 
   return {
     changeTestConditions,
-    schema,
-    values,
-    handleValidation,
     isDisabled,
-    setValues,
     test,
+    isValidData,
   }
 }
