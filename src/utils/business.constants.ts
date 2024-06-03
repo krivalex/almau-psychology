@@ -26,3 +26,8 @@ export const loginFields: Record<string, string> = {
   phone: 'Телефон',
   courseRegister: 'Курс',
 }
+
+export const isNotValidMessage = 'Обязательно для заполнения'
+export const firstLayerFields = ['image', 'name', 'description', 'timeToComplete', 'author']
+export const secondLayerFields = ['text']
+export const thirdLayerFields = ['text', 'value']

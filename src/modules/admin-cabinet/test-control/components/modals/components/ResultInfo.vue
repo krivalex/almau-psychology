@@ -59,10 +59,22 @@
                 </div>
               </div>
             </template>
+            <div class="create-block-button">
+              <p-button
+                label="Удалить результат"
+                severity="danger"
+                icon="pi pi-trash"
+                @click="deleteResult(RRindex)"
+                class="p-button-text"
+              />
+            </div>
           </p-panel>
         </template>
       </template>
     </template>
+    <div class="create-block-button">
+      <p-button label="Добавить результат" icon="pi pi-plus" @click="addResult" class="p-button-text" />
+    </div>
   </p-panel>
 </template>
 
@@ -72,11 +84,12 @@ import PPanel from 'primevue/panel'
 import PInputNumber from 'primevue/inputnumber'
 import PTextArea from 'primevue/textarea'
 import PFileUpload from 'primevue/fileupload'
+import PButton from 'primevue/button'
 import { onImageError } from '@/utils'
 
 import { useChangeTest } from '@/modules/admin-cabinet/test-control/composables/useChangeTest'
 
-const { changeTestConditions, test, isValidData } = useChangeTest()
+const { changeTestConditions, test, isValidData, addResult, deleteResult } = useChangeTest()
 </script>
 
 <style lang="scss" src="@/modules/admin-cabinet/test-control/styles/test-control.scss" scoped />

@@ -92,6 +92,7 @@
     .adds {
       display: flex;
       gap: 1rem;
+
     }
 
     .dels {
@@ -120,15 +121,26 @@
 
 .contain-horizontal {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: row;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
 
   .condition-body {
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: center;
+
+    .condition-content {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .input {
+        width: 100%;
+      }
+    }
 
 
     .input {
@@ -138,7 +150,25 @@
     .label {
       font-weight: bold;
       min-width: 140px;
+      padding-top: 10px;
     }
 
   }
+}
+
+.delete-icon {
+  cursor: pointer;
+
+  :deep(.p-button-icon) {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+.create-block-button {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1rem;
 }

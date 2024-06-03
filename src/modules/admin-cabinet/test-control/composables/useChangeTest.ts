@@ -1,15 +1,11 @@
 import { ConrolTestCondition } from '@/interfaces'
 import { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
-import { useForm } from 'vee-validate'
 import { inject, Ref, ref } from 'vue'
-
-const isNotValidMessage = 'Обязательно для заполнения'
+import { firstLayerFields, secondLayerFields, thirdLayerFields, isNotValidMessage } from '@/utils'
 
 export function useChangeTest() {
   const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
   const test = ref(dialogRef?.value?.data?.test)
-
-  const isDisabled = ref(true)
 
   const changeTestConditions: ConrolTestCondition[] = [
     {
@@ -119,14 +115,105 @@ export function useChangeTest() {
     },
   ]
 
-  function isValidData(value: unknown) {
+  function isValidData(value: unknown | any) {
     return value !== null && value !== undefined && value !== ''
+  }
+
+  function deleteAnswer(Qindex: number, Rindex: number) {
+    test.value.questions[Qindex].answers.splice(Rindex, 1)
+  }
+
+  function addAnswer(Qindex: number) {
+    test.value.questions[Qindex].answers.push({ text: '' })
+  }
+
+  function deleteQuestion(Qindex: number) {
+    test.value.questions.splice(Qindex, 1)
+  }
+
+  function addQuestion() {
+    test.value.questions.push({ text: '', answers: [{ text: '' }] })
+  }
+
+  function addResult() {
+    test.value.results.push({
+      name: '',
+      description: '',
+      image: '',
+    })
+  }
+
+  function deleteResult(index: number) {
+    test.value.results.splice(index, 1)
+  }
+
+  function getConditions() {
+    const isTwoResult = test.value.results.length >= 2
+    const isFiveQuestion = test.value.questions.length >= 5
+    const isAllQuestionsHasTwoMoreAnswers = test.value.questions.every((question: any) => question.answers.length >= 2)
+
+    const firstLayer = firstLayerFields.every(field => {
+      return isValidData(test.value[field])
+    })
+
+    const secondLayer = test.value.questions.every((question: any) => {
+      return secondLayerFields.every(field => {
+        return isValidData(question[field])
+      })
+    })
+
+    const thirdLayer = test.value.questions.every((question: any) => {
+      return question.answers.every((answer: any) => {
+        return thirdLayerFields.every(field => {
+          return isValidData(answer[field])
+        })
+      })
+    })
+
+    const isValid = !(firstLayer && secondLayer && thirdLayer)
+
+    console.log('isVALID', {
+      firstLayer,
+      secondLayer,
+      thirdLayer,
+      isTwoResult,
+      isFiveQuestion,
+      isAllQuestionsHasTwoMoreAnswers,
+    })
+
+    const valid = !(
+      firstLayer &&
+      secondLayer &&
+      thirdLayer &&
+      isTwoResult &&
+      isFiveQuestion &&
+      isAllQuestionsHasTwoMoreAnswers
+    )
+
+    return {
+      valid,
+      options: {
+        isValid,
+        firstLayer,
+        secondLayer,
+        thirdLayer,
+        isTwoResult,
+        isFiveQuestion,
+        isAllQuestionsHasTwoMoreAnswers,
+      },
+    }
   }
 
   return {
     changeTestConditions,
-    isDisabled,
     test,
     isValidData,
+    deleteAnswer,
+    addAnswer,
+    deleteQuestion,
+    addQuestion,
+    addResult,
+    deleteResult,
+    getConditions,
   }
 }
