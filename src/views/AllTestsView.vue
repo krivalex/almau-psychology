@@ -3,7 +3,9 @@
     <template v-if="!loading.testList">
       <span class="about-all-tests"> Список тестов </span>
       <template v-for="test in testList" :key="test.id">
-        <TestCard :test="test" />
+        <template v-if="test.visible">
+          <TestCard :test="test" />
+        </template>
       </template>
     </template>
     <template v-else>

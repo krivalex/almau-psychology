@@ -49,7 +49,8 @@ export interface Test {
   results: Result[]
   questions: Question[]
   firebaseId?: string
-  image?: string
+  image: string
+  visible: boolean
 }
 
 export interface Question {

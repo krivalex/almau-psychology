@@ -39,7 +39,7 @@
                     <template v-else-if="resultCondition.type === 'file'">
                       <div class="input-file">
                         <p-input-text
-                          v-model="test[condition.field]"
+                          v-model="test['results'][RRindex][resultCondition.field]"
                           type="text"
                           :class="{ 'p-invalid': !isValidData(test['results'][RRindex][resultCondition.field]) }"
                           class="input"

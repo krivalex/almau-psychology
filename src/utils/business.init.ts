@@ -1,4 +1,4 @@
-import { CompletedTest, Test, User, Question, Answer } from '../interfaces'
+import { CompletedTest, Test, User, Question, Answer } from '@/interfaces'
 
 export const initNewUser: User = {
   phone: '',
@@ -17,6 +17,8 @@ export const initNewUser: User = {
   telegramID: '',
   telegramLogin: '',
   enableTelegramEnter: false,
+  registerDate: new Date(),
+  lastLogin: new Date(),
 }
 
 export const initNewTest: Test = {
@@ -29,6 +31,7 @@ export const initNewTest: Test = {
   questions: [],
   firebaseId: '',
   image: '',
+  visible: false,
 }
 
 export const initNewCurrentTest: CompletedTest = {
