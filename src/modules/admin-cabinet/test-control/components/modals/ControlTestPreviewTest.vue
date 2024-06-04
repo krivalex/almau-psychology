@@ -4,7 +4,7 @@
 
 <script setup lang="ts"></script>
 
-<style lang="scss" src="@/modules/admin-cabinet/test-control/styles/test-control.scss" scoped />
+<style lang="scss" src="@admin/test-control/styles/test-control.scss" scoped />
 
 <style lang="scss" scoped>
 .preview-test-content {

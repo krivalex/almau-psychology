@@ -24,19 +24,35 @@
         <label for="phone">Телефон</label>
       </span>
       <span class="p-float-label">
-        <p-dropdown v-model="newStudent.courseRegister" :options="courses" id="courseRegister" optionLabel="label" optionValue="value" @change="calculateYear" :showClear="true" />
+        <p-dropdown
+          v-model="newStudent.courseRegister"
+          :options="courses"
+          id="courseRegister"
+          optionLabel="label"
+          optionValue="value"
+          @change="calculateYear"
+          :showClear="true"
+        />
         <label for="courseRegister">Курс</label>
       </span>
       <template v-if="!isNotAStudent">
         <span class="p-float-label">
-          <p-dropdown v-model="newStudent.specialty" :options="schools" id="specialty" optionLabel="label" optionValue="value" :showClear="true" />
+          <p-dropdown
+            v-model="newStudent.specialty"
+            :options="schools"
+            id="specialty"
+            optionLabel="label"
+            optionValue="value"
+            :showClear="true"
+          />
           <label for="specialty">Специальность</label>
         </span>
       </template>
       <template v-if="getTelegramNickname() && getTelegramID()">
         <span class="status good"><strong>Авто-вход:</strong> доступен через телеграм</span>
         <span class="telegram-info">
-          После регистрации вход в бота будет выполнятся автоматически, через ваш телеграм <strong>@{{ getTelegramNickname() }}</strong>
+          После регистрации вход в бота будет выполнятся автоматически, через ваш телеграм
+          <strong>@{{ getTelegramNickname() }}</strong>
         </span>
       </template>
       <template v-else-if="getTelegramID() || getTelegramNickname()">
@@ -53,7 +69,10 @@
       </template>
       <template v-else>
         <span class="status bad"><strong>Авто-вход:</strong> не доступен</span>
-        <span class="telegram-info"> Автоматический вход в бота не доступен. Чтобы подключить автоматический вход через телеграм, добавьте себе логин в телеграме - <strong>@example</strong> </span>
+        <span class="telegram-info">
+          Автоматический вход в бота не доступен. Чтобы подключить автоматический вход через телеграм, добавьте себе
+          логин в телеграме - <strong>@example</strong>
+        </span>
       </template>
     </div>
     <div class="contols">
@@ -224,3 +243,4 @@ function calculateYear() {
   }
 }
 </style>
+@/modules/auth/composables/useRegistration @/modules/auth/composables/useTelegram

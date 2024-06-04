@@ -63,6 +63,7 @@ const props = defineProps<{
 .test-card {
   position: relative;
   max-width: 90vw;
+  min-width: 90vw;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   border-top-left-radius: 30px !important;
@@ -146,3 +147,4 @@ const props = defineProps<{
   padding: 0 10px;
 }
 </style>
+@/modules/tests/composables/useTest

@@ -22,7 +22,10 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@admin/*": ["src/modules/admin-cabinet/*"],
+      "@auth/*": ["src/modules/auth/*"],
+      "@test/*": ["src/modules/tests/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],

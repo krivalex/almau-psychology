@@ -4,7 +4,7 @@ import { initNewCurrentTest } from '@/utils/business.init'
 import { DocumentData, addDoc, collection, getDocs } from 'firebase/firestore'
 import { db } from '@/firebase-config'
 
-import { useTest } from '@/composables/useTest'
+import { useTest } from '@/modules/tests/composables/useTest'
 import { useUser } from '@/composables/useUser'
 import { useRedirect } from '@/composables/useRedirect'
 
@@ -32,7 +32,7 @@ export const useCurrentTest = () => {
     allCompletedTests.value = []
     try {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach(doc => {
         const compressive = {
           firebaseId: doc.id,
           ...doc.data(),
@@ -49,7 +49,7 @@ export const useCurrentTest = () => {
     loading.completedTests = true
     try {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
-      completedTests.value = querySnapshot.docs.map((doc) => doc.data()).find((item: any) => item.id === id)
+      completedTests.value = querySnapshot.docs.map(doc => doc.data()).find((item: any) => item.id === id)
       loading.completedTests = false
     } catch (error) {
       console.error(error)
@@ -120,11 +120,15 @@ export const useCurrentTest = () => {
     currentTest.value.created = new Date()
     currentTest.value.testName = selectedTest.value?.name as string
     currentTest.value.scoreName =
-      (selectedTest.value?.results.find((result) => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max)?.name as string) ?? 'Ошибка при записи'
+      (selectedTest.value?.results.find(
+        result => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max,
+      )?.name as string) ?? 'Ошибка при записи'
   }
 
   function calculateResult() {
-    currentResult.value = selectedTest.value?.results.find((result) => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max)
+    currentResult.value = selectedTest.value?.results.find(
+      result => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max,
+    )
   }
 
   function clickAnswerAnimation() {
@@ -136,7 +140,7 @@ export const useCurrentTest = () => {
       text?.classList.remove('animation-question-text')
     }, 500)
 
-    buttons.forEach((button) => {
+    buttons.forEach(button => {
       button.classList.add('clicked')
       setTimeout(() => {
         button.classList.remove('clicked')

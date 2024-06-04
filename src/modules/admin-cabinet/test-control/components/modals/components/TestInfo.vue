@@ -106,10 +106,10 @@ import PPanel from 'primevue/panel'
 import PTextArea from 'primevue/textarea'
 import PButton from 'primevue/button'
 
-import { useChangeTest } from '@/modules/admin-cabinet/test-control/composables/useChangeTest'
+import { useChangeTest } from '@admin/test-control/composables/useChangeTest'
 
 const { changeTestConditions, test, isValidData, deleteAnswer, addAnswer, deleteQuestion, addQuestion } =
   useChangeTest()
 </script>
 
-<style lang="scss" src="@/modules/admin-cabinet/test-control/styles/test-control.scss" scoped />
+<style lang="scss" src="@admin/test-control/styles/test-control.scss" scoped />

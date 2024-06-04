@@ -36,7 +36,7 @@ import { useTest } from '@/composables/useTest'
 import { useConfirm } from 'primevue/useconfirm'
 import { useDialog } from 'primevue/usedialog'
 import { onImageError } from '@/utils'
-import TestControlChangeModal from '@/modules/admin-cabinet/test-control/components/modals/TestControlChangeModal.vue'
+import TestControlChangeModal from '@admin/test-control/components/modals/TestControlChangeModal.vue'
 
 const props = defineProps<{
   test: Test
@@ -182,3 +182,4 @@ async function onDeleteTest() {
   padding: 0.25rem;
 }
 </style>
+@/modules/tests/composables/useTest

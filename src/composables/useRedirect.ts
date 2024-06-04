@@ -1,4 +1,4 @@
-import { useTelegram } from '@/composables/useTelegram'
+import { useTelegram } from '@/modules/auth/composables/useTelegram'
 import { useUserDevice } from '@/composables/useUserDevice'
 import { computed } from 'vue'
 
@@ -42,6 +42,10 @@ export function useRedirect() {
     router.push('/admin-cabinet')
   }
 
+  function redirectToKrivalex() {
+    window.open('https://www.instagram.com/_krivalex_/?hl=ru')
+  }
+
   return {
     isLoginPage,
     currentParamsID,
@@ -51,5 +55,6 @@ export function useRedirect() {
     goToAdminView,
     goToResultPage,
     goToTest,
+    redirectToKrivalex,
   }
 }

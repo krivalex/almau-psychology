@@ -7,7 +7,9 @@
       </span>
     </template>
     <template v-else>
-      <span class="text"> У вас нет телеграм логина, авто-вход с телеграма не доступен, бот подскажет вам как его добавить </span>
+      <span class="text">
+        У вас нет телеграм логина, авто-вход с телеграма не доступен, бот подскажет вам как его добавить
+      </span>
     </template>
     <p-button class="nav-buttons" label="Вернуться" @click="goBackToTelegramBot" />
   </section>
@@ -46,3 +48,4 @@ const { goBackToTelegramBot } = useRedirect()
   }
 }
 </style>
+@/modules/auth/composables/useTelegram

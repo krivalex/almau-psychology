@@ -42,7 +42,7 @@ const router = createRouter({
     {
       path: '/admin-cabinet',
       name: 'admin-cabinet',
-      component: () => import('@/modules/admin-cabinet/AdminCabinetView.vue'),
+      component: () => import('@admin/AdminCabinetView.vue'),
     },
   ],
 })

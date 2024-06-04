@@ -6,7 +6,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
 // import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from 'firebase/auth'
 import type { GoogleUser, User } from '../interfaces'
 import { useRouter } from 'vue-router'
-import { useTelegram } from './useTelegram'
+import { useTelegram } from '../modules/auth/composables/useTelegram'
 
 const googleUser = ref<User | DocumentData | null>()
 const googleUserList = ref<User[]>([])
@@ -92,7 +92,7 @@ export const useUser = () => {
     const _googleUserList: User[] = []
     try {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach(doc => {
         const compressive = {
           firebaseId: doc.id,
           ...doc.data(),

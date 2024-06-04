@@ -1,6 +1,8 @@
 <template>
   <section class="login-redirect">
-    <span class="text"> Вход должен был запустится автоматически - если это не произошло, пожалуйста нажмите на кнопку </span>
+    <span class="text">
+      Вход должен был запустится автоматически - если это не произошло, пожалуйста нажмите на кнопку
+    </span>
     <p-button class="nav-buttons" label="Вход" @click="googleRegister" />
   </section>
 </template>
@@ -41,3 +43,4 @@ onMounted(() => {
   }
 }
 </style>
+@/modules/auth/composables/useTelegram

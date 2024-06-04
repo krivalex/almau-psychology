@@ -45,7 +45,7 @@ import PDatatable from 'primevue/datatable';
 import PColumn from 'primevue/column';
 import PButton from 'primevue/button';
 import { useDialog } from 'primevue/usedialog'
-import AnswersModal from '@/components/modals/AnswersModal.vue'
+import AnswersModal from './modals/AnswersModal.vue'
 import type {CompletedTest} from '@/interfaces'
 import {writeToTelegram, writeToWhatsapp, transformDate} from '@/utils'
 
@@ -132,3 +132,4 @@ onMounted(async () => {
 
 </style
 
+@/modules/tests/composables/useCurrentTest

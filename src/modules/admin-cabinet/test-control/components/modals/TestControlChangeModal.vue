@@ -48,11 +48,11 @@
 import BaseInfo from './components/BaseInfo.vue'
 import ResultInfo from './components/ResultInfo.vue'
 import TestInfo from './components/TestInfo.vue'
-import ControlTestPreviewTest from '@/modules/admin-cabinet/test-control/components/modals/ControlTestPreviewTest.vue'
+import ControlTestPreviewTest from '@admin/test-control/components/modals/ControlTestPreviewTest.vue'
 import PButton from 'primevue/button'
 
-import { useChangeTest } from '@/modules/admin-cabinet/test-control/composables/useChangeTest'
-import { useTest } from '@/composables/useTest'
+import { useChangeTest } from '@admin/test-control/composables/useChangeTest'
+import { useTest } from '@test/composables/useTest'
 import { success } from '@/utils/toast'
 import { useConfirm } from 'primevue/useconfirm'
 import { ref, watch } from 'vue'
@@ -148,4 +148,5 @@ async function saveTestToDraft() {
 }
 </script>
 
-<style lang="scss" src="@/modules/admin-cabinet/test-control/styles/test-control.scss" scoped />
+<style lang="scss" src="@admin/test-control/styles/test-control.scss" scoped />
+@/modules/tests/composables/useTest

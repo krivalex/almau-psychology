@@ -20,9 +20,9 @@ import PTabView from 'primevue/tabview'
 import PTabPanel from 'primevue/tabpanel'
 import { ref, shallowRef } from 'vue'
 
-import CompletedTestsView from '@/modules/admin-cabinet/completed-tests/CompletedTestsView.vue'
-import AllStudentsView from '@/modules/admin-cabinet/students/AllStudentsView.vue'
-import TestControlView from '@/modules/admin-cabinet/test-control/TestControlView.vue'
+import CompletedTestsView from '@admin/completed-tests/CompletedTestsView.vue'
+import AllStudentsView from '@admin/students/AllStudentsView.vue'
+import TestControlView from '@admin/test-control/TestControlView.vue'
 
 import YourHaveNoPermission from '@/components/YourHaveNoPermission.vue'
 import { useUser } from '@/composables/useUser'

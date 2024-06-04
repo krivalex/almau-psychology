@@ -1,12 +1,14 @@
 <template>
   <section class="all-tests">
+    <span class="about-all-tests"> Список тестов </span>
     <template v-if="!loading.testList">
-      <span class="about-all-tests"> Список тестов </span>
-      <template v-for="test in testList" :key="test.id">
-        <template v-if="test.visible">
+      <div class="all-tests-container">
+        <template v-for="test in testList" :key="test.id">
+          <!-- <template v-if="test.visible"> -->
           <TestCard :test="test" />
+          <!-- </template> -->
         </template>
-      </template>
+      </div>
     </template>
     <template v-else>
       <LoadSpinner />
@@ -35,11 +37,23 @@ onMounted(async () => {
   align-items: center;
   flex-direction: column;
   color: black;
-  margin-top: 10px;
+  margin-bottom: 3rem;
+
   .about-all-tests {
-    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
     color: black;
   }
+
+  .all-tests-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
 }
 </style>
+@/modules/tests/composables/useTest

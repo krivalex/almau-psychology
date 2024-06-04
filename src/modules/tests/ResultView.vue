@@ -101,3 +101,4 @@ onMounted(async () => {
   }
 }
 </style>
+@/modules/tests/composables/useTest @/modules/tests/composables/useCurrentTest

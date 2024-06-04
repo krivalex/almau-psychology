@@ -15,10 +15,10 @@
 </template>
 
 <script setup lang="ts">
-import { useTest } from '@/composables/useTest'
+import { useTest } from '@test/composables/useTest'
 import { onMounted } from 'vue'
-import TestControlCard from '@/modules/admin-cabinet/test-control/components/TestControlCard.vue'
-import TestControlCreateCard from '@/modules/admin-cabinet/test-control/components/TestControlCreateCard.vue'
+import TestControlCard from '@admin/test-control/components/TestControlCard.vue'
+import TestControlCreateCard from '@admin/test-control/components/TestControlCreateCard.vue'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
 
 const { testList, getAllContent, loading } = useTest()
@@ -49,3 +49,4 @@ onMounted(async () => {
   }
 }
 </style>
+@/modules/tests/composables/useTest
