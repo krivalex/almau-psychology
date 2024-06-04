@@ -1,6 +1,8 @@
 .test-change-modal {
   min-width: 90vw;
   max-width: 90vw;
+  max-height: 95vh;
+  min-height: 95vh;
 
   .test-block {
     width: 100%;
@@ -171,4 +173,5 @@
   justify-content: flex-end;
   align-items: center;
   margin-top: 1rem;
+  margin-bottom: 1rem;
 }

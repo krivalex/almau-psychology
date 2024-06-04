@@ -38,11 +38,6 @@ const { goToMain } = useRedirect()
   flex-direction: column;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.6);
 
-  .admin-panel {
-    width: 100%;
-    height: 40px;
-  }
-
   .standart-navbar {
     display: flex;
     align-items: center;
@@ -81,23 +76,6 @@ const { goToMain } = useRedirect()
       .enter {
         margin: 0 10px;
       }
-    }
-  }
-
-  .navbar-actions {
-    margin-left: auto;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100vw;
-    margin: 0 auto;
-
-    .nav-buttons {
-      width: 100%;
-      font-size: 0.8rem;
-      background-color: #fff;
-      border-radius: 0;
-      color: black;
     }
   }
 }

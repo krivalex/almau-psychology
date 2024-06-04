@@ -44,12 +44,6 @@
                           :class="{ 'p-invalid': !isValidData(test['results'][RRindex][resultCondition.field]) }"
                           class="input"
                         />
-                        <p-file-upload
-                          mode="basic"
-                          v-model="test['results'][RRindex][resultCondition.field]"
-                          :class="{ 'p-invalid': !isValidData(test['results'][RRindex][resultCondition.field]) }"
-                          class="input"
-                        />
                       </div>
                     </template>
                     <template v-if="!isValidData(test['results'][RRindex][resultCondition.field])">
@@ -83,7 +77,6 @@ import PInputText from 'primevue/inputtext'
 import PPanel from 'primevue/panel'
 import PInputNumber from 'primevue/inputnumber'
 import PTextArea from 'primevue/textarea'
-import PFileUpload from 'primevue/fileupload'
 import PButton from 'primevue/button'
 import { onImageError } from '@/utils'
 

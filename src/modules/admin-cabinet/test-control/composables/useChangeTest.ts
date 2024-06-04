@@ -13,7 +13,7 @@ export function useChangeTest() {
       position: 'base',
       type: 'file',
       validate: isNotValidMessage,
-      localization: 'Загрузите изображение',
+      localization: 'Ccылка на изображение',
     },
     {
       field: 'name',
@@ -85,7 +85,7 @@ export function useChangeTest() {
           field: 'image',
           type: 'file',
           validate: isNotValidMessage,
-          localization: 'Загрузите изображение',
+          localization: 'Ccылка на изображение',
         },
         {
           field: 'name',

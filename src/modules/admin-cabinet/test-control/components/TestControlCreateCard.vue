@@ -1,11 +1,34 @@
 <template>
-  <div class="test-card">
+  <div class="test-card" @click="openCreateTestModal">
     <span class="text">Создать тест</span>
     <i class="pi pi-plus" />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useDialog } from 'primevue/usedialog'
+import TestControlChangeModal from '@/modules/admin-cabinet/test-control/components/modals/TestControlChangeModal.vue'
+import { useTest } from '@/composables/useTest'
+
+const { newTest } = useTest()
+const dialog = useDialog()
+
+function openCreateTestModal() {
+  dialog.open(TestControlChangeModal, {
+    props: {
+      header: 'Создание нового теста',
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+      modal: true,
+    },
+    data: {
+      test: newTest.value,
+    },
+  })
+}
+</script>
 
 <style lang="scss" scoped>
 .test-card {

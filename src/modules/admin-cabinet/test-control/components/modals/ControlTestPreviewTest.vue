@@ -8,8 +8,8 @@
 
 <style lang="scss" scoped>
 .preview-test-content {
-  width: calc(390px * 0.9);
-  height: calc(844px * 0.8);
+  width: calc(390px * 0.85);
+  height: calc(844px * 0.75);
   border: 3px solid gray;
   border-radius: 1rem;
   display: flex;

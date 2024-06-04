@@ -1,5 +1,8 @@
 <template>
   <div class="test-card">
+    <div class="absolute-icon">
+      <i :class="['pi', test.visible ? 'pi-eye' : 'pi-eye-slash']" />
+    </div>
     <p-card>
       <template #header>
         <div class="image-block">
@@ -85,6 +88,19 @@ async function onDeleteTest() {
   border-top-right-radius: 30px !important;
   min-width: 505px;
   min-height: 298px;
+
+  .absolute-icon {
+    position: absolute;
+    top: 5px;
+    left: 15px;
+    z-index: 1;
+
+    i {
+      font-size: 2.5rem;
+      cursor: pointer;
+      filter: drop-shadow(0 0 2px rgba(255, 255, 255, 1));
+    }
+  }
 
   :deep(.p-card) {
     border-radius: 10px;

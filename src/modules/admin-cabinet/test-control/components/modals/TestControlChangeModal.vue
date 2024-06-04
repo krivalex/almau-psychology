@@ -59,7 +59,7 @@ import { ref, watch } from 'vue'
 import { validators } from '@/utils'
 
 const { getConditions, test } = useChangeTest()
-const { addContent, newTest, deleteTest, updateTest } = useTest()
+const { addContent, newTest, deleteTest, updateTest, getAllContent } = useTest()
 const confirm = useConfirm()
 
 const isDisabled = ref(true)
@@ -127,11 +127,13 @@ async function onSaveTestToDraft() {
 async function publishTest() {
   test.value.visible = true
   await updateTest(test.value)
+  await getAllContent()
   success('Управление тестами', 'Тест успешно опубликован')
 }
 
 async function deleteTestFromDraft() {
   await deleteTest(test.value)
+  await getAllContent()
   success('Управление тестами', 'Тест успешно удален из ЧЕРНОВИКОВ')
 }
 
@@ -141,6 +143,7 @@ async function saveTestToDraft() {
     ...test.value,
   }
   await addContent()
+  await getAllContent()
   success('Управление тестами', 'Тест успешно сохранен как ЧЕРНОВИК')
 }
 </script>

@@ -41,12 +41,6 @@
                     :class="{ 'p-invalid': !isValidData(test[condition.field]) }"
                     class="input"
                   />
-                  <p-file-upload
-                    mode="basic"
-                    v-model="test[condition.field]"
-                    :class="{ 'p-invalid': !isValidData(test[condition.field]) }"
-                    class="input"
-                  />
                 </div>
               </template>
               <template v-if="!isValidData(test[condition.field])">
@@ -65,7 +59,6 @@ import PInputText from 'primevue/inputtext'
 import PPanel from 'primevue/panel'
 import PInputNumber from 'primevue/inputnumber'
 import PTextArea from 'primevue/textarea'
-import PFileUpload from 'primevue/fileupload'
 import { onImageError } from '@/utils'
 
 import { useChangeTest } from '@/modules/admin-cabinet/test-control/composables/useChangeTest'

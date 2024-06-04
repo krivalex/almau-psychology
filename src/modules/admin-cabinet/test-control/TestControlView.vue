@@ -5,13 +5,6 @@
         <TestControlCreateCard />
         <template v-for="test in testList" :key="test.id">
           <TestControlCard :test="test" />
-          <TestControlCard :test="test" />
-          <TestControlCard :test="test" />
-          <TestControlCard :test="test" />
-          <TestControlCard :test="test" />
-          <TestControlCard :test="test" />
-          <TestControlCard :test="test" />
-          <TestControlCard :test="test" />
         </template>
       </div>
     </template>
