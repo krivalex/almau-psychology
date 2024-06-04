@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import PButton from 'primevue/button'
-import { useTelegram } from '@/composables/useTelegram'
+import { useTelegram } from '@auth/composables/useTelegram'
 import { useRedirect } from '@/composables/useRedirect'
 
 const { getTelegramNickname } = useTelegram()

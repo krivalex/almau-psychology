@@ -18,7 +18,6 @@ export const initNewUser: User = {
   telegramLogin: '',
   enableTelegramEnter: false,
   registerDate: new Date(),
-  lastLogin: new Date(),
 }
 
 export const initNewCurrentTest: CompletedTest = {

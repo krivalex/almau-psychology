@@ -36,13 +36,13 @@
 import PCard from 'primevue/card'
 import PButton from 'primevue/button'
 import PDivider from 'primevue/divider'
-import LoginButton from './ui/LoginButton.vue'
+import LoginButton from '@/components/ui/LoginButton.vue'
 import { defineProps } from 'vue'
 import { Test } from '@/interfaces'
 import { onImageError } from '@/utils'
 
 import { useUser } from '@/composables/useUser'
-import { useTest } from '@/composables/useTest'
+import { useTest } from '@test/composables/useTest'
 import { useRedirect } from '@/composables/useRedirect'
 
 const { goToTest } = useRedirect()

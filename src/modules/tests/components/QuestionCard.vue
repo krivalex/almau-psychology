@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import { Question } from '../interfaces'
+import { Question } from '@/interfaces'
 
 defineProps<{
   question: Question | undefined

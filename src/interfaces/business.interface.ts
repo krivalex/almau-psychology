@@ -12,7 +12,6 @@ export interface User extends GoogleUser {
   telegramID: string
   enableTelegramEnter: boolean
   registerDate: Date
-  lastLogin: Date
   firebaseId?: string
 }
 

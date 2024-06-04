@@ -13,11 +13,7 @@
       >
         <p-column v-for="col in columns" v-bind="col" :field="col.field" :header="col.header" sortable :key="col.field">
           <template #body="{ data }">
-            <span v-if="col.field === 'dates'">
-              {{ transformDate(data?.registerDate) }}
-              {{ transformDate(data?.lastLogin) }}
-            </span>
-            <span v-else-if="col.field === 'messages'">
+            <span v-if="col.field === 'messages'">
               <p-button icon="pi pi-telegram" @click="writeToTelegram(data)" class="p-button-text"></p-button>
               <p-button icon="pi pi-whatsapp" @click="writeToWhatsapp(data)" class="p-button-text"></p-button>
             </span>
@@ -37,7 +33,7 @@ import PDatatable from 'primevue/datatable'
 import PColumn from 'primevue/column'
 import PButton from 'primevue/button'
 
-import { transformDate, writeToTelegram, writeToWhatsapp } from '@/utils'
+import { writeToTelegram, writeToWhatsapp } from '@/utils'
 import { AppColumn, User } from '@/interfaces'
 
 const { googleUserList, loading, getAllUsers } = useUser()
@@ -115,7 +111,6 @@ const columns: AppColumn[] = [
     },
     style: 'width: 100px',
   },
-  { field: 'dates', header: 'Тайминг' },
   { field: 'messages', header: 'Связаться' },
 ]
 

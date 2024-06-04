@@ -18,8 +18,8 @@ import PButton from 'primevue/button'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
 import { onMounted } from 'vue'
 
-import { useCurrentTest } from '@/composables/useCurrentTest'
-import { useTest } from '@/composables/useTest'
+import { useCurrentTest } from '@test/composables/useCurrentTest'
+import { useTest } from '@test/composables/useTest'
 import { useRedirect } from '@/composables/useRedirect'
 
 const { selectedTest, getContentById, loading } = useTest()
