@@ -51,7 +51,7 @@ const { selectedTest } = useTest()
 
 function enjoyTest() {
   selectedTest.value = props.test
-  goToTest(props.test.firebaseId as string)
+  goToTest(props.test.id as string)
 }
 
 const props = defineProps<{

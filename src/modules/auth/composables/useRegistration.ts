@@ -1,12 +1,12 @@
 import { reactive, ref } from 'vue'
-import { initNewUser } from '../../../utils/business.init'
-import { User } from '../../../interfaces'
+import { initNewUser } from '@/utils/business.init'
+import { User } from '@/interfaces'
 import { addDoc, collection } from 'firebase/firestore'
-import { db } from '../../../firebase-config'
-import { useUser } from '../../../composables/useUser'
+import { db } from '@/firebase-config'
+import { useUser } from '@/composables/useUser'
 import { useRouter } from 'vue-router'
-import { useTelegram } from './useTelegram'
-import { useUserDevice } from '../../../composables/useUserDevice'
+import { useTelegram } from '@auth/composables/useTelegram'
+import { useUserDevice } from '@/composables/useUserDevice'
 
 const newStudent = ref<User>(initNewUser)
 const studentList = ref<User[]>([])

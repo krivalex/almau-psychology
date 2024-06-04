@@ -17,9 +17,9 @@
 </template>
 
 <script setup lang="ts">
-import { useTest } from '@/composables/useTest'
+import { useTest } from '@test/composables/useTest'
 import { onMounted } from 'vue'
-import TestCard from '@/components/TestCard.vue'
+import TestCard from '@test/components/TestCard.vue'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
 
 const { testList, getAllContent, loading } = useTest()
@@ -31,7 +31,7 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .all-tests {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: flex-start;
   align-items: center;

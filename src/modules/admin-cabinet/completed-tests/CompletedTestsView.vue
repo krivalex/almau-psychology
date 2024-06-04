@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import {onMounted} from 'vue';
-import {useCurrentTest} from '@/composables/useCurrentTest'
+import {useCurrentTest} from '@test/composables/useCurrentTest'
 import PDatatable from 'primevue/datatable';
 import PColumn from 'primevue/column';
 import PButton from 'primevue/button';

@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { useDialog } from 'primevue/usedialog'
 import TestControlChangeModal from '@admin/test-control/components/modals/TestControlChangeModal.vue'
-import { useTest } from '@/composables/useTest'
+import { useTest } from '@test/composables/useTest'
 
 const { newTest } = useTest()
 const dialog = useDialog()

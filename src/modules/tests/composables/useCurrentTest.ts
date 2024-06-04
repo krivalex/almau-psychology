@@ -154,7 +154,7 @@ export const useCurrentTest = () => {
     await addContent()
     isTestCompleted.value = false
     clearTestAnswers()
-    goToResultPage(selectedTest.value?.firebaseId)
+    goToResultPage(selectedTest.value?.id)
   }
 
   return {
