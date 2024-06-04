@@ -40,7 +40,7 @@
         />
       </div>
     </div>
-    <small v-if="isDisabled" class="error-message">{{ validateMessage }}</small>
+    <small v-if="isDisabled" style="padding-bottom: 1rem" class="error-message">{{ validateMessage }}</small>
   </section>
 </template>
 

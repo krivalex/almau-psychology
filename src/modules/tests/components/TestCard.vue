@@ -62,8 +62,9 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .test-card {
   position: relative;
-  max-width: 90vw;
-  min-width: 90vw;
+  width: 90vw;
+  max-width: 400px;
+  max-height: 440px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   border-top-left-radius: 30px !important;

@@ -4,9 +4,9 @@
     <template v-if="!loading.testList">
       <div class="all-tests-container">
         <template v-for="test in testList" :key="test.id">
-          <!-- <template v-if="test.visible"> -->
-          <TestCard :test="test" />
-          <!-- </template> -->
+          <template v-if="test.visible">
+            <TestCard :test="test" />
+          </template>
         </template>
       </div>
     </template>
