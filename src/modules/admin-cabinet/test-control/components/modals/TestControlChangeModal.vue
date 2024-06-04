@@ -56,6 +56,7 @@ import { useTest } from '@/composables/useTest'
 import { success } from '@/utils/toast'
 import { useConfirm } from 'primevue/useconfirm'
 import { ref, watch } from 'vue'
+import { validators } from '@/utils'
 
 const { getConditions, test } = useChangeTest()
 const { addContent, newTest, deleteTest, updateTest } = useTest()
@@ -69,10 +70,12 @@ watch(
   () => {
     const { valid, options } = getConditions()
 
-    if (options.isValid) validateMessage.value = 'Заполните все поля'
-    if (!options.isTwoResult) validateMessage.value = 'Добавьте минимум 2 результата'
-    if (!options.isFiveQuestion) validateMessage.value = 'Добавьте минимум 5 вопросов'
-    if (!options.isAllQuestionsHasTwoMoreAnswers) validateMessage.value = 'Добавьте минимум 2 ответа к каждому вопросу'
+    if (options.isValid) validateMessage.value = validators.requiredMsg
+    if (!options.isTwoResult) validateMessage.value = validators.minTwoResults
+    if (!options.isFiveQuestion) validateMessage.value = validators.minFiveQuestions
+    if (!options.isAllQuestionsHasTwoMoreAnswers) validateMessage.value = validators.minTwoAnswers
+    if (!options.secondLayerResult) validateMessage.value = validators.resultMsg
+    if (!options.secondLayerAdditional) validateMessage.value = validators.resultMinMaxMag
 
     isDisabled.value = valid
   },

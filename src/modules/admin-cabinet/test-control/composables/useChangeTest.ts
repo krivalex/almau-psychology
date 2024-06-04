@@ -1,7 +1,7 @@
 import { ConrolTestCondition } from '@/interfaces'
 import { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 import { inject, Ref, ref } from 'vue'
-import { firstLayerFields, secondLayerFields, thirdLayerFields, isNotValidMessage } from '@/utils'
+import { firstLayerFields, secondLayerFields, thirdLayerFields, isNotValidMessage, secondLayerResults } from '@/utils'
 
 export function useChangeTest() {
   const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
@@ -162,6 +162,16 @@ export function useChangeTest() {
       })
     })
 
+    const secondLayerResult = test.value.results.every((result: any) => {
+      return secondLayerResults.every(field => {
+        return isValidData(result[field])
+      })
+    })
+
+    const secondLayerAdditional = test.value.results.every((result: any) => {
+      return result.min < result.max
+    })
+
     const thirdLayer = test.value.questions.every((question: any) => {
       return question.answers.every((answer: any) => {
         return thirdLayerFields.every(field => {
@@ -170,11 +180,13 @@ export function useChangeTest() {
       })
     })
 
-    const isValid = !(firstLayer && secondLayer && thirdLayer)
+    const isValid = !(firstLayer && secondLayer && thirdLayer && secondLayerResult)
 
     console.log('isVALID', {
       firstLayer,
       secondLayer,
+      secondLayerResult,
+      secondLayerAdditional,
       thirdLayer,
       isTwoResult,
       isFiveQuestion,
@@ -184,6 +196,8 @@ export function useChangeTest() {
     const valid = !(
       firstLayer &&
       secondLayer &&
+      secondLayerResult &&
+      secondLayerAdditional &&
       thirdLayer &&
       isTwoResult &&
       isFiveQuestion &&
@@ -196,6 +210,8 @@ export function useChangeTest() {
         isValid,
         firstLayer,
         secondLayer,
+        secondLayerResult,
+        secondLayerAdditional,
         thirdLayer,
         isTwoResult,
         isFiveQuestion,

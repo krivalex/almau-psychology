@@ -30,4 +30,14 @@ export const loginFields: Record<string, string> = {
 export const isNotValidMessage = 'Обязательно для заполнения'
 export const firstLayerFields = ['image', 'name', 'description', 'timeToComplete', 'author']
 export const secondLayerFields = ['text']
+export const secondLayerResults = ['image', 'name', 'description', 'min', 'max']
 export const thirdLayerFields = ['text', 'value']
+
+export const validators = {
+  requiredMsg: 'Проверьте заполненость полей',
+  minFiveQuestions: 'Вопросы и ответы:  Добавьте минимум 5 вопросов',
+  minTwoAnswers: 'Вопросы и ответы: Добавьте минимум 2 ответа к каждому вопросу',
+  minTwoResults: 'Результаты: Добавьте минимум 2 результата',
+  resultMsg: 'Результаты: где-то ошибка',
+  resultMinMaxMag: 'Результаты: Минимальное значение должно быть меньше максимального',
+}
