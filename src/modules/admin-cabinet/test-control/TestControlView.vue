@@ -39,6 +39,7 @@ onMounted(async () => {
   color: black;
   margin-top: 10px;
   padding: 1rem 2rem;
+  overflow-x: hidden;
 
   .tests {
     display: flex;

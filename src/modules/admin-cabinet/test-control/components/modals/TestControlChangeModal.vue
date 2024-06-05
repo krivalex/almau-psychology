@@ -59,7 +59,7 @@ import { ref, watch } from 'vue'
 import { validators } from '@/utils'
 
 const { getConditions, test } = useChangeTest()
-const { addContent, newTest, deleteTest, updateTest, getAllContent } = useTest()
+const { newTest, deleteTest, updateTest, getAllContent } = useTest()
 const confirm = useConfirm()
 
 const isDisabled = ref(true)
@@ -142,7 +142,7 @@ async function saveTestToDraft() {
     ...newTest.value,
     ...test.value,
   }
-  await addContent()
+  await updateTest(newTest.value)
   await getAllContent()
   success('Управление тестами', 'Тест успешно сохранен как ЧЕРНОВИК')
 }

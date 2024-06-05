@@ -45,7 +45,7 @@ const props = defineProps<{
 const confirm = useConfirm()
 const dialog = useDialog()
 
-const { deleteTest } = useTest()
+const { deleteTest, getAllContent } = useTest()
 
 function openTestChangerModal() {
   dialog.open(TestControlChangeModal, {
@@ -68,7 +68,10 @@ async function onDeleteTest() {
     message: `Вы уверены, что хотите удалить тест "${props?.test?.name}"?`,
     header: 'Подтверждение',
     icon: 'pi pi-exclamation-triangle',
-    accept: async () => await deleteTest(props.test),
+    accept: async () => {
+      await deleteTest(props.test)
+      await getAllContent()
+    },
     reject: () => {},
     acceptLabel: 'Да, удалить тест',
     rejectLabel: 'Отмена',

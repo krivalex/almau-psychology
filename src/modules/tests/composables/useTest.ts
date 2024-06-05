@@ -29,8 +29,8 @@ export const useTest = () => {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
       querySnapshot.forEach(doc => {
         const compressive = {
-          firebaseId: doc.id,
           ...doc.data(),
+          firebaseId: doc.id,
         }
         testList.value.push(compressive as Test)
       })
@@ -106,6 +106,7 @@ export const useTest = () => {
   async function updateTest(test: Test) {
     loading.testList = true
     try {
+      console.log(test)
       if (test.firebaseId) await deleteDoc(doc(db, yourDatabase, test.firebaseId))
       await addDoc(collection(db, yourDatabase), test)
       loading.testList = false
