@@ -6,7 +6,7 @@
   <template v-else>
     <section class="test">
       <!-- just an info -->
-      <img :src="selectedTest?.image" class="test-image" />
+      <img :src="selectedTest?.image" class="test-image" @error="onImageError" />
       <div class="info">
         <span class="about-test"> Психологический тест: </span>
         <span class="naming">
@@ -40,9 +40,7 @@
 
         <!-- result block -->
         <template v-else>
-          <div>
-            <p-button label="Посмотреть результаты" class="control-button" @click="completeTest" />
-          </div>
+          <div><p-button label="Посмотреть результаты" class="control-button" @click="completeTest" /></div>
         </template>
       </div>
     </section>
@@ -50,13 +48,14 @@
 </template>
 
 <script setup lang="ts">
-import { useTest } from '@/composables/useTest'
-import QuestionCard from '@/components/QuestionCard.vue'
+import { useTest } from '@test/composables/useTest'
+import QuestionCard from '@test/components/QuestionCard.vue'
 import { onMounted } from 'vue'
 import PButton from 'primevue/button'
 import { useRouter } from 'vue-router'
-import { useCurrentTest } from '@/composables/useCurrentTest'
+import { useCurrentTest } from '@test/composables/useCurrentTest'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
+import { onImageError } from '@/utils'
 
 const { selectedTest, getContentById, loading: testLoading } = useTest()
 const { currentIndex, clearTestAnswers, nextQuestion, prevQuestion, isTestCompleted, completeTest } = useCurrentTest()
@@ -195,3 +194,4 @@ onMounted(async () => {
   }
 }
 </style>
+@/modules/tests/composables/useTest @/modules/tests/composables/useCurrentTest

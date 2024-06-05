@@ -12,12 +12,12 @@
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import NavbarPanel from './components/NavbarPanel.vue'
-import FooterPanel from './components/FooterPanel.vue'
+import NavbarPanel from '@/components/NavbarPanel.vue'
+import FooterPanel from '@/components/FooterPanel.vue'
 import { onMounted } from 'vue'
-import { useUser } from './composables/useUser'
-import { useTelegram } from './composables/useTelegram'
-import WarningWindow from './components/WarningWindow.vue'
+import { useUser } from '@/composables/useUser'
+import { useTelegram } from '@auth/composables/useTelegram'
+import WarningWindow from '@/components/WarningWindow.vue'
 
 import DynamicDialog from 'primevue/dynamicdialog'
 import ConfirmDialog from 'primevue/confirmdialog'
@@ -74,3 +74,4 @@ main {
   }
 }
 </style>
+./modules/auth/composables/useTelegram

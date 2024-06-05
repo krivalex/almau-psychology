@@ -1,11 +1,24 @@
 <template>
   <template v-if="!isLoginPage && telegramUser && isWebViewMounted()">
     <template v-if="!isBrowserMounted()">
-      <a :href="getRedirectRoute()" target="_blank" class="enter-link p-button-sm" v-if="!googleUser" @click="toggleRedirectPosition">Войти</a>
+      <a
+        :href="getRedirectRoute()"
+        target="_blank"
+        class="enter-link p-button-sm"
+        v-if="!googleUser"
+        @click="toggleRedirectPosition"
+        >Войти</a
+      >
       <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
     </template>
     <template v-else>
-      <p-button class="enter p-button-sm" v-if="!googleUser" @click="googleRegister" label="Войти" icon="pi pi-sign"></p-button>
+      <p-button
+        class="enter p-button-sm"
+        v-if="!googleUser"
+        @click="googleRegister"
+        label="Войти"
+        icon="pi pi-sign"
+      ></p-button>
       <p-avatar v-if="googleUser" :image="googleUser.photoURL" shape="circle" size="normal" />
     </template>
   </template>
@@ -24,7 +37,7 @@ import PAvatar from 'primevue/avatar'
 import { useUser } from '@/composables/useUser'
 import { useUserDevice } from '@/composables/useUserDevice'
 import { useRedirect } from '@/composables/useRedirect'
-import { useTelegram } from '@/composables/useTelegram'
+import { useTelegram } from '@auth/composables/useTelegram'
 
 const { googleRegister, googleUser } = useUser()
 const { isBrowserMounted, toggleRedirectPosition } = useUserDevice()
@@ -47,3 +60,4 @@ const { telegramUser } = useTelegram()
   font-weight: 600;
 }
 </style>
+@/modules/auth/composables/useTelegram

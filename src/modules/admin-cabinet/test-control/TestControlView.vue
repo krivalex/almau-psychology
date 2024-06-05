@@ -1,12 +1,10 @@
 <template>
-  <section class="all-tests">
-    <span class="about-all-tests"> Список тестов </span>
+  <section class="test-control">
     <template v-if="!loading.testList">
-      <div class="all-tests-container">
+      <div class="tests">
+        <TestControlCreateCard />
         <template v-for="test in testList" :key="test.id">
-          <template v-if="test.visible">
-            <TestCard :test="test" />
-          </template>
+          <TestControlCard :test="test" />
         </template>
       </div>
     </template>
@@ -19,40 +17,36 @@
 <script setup lang="ts">
 import { useTest } from '@test/composables/useTest'
 import { onMounted } from 'vue'
-import TestCard from '@test/components/TestCard.vue'
+import TestControlCard from '@admin/test-control/components/TestControlCard.vue'
+import TestControlCreateCard from '@admin/test-control/components/TestControlCreateCard.vue'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
 
 const { testList, getAllContent, loading } = useTest()
 
 onMounted(async () => {
-  await getAllContent()
+  if (!testList.value.length) await getAllContent()
 })
 </script>
 
 <style lang="scss" scoped>
-.all-tests {
+.test-control {
   min-height: 100vh;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
   color: black;
-  margin-bottom: 3rem;
+  margin-top: 10px;
+  padding: 1rem 2rem;
+  overflow-x: hidden;
 
-  .about-all-tests {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: black;
-  }
-
-  .all-tests-container {
+  .tests {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
+    justify-content: space-between;
+    align-items: flex-start;
     flex-wrap: wrap;
+    gap: 2rem;
   }
 }
 </style>

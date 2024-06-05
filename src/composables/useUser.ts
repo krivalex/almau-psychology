@@ -6,17 +6,15 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
 // import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from 'firebase/auth'
 import type { GoogleUser, User } from '../interfaces'
 import { useRouter } from 'vue-router'
-import { useTelegram } from './useTelegram'
+import { useTelegram } from '../modules/auth/composables/useTelegram'
 
 const googleUser = ref<User | DocumentData | null>()
-const googleUserList = ref([] as DocumentData)
+const googleUserList = ref<User[]>([])
 
 const loading = reactive({
   googleUser: false,
   googleUserList: false,
 })
-
-// const isSuccessAuth = ref(false)
 
 const userToObject = computed((): GoogleUser | null => {
   if (googleUser.value) {
@@ -32,10 +30,10 @@ const userToObject = computed((): GoogleUser | null => {
 
 export const useUser = () => {
   const { telegramUser, expandWindow } = useTelegram()
+  const yourDatabase = 'users'
 
   const router = useRouter()
   const auth = getAuth()
-  const yourDatabase = 'users'
 
   const isAdmin = computed(() => {
     return googleUser.value?.status === 'admin'
@@ -91,11 +89,17 @@ export const useUser = () => {
   // получить всех юзеров
   async function getAllUsers() {
     loading.googleUserList = true
+    const _googleUserList: User[] = []
     try {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
-      querySnapshot.forEach((doc) => {
-        googleUserList.value.push(doc.data())
+      querySnapshot.forEach(doc => {
+        const compressive = {
+          firebaseId: doc.id,
+          ...doc.data(),
+        }
+        _googleUserList.push(compressive as User)
       })
+      googleUserList.value = _googleUserList
       loading.googleUserList = false
     } catch (error) {
       console.error(error)

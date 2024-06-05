@@ -12,27 +12,27 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/modules/auth/LoginView.vue'),
+      component: () => import('@auth/LoginView.vue'),
     },
     {
       path: '/login-options',
       name: 'login-options',
-      component: () => import('@/modules/auth/LoginRedirectView.vue'),
+      component: () => import('@auth/LoginRedirectView.vue'),
     },
     {
       path: '/after-register',
       name: 'after-register',
-      component: () => import('../views/AfterRegisterRedirectView.vue'),
+      component: () => import('@auth/AfterRegisterRedirectView.vue'),
     },
     {
       path: '/test/:id',
       name: 'test',
-      component: () => import('@/modules/tests/TestView.vue'),
+      component: () => import('@test/TestView.vue'),
     },
     {
       path: '/result/:id',
       name: 'result',
-      component: () => import('@/modules/tests/ResultView.vue'),
+      component: () => import('@test/ResultView.vue'),
     },
     {
       path: '/:pathMatch(.*)*',
@@ -42,19 +42,7 @@ const router = createRouter({
     {
       path: '/admin-cabinet',
       name: 'admin-cabinet',
-      component: () => import('@/modules/admin-cabinet/AdminCabinetView.vue'),
-      children: [
-        {
-          path: '/tests-control',
-          name: 'tests-control',
-          component: () => import('@/modules/admin-cabinet/TestControlView.vue'),
-        },
-        {
-          path: '/completed-tests',
-          name: 'completed-tests',
-          component: () => import('@/modules/admin-cabinet/CompletedTestsView.vue'),
-        },
-      ],
+      component: () => import('@admin/AdminCabinetView.vue'),
     },
   ],
 })

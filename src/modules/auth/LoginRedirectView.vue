@@ -1,6 +1,8 @@
 <template>
   <section class="login-redirect">
-    <span class="text"> Вход должен был запустится автоматически - если это не произошло, пожалуйста нажмите на кнопку </span>
+    <span class="text">
+      Вход должен был запустится автоматически - если это не произошло, пожалуйста нажмите на кнопку
+    </span>
     <p-button class="nav-buttons" label="Вход" @click="googleRegister" />
   </section>
 </template>
@@ -8,7 +10,7 @@
 <script setup lang="ts">
 import PButton from 'primevue/button'
 import { useUser } from '@/composables/useUser'
-import { useTelegram } from '@/composables/useTelegram'
+import { useTelegram } from '@auth/composables/useTelegram'
 import { onMounted } from 'vue'
 
 const { googleRegister } = useUser()
@@ -41,3 +43,4 @@ onMounted(() => {
   }
 }
 </style>
+@/modules/auth/composables/useTelegram

@@ -1,11 +1,10 @@
 import { getDocs, addDoc, doc, collection, type DocumentData, deleteDoc } from 'firebase/firestore'
-import { db } from '../firebase-config'
+import { db } from '@/firebase-config'
 import { ref, reactive } from 'vue'
-// import { useUser } from './useUser'
 import * as firebase from 'firebase/storage'
 import { getStorage, uploadBytes } from 'firebase/storage'
-import type { Test } from '../interfaces'
-import { initNewTest } from '../utils/business.init'
+import type { Test } from '@/interfaces'
+import { initNewTest } from '@/utils/business.init'
 
 const test = ref<Test | DocumentData>()
 const selectedTest = ref<Test>()
@@ -28,10 +27,10 @@ export const useTest = () => {
     testList.value = []
     try {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach(doc => {
         const compressive = {
-          firebaseId: doc.id,
           ...doc.data(),
+          firebaseId: doc.id,
         }
         testList.value.push(compressive as Test)
       })
@@ -46,7 +45,7 @@ export const useTest = () => {
     loading.test = true
     try {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
-      test.value = querySnapshot.docs.map((doc) => {
+      test.value = querySnapshot.docs.map(doc => {
         if (doc.id === id) {
           return doc.data()
         }
@@ -60,7 +59,6 @@ export const useTest = () => {
   }
 
   async function addContent() {
-    // const { userToObject } = useUser()
     loading.newTest = true
     try {
       if (newTest.value) {
@@ -68,16 +66,6 @@ export const useTest = () => {
         await addDoc(collection(db, yourDatabase), newTest.value)
         loading.newTest = false
       }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  async function deleteDocById(firebaseId: string) {
-    loading.test = true
-    try {
-      await deleteDoc(doc(db, yourDatabase, firebaseId))
-      loading.test = false
     } catch (error) {
       console.error(error)
     }
@@ -93,16 +81,38 @@ export const useTest = () => {
 
         firebase
           .getDownloadURL(storageRef)
-          .then((downloadURL) => {
+          .then(downloadURL => {
             newTest.value.image = downloadURL
           })
-          .catch((error) => {
+          .catch(error => {
             console.error('Ошибка получения ссылки на загруженный файл:', error)
           })
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Ошибка загрузки файла:', error)
       })
+  }
+
+  async function deleteTest(test: Test) {
+    loading.testList = true
+    try {
+      if (test.firebaseId) await deleteDoc(doc(db, yourDatabase, test.firebaseId))
+      loading.testList = false
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async function updateTest(test: Test) {
+    loading.testList = true
+    try {
+      console.log(test)
+      if (test.firebaseId) await deleteDoc(doc(db, yourDatabase, test.firebaseId))
+      await addDoc(collection(db, yourDatabase), test)
+      loading.testList = false
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   async function load() {
@@ -128,10 +138,11 @@ export const useTest = () => {
     getAllContent,
     getContentById,
     addContent,
-    deleteDocById,
+    updateTest,
     load,
     uploadImage,
     clearContent,
+    deleteTest,
     selectedTest,
   }
 }

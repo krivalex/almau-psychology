@@ -11,6 +11,8 @@ export interface User extends GoogleUser {
   telegramLogin: string
   telegramID: string
   enableTelegramEnter: boolean
+  registerDate: Date
+  firebaseId?: string
 }
 
 export interface GoogleUser {
@@ -46,7 +48,8 @@ export interface Test {
   results: Result[]
   questions: Question[]
   firebaseId?: string
-  image?: string
+  image: string
+  visible: boolean
 }
 
 export interface Question {

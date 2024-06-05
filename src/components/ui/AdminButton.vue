@@ -1,5 +1,5 @@
 <template>
-  <template v-if="isAdmin">
+  <template v-if="isAdmin && !isWebViewMounted()">
     <p-button class="admin-link p-button-sm" label="Кабинет психолога" @click="goToAdminView" />
   </template>
 </template>
@@ -8,9 +8,11 @@
 import PButton from 'primevue/button'
 import { useUser } from '@/composables/useUser'
 import { useRedirect } from '@/composables/useRedirect'
+import { useUserDevice } from '@/composables/useUserDevice'
 
 const { goToAdminView } = useRedirect()
 const { isAdmin } = useUser()
+const { isWebViewMounted } = useUserDevice()
 </script>
 
 <style scoped lang="scss">

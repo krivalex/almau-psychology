@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import PButton from 'primevue/button'
-import { useTelegram } from '../composables/useTelegram'
-import { useUserDevice } from '../composables/useUserDevice'
+import { useTelegram } from '@auth/composables/useTelegram'
+import { useUserDevice } from '@/composables/useUserDevice'
 
 const { redirectToBrowser } = useUserDevice()
 const { reloadPage } = useTelegram()
@@ -63,3 +63,4 @@ main {
   }
 }
 </style>
+@/modules/auth/composables/useTelegram

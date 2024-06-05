@@ -3,7 +3,7 @@
     <p-card>
       <template #header>
         <div class="image-block">
-          <img class="preview-image" :src="test.image" alt="test image" />
+          <img class="preview-image" :src="test.image" alt="test image" @error="onImageError" />
         </div>
         <div class="preview-content">
           <h3>{{ test.name }}</h3>
@@ -36,21 +36,22 @@
 import PCard from 'primevue/card'
 import PButton from 'primevue/button'
 import PDivider from 'primevue/divider'
-import LoginButton from './ui/LoginButton.vue'
+import LoginButton from '@/components/ui/LoginButton.vue'
 import { defineProps } from 'vue'
-import { Test } from '../interfaces'
-import { useUser } from '../composables/useUser'
-import { useTest } from '../composables/useTest'
-import { useRouter } from 'vue-router'
+import { Test } from '@/interfaces'
+import { onImageError } from '@/utils'
 
-const router = useRouter()
+import { useUser } from '@/composables/useUser'
+import { useTest } from '@test/composables/useTest'
+import { useRedirect } from '@/composables/useRedirect'
 
+const { goToTest } = useRedirect()
 const { googleUser } = useUser()
 const { selectedTest } = useTest()
 
 function enjoyTest() {
   selectedTest.value = props.test
-  router.push(`/test/${props.test.firebaseId}`)
+  goToTest(props.test.id as string)
 }
 
 const props = defineProps<{
@@ -61,7 +62,9 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .test-card {
   position: relative;
-  max-width: 90vw;
+  width: 90vw;
+  max-width: 400px;
+  max-height: 440px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   border-top-left-radius: 30px !important;
@@ -145,3 +148,4 @@ const props = defineProps<{
   padding: 0 10px;
 }
 </style>
+@/modules/tests/composables/useTest

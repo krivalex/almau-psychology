@@ -8,11 +8,10 @@
 </template>
 
 <script setup lang="ts">
-const currentYear = new Date().getFullYear()
+import { useRedirect } from '@/composables/useRedirect'
 
-function redirectToKrivalex() {
-  window.open('https://www.instagram.com/_krivalex_/?hl=ru')
-}
+const { redirectToKrivalex } = useRedirect()
+const currentYear = new Date().getFullYear()
 </script>
 
 <style scoped lang="scss">

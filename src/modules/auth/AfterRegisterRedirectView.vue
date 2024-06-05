@@ -7,7 +7,9 @@
       </span>
     </template>
     <template v-else>
-      <span class="text"> У вас нет телеграм логина, авто-вход с телеграма не доступен, бот подскажет вам как его добавить </span>
+      <span class="text">
+        У вас нет телеграм логина, авто-вход с телеграма не доступен, бот подскажет вам как его добавить
+      </span>
     </template>
     <p-button class="nav-buttons" label="Вернуться" @click="goBackToTelegramBot" />
   </section>
@@ -15,9 +17,11 @@
 
 <script setup lang="ts">
 import PButton from 'primevue/button'
-import { useTelegram } from '../composables/useTelegram'
+import { useTelegram } from '@auth/composables/useTelegram'
+import { useRedirect } from '@/composables/useRedirect'
 
-const { goBackToTelegramBot, getTelegramNickname } = useTelegram()
+const { getTelegramNickname } = useTelegram()
+const { goBackToTelegramBot } = useRedirect()
 </script>
 
 <style scoped lang="scss">
@@ -44,3 +48,4 @@ const { goBackToTelegramBot, getTelegramNickname } = useTelegram()
   }
 }
 </style>
+@/modules/auth/composables/useTelegram

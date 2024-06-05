@@ -1,4 +1,4 @@
-import { useTelegram } from '@/composables/useTelegram'
+import { useTelegram } from '@/modules/auth/composables/useTelegram'
 import { useUserDevice } from '@/composables/useUserDevice'
 import { computed } from 'vue'
 
@@ -30,12 +30,20 @@ export function useRedirect() {
     router.push('/')
   }
 
+  function goToResultPage(id?: string) {
+    router.push(`/result/${id}`)
+  }
+
+  function goToTest(id: string) {
+    router.push(`/test/${id}`)
+  }
+
   function goToAdminView() {
     router.push('/admin-cabinet')
   }
 
-  function goToResultPage(id?: string) {
-    router.push(`/result/${id}`)
+  function redirectToKrivalex() {
+    window.open('https://www.instagram.com/_krivalex_/?hl=ru')
   }
 
   return {
@@ -46,5 +54,7 @@ export function useRedirect() {
     goToMain,
     goToAdminView,
     goToResultPage,
+    goToTest,
+    redirectToKrivalex,
   }
 }

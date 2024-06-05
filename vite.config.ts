@@ -8,6 +8,9 @@ const baseConfig = {
     extensions: ['.js', '.ts', '.vue', '.json'],
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@admin': fileURLToPath(new URL('./src/modules/admin-cabinet', import.meta.url)),
+      '@auth': fileURLToPath(new URL('./src/modules/auth', import.meta.url)),
+      '@test': fileURLToPath(new URL('./src/modules/tests', import.meta.url)),
     },
   },
   css: {
