@@ -57,8 +57,9 @@ import { success } from '@/utils/toast'
 import { useConfirm } from 'primevue/useconfirm'
 import { ref, watch } from 'vue'
 import { validators } from '@/utils'
+import { onUnmounted } from 'vue'
 
-const { getConditions, test } = useChangeTest()
+const { getConditions, test, clear } = useChangeTest()
 const { newTest, deleteTest, updateTest, getAllContent } = useTest()
 const confirm = useConfirm()
 
@@ -146,7 +147,10 @@ async function saveTestToDraft() {
   await getAllContent()
   success('Управление тестами', 'Тест успешно сохранен как ЧЕРНОВИК')
 }
+
+onUnmounted(() => {
+  clear()
+})
 </script>
 
 <style lang="scss" src="@admin/test-control/styles/test-control.scss" scoped />
-@/modules/tests/composables/useTest

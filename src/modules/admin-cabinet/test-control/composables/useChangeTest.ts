@@ -1,11 +1,21 @@
 import { ConrolTestCondition } from '@/interfaces'
 import { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 import { inject, Ref, ref } from 'vue'
-import { firstLayerFields, secondLayerFields, thirdLayerFields, isNotValidMessage, secondLayerResults } from '@/utils'
+import {
+  firstLayerFields,
+  secondLayerFields,
+  thirdLayerFields,
+  isNotValidMessage,
+  secondLayerResults,
+  initNewTest,
+} from '@/utils'
+import { useTest } from '@/modules/tests/composables/useTest'
 
 export function useChangeTest() {
   const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
   const test = ref(dialogRef?.value?.data?.test)
+
+  const { newTest } = useTest()
 
   const changeTestConditions: ConrolTestCondition[] = [
     {
@@ -220,6 +230,11 @@ export function useChangeTest() {
     }
   }
 
+  function clear() {
+    test.value = {}
+    newTest.value = initNewTest
+  }
+
   return {
     changeTestConditions,
     test,
@@ -231,5 +246,6 @@ export function useChangeTest() {
     addResult,
     deleteResult,
     getConditions,
+    clear,
   }
 }
