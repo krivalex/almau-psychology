@@ -28,6 +28,7 @@ export const initNewCurrentTest: CompletedTest = {
   created: null,
   testName: '',
   answers: [],
+  status: 'not_started',
 }
 
 export const initNewAnswer: Answer = {

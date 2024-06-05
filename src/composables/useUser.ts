@@ -1,4 +1,4 @@
-import { collection, getDocs, type DocumentData } from 'firebase/firestore'
+import { collection, getDocs, type DocumentData, updateDoc, doc } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { ref, computed, reactive } from 'vue'
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
@@ -41,7 +41,6 @@ export const useUser = () => {
 
   async function userChecker() {
     const result = await calculateLoginRegister()
-    console.log(result)
 
     if (result === 'new user') {
       router.push('/login')
@@ -94,8 +93,8 @@ export const useUser = () => {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
       querySnapshot.forEach(doc => {
         const compressive = {
-          firebaseId: doc.id,
           ...doc.data(),
+          firebaseId: doc.id,
         }
         _googleUserList.push(compressive as User)
       })
@@ -159,6 +158,20 @@ export const useUser = () => {
     removeFromLocalStorage()
   }
 
+  async function updateUserInDatabase(completedTestName: string) {
+    googleUser.value?.completedTests.push(completedTestName)
+
+    loading.googleUser = true
+    try {
+      if (googleUser.value?.firebaseId) {
+        await updateDoc(doc(db, yourDatabase, googleUser.value?.firebaseId), googleUser.value)
+      }
+      loading.googleUser = false
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return {
     googleUser,
     googleUserList,
@@ -172,5 +185,6 @@ export const useUser = () => {
     removeFromLocalStorage,
     isAdmin,
     checkUserTelegram,
+    updateUserInDatabase,
   }
 }

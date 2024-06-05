@@ -31,6 +31,7 @@ export interface CompletedTest {
   created: Date | null
   answers: AnswersMap[]
   testName: string
+  status: 'completed' | 'in_progress' | 'attention' | 'not_started'
 }
 
 export interface AnswersMap {

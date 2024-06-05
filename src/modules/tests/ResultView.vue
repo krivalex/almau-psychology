@@ -27,7 +27,7 @@ const { currentResult, calculateResult } = useCurrentTest()
 const { currentParamsID, goToMain } = useRedirect()
 
 onMounted(async () => {
-  if (!selectedTest.value) {
+  if (!selectedTest.value?.id) {
     await getContentById(currentParamsID.value)
     calculateResult()
   }

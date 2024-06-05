@@ -106,7 +106,6 @@ export const useTest = () => {
   async function updateTest(test: Test) {
     loading.testList = true
     try {
-      console.log(test)
       if (test.firebaseId) await deleteDoc(doc(db, yourDatabase, test.firebaseId))
       await addDoc(collection(db, yourDatabase), test)
       loading.testList = false
