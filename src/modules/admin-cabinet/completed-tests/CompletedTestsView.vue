@@ -1,15 +1,36 @@
 <template>
   <section class="completed-tests">
     <p-datatable
+      v-model:filters="filters"
       :value="allCompletedTests"
       :paginator="true"
-      :rows="10"
+      :rows="8"
       :rowsPerPageOptions="[5, 10, 20]"
       filter
       sort
+      :sort-order="-1"
+      :sort-field="'created' || filters['global'].value"
       :loading="loading.allCompletedTests"
       style="width: 100%; height: 100%; min-height: 100vh"
+      :globalFilterFields="[
+        'student.name',
+        'student.surname',
+        'student.specialty',
+        'student.yearAdmission',
+        'student.courseRegister',
+        'student.email',
+        'student.phone',
+        'testName',
+        'scoreValue',
+        'scoreName',
+        'created',
+        'status',
+        'answers',
+      ]"
     >
+      <template #header>
+        <search-panel />
+      </template>
       <p-column
         v-for="col in columns"
         :field="col.field"
@@ -79,8 +100,9 @@ import type { CompletedTest } from '@/interfaces'
 import { writeToTelegram, writeToWhatsapp, transformDate } from '@/utils'
 import PDropdown from 'primevue/dropdown'
 import { statusLabels } from '@/utils'
+import SearchPanel from '@admin/completed-tests/components/SearchPanel.vue'
 
-const { getAllContent, allCompletedTests, loading, updateStatus } = useCurrentTest()
+const { getAllContent, allCompletedTests, loading, updateStatus, filters } = useCurrentTest()
 
 async function toogleUpdateStatus(data: CompletedTest) {
   await updateStatus(data)
@@ -137,7 +159,7 @@ onMounted(async () => {
   color: black;
   font-size: 1rem;
   font-weight: 600;
-  width: 96vw;
+  width: 98vw;
   margin: 0 auto;
   z-index: 100;
   position: relative;

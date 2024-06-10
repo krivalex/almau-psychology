@@ -7,6 +7,7 @@ import { db } from '@/firebase-config'
 import { useTest } from '@/modules/tests/composables/useTest'
 import { useUser } from '@/composables/useUser'
 import { useRedirect } from '@/composables/useRedirect'
+import { FilterMatchMode } from 'primevue/api'
 
 const currentIndex = ref(0)
 const currentTest = ref<CompletedTest>(initNewCurrentTest)
@@ -14,6 +15,10 @@ const isTestCompleted = ref(false)
 const allCompletedTests = ref<CompletedTest[]>([])
 const completedTests = ref<CompletedTest | DocumentData>()
 const currentResult = ref<Result>()
+
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+})
 
 const loading = reactive({
   allCompletedTests: false,
@@ -187,5 +192,6 @@ export const useCurrentTest = () => {
     currentResult,
     getAllContent,
     updateStatus,
+    filters,
   }
 }
