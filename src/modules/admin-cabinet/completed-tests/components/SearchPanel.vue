@@ -22,6 +22,7 @@
         showClear
         placeholder="Название теста"
       />
+      <p-button icon="pi pi-download" @click="exportExcel" outlined class="p-button-text" />
     </div>
     <div class="search">
       <i class="pi pi-search" />
@@ -38,7 +39,7 @@ import { useCurrentTest } from '@test/composables/useCurrentTest'
 import { useCompletedTest } from '@admin/completed-tests/composables/useCompletedTest'
 
 const { filters } = useCurrentTest()
-const { changeMode, mode, testOptions } = useCompletedTest()
+const { changeMode, mode, testOptions, exportExcel } = useCompletedTest()
 </script>
 
 <style scoped lang="scss">

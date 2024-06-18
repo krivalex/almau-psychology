@@ -3,6 +3,7 @@
     <p-datatable
       v-model:filters="filters"
       :value="filteredData"
+      ref="DT"
       :paginator="true"
       :rows="8"
       :rowsPerPageOptions="[5, 10, 20]"
@@ -27,6 +28,9 @@
         'status',
         'answers',
       ]"
+      :exportFilename="`Пройденные тесты за ${new Date().toLocaleDateString()}`"
+      :export-function="exportPretify"
+      :csv-separator="';'"
     >
       <template #header>
         <search-panel />
@@ -104,14 +108,12 @@ import SearchPanel from '@admin/completed-tests/components/SearchPanel.vue'
 import { useCompletedTest } from '@admin/completed-tests/composables/useCompletedTest'
 
 const { getAllContent, allCompletedTests, loading, updateStatus, filters } = useCurrentTest()
-const { filteredData } = useCompletedTest()
-const { getTestOptions } = useCompletedTest()
+const { getTestOptions, DT, filteredData, exportPretify } = useCompletedTest()
+const dialog = useDialog()
 
 async function toogleUpdateStatus(data: CompletedTest) {
   await updateStatus(data)
 }
-
-const dialog = useDialog()
 
 function openAnswersModal(answers: CompletedTest): void {
   dialog.open(AnswersModal, {
@@ -134,7 +136,7 @@ const columns = [
   { field: 'surname', header: 'Фамилия' },
   { field: 'student', header: 'Инфо' },
   { field: 'testName', header: 'Тест' },
-  { field: 'scoreValue', header: 'Очки' },
+  { field: 'scoreValue', header: 'Баллы' },
   { field: 'scoreName', header: 'Результат' },
   { field: 'created', header: 'Дата прохождения' },
   { field: 'answers', header: 'Карта ответов' },
