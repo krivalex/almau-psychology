@@ -35,10 +35,6 @@ export function useCompletedTest() {
   }
 
   function exportPretify(event: { data: any; field: string }) {
-    if (event.field === 'student') {
-      event.data.name = `${event?.data?.student?.firstName}`
-      event.data.surname = `${event?.data?.student?.lastName}`
-    }
     if (event.field === 'status') {
       event.data =
         event.data.status === 'not_started'
