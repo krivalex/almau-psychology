@@ -11,7 +11,7 @@ export function useCompletedTest() {
     if (mode.value) {
       return allCompletedTests.value?.filter(test => {
         if (mode.value === 'all') return true
-        if (mode.value === 'not_started') return test.status === 'not_started'
+        if (mode.value === 'not_started') return test.status === 'not_started' || test.status === 'in_progress'
         if (mode.value === 'attention') return test.status === 'attention'
         return false
       })

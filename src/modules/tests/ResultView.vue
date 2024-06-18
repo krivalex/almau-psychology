@@ -30,12 +30,13 @@ const { currentParamsID, goToMain } = useRedirect()
 
 const props = defineProps<{
   previewTest?: Test
+  previewID?: number
 }>()
 
 onMounted(async () => {
-  if (props.previewTest) {
+  if (props.previewTest && props.previewID !== undefined) {
     selectedTest.value = props.previewTest
-    calculateResult()
+    currentResult.value = selectedTest.value.results[props.previewID]
     return
   }
 

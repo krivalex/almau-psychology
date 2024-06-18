@@ -2,15 +2,15 @@
   <div class="preview-test-content">
     <template v-for="preview in previewMap" :key="preview.id">
       <template v-if="previewID === preview.id">
-        <component :is="preview.view" :previewTest="test" :class="preview.class" />
+        <component :is="preview.view" :previewTest="test" :previewID="previewID - 2" :class="preview.class" />
         <h1 class="preview-header">{{ preview.id }}. {{ preview.header() }}</h1>
       </template>
     </template>
   </div>
   <div class="contols">
-    <p-button icon="pi pi-arrow-left" class="control-button" @click="nextAction" />
+    <p-button icon="pi pi-arrow-left" class="control-button" @click="prevAction" />
     <p-button icon="pi pi-refresh" class="p-button-text control-button refresh" @click="updateAction" />
-    <p-button icon="pi pi-arrow-right" class="control-button" @click="prevAction" />
+    <p-button icon="pi pi-arrow-right" class="control-button" @click="nextAction" />
   </div>
 </template>
 
@@ -21,6 +21,7 @@ import TestView from '@/modules/tests/TestView.vue'
 import ResultView from '@/modules/tests/ResultView.vue'
 import { ref, shallowRef } from 'vue'
 import { useCurrentTest } from '@/modules/tests/composables/useCurrentTest'
+import { Result } from '@/interfaces'
 
 const { clearTestAnswers, isTestCompleted } = useCurrentTest()
 const { test } = useChangeTest()
@@ -29,13 +30,13 @@ const previewID = ref(1)
 
 const previewMap = ref([
   { id: 1, name: 'questions', header: () => 'Вопросы', view: shallowRef(TestView), class: 'preview-test-view' },
-  {
-    id: 2,
+  ...test.value.results.map((_result: Result, index: number) => ({
+    id: index + 2,
     name: 'results',
-    header: () => `Результаты(${test.value.results.length})`,
+    header: () => `Результаты(${index + 1}/${test.value.results.length})`,
     view: shallowRef(ResultView),
     class: 'preview-result-view',
-  },
+  })),
 ])
 
 function nextAction() {
@@ -132,7 +133,7 @@ function updateAction() {
   }
 
   :deep(.title) {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     padding: 0.5rem 0.5rem;
   }
 

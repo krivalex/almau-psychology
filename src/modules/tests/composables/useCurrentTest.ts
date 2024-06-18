@@ -155,11 +155,9 @@ export const useCurrentTest = () => {
     })
   }
 
-  async function completeTest(preview: boolean = false) {
+  async function completeTest(preview?: boolean) {
     if (preview) {
       makeTestBody()
-      calculateResult()
-      isTestCompleted.value = false
       clearTestAnswers()
     }
 
