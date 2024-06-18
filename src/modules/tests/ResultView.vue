@@ -4,7 +4,7 @@
   </template>
   <template v-else>
     <section class="result-page">
-      <img class="result" :src="currentResult?.image" />
+      <img class="result" :src="currentResult?.image" @error="onImageError" />
       <h1 class="title">{{ currentResult?.name }}</h1>
       <p class="description">{{ currentResult?.description }}</p>
       <!-- <p-button label="Записаться на консультацию" class="control-button" @click="goToWhatsapp" /> -->
@@ -17,16 +17,28 @@
 import PButton from 'primevue/button'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
 import { onMounted } from 'vue'
+import { onImageError } from '@/utils'
 
 import { useCurrentTest } from '@test/composables/useCurrentTest'
 import { useTest } from '@test/composables/useTest'
 import { useRedirect } from '@/composables/useRedirect'
+import { Test } from '@/interfaces'
 
 const { selectedTest, getContentById, loading } = useTest()
 const { currentResult, calculateResult } = useCurrentTest()
 const { currentParamsID, goToMain } = useRedirect()
 
+const props = defineProps<{
+  previewTest?: Test
+}>()
+
 onMounted(async () => {
+  if (props.previewTest) {
+    selectedTest.value = props.previewTest
+    calculateResult()
+    return
+  }
+
   if (!selectedTest.value?.id) {
     await getContentById(currentParamsID.value)
     calculateResult()

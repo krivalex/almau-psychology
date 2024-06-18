@@ -1,5 +1,21 @@
 <template>
   <section class="search-panel">
+    <div class="contols">
+      <p-button
+        label="Новые"
+        @click="changeMode('not_started')"
+        outlined
+        :class="[mode === 'not_started' ? 'active' : '']"
+      />
+      <p-button
+        label="Требуют внимания"
+        @click="changeMode('attention')"
+        outlined
+        :class="[mode === 'attention' ? 'active' : '']"
+      />
+      <p-button label="Все" @click="changeMode('all')" outlined :class="[mode === 'all' ? 'active' : '']" />
+      <p-dropdown v-model="filters['testName'].value" :options="testOptions" optionLabel="label" optionValue="value" />
+    </div>
     <div class="search">
       <i class="pi pi-search" />
       <p-input-text v-model.lazy="filters['global'].value" :placeholder="`Поиск по пройденным тестам`" />
@@ -9,15 +25,24 @@
 
 <script setup lang="ts">
 import PInputText from 'primevue/inputtext'
+import PButton from 'primevue/button'
+import PDropdown from 'primevue/dropdown'
 import { useCurrentTest } from '@test/composables/useCurrentTest'
+import { useCompletedTest } from '@admin/completed-tests/composables/useCompletedTest'
+import { onMounted } from 'vue'
 
 const { filters } = useCurrentTest()
+const { changeMode, mode, testOptions, getTestOptions } = useCompletedTest()
+
+onMounted(() => {
+  getTestOptions()
+})
 </script>
 
 <style scoped lang="scss">
 .search-panel {
   width: 100%;
-  justify-content: flex-end;
+  justify-content: space-between;
   display: flex;
   align-items: center;
 
@@ -33,6 +58,17 @@ const { filters } = useCurrentTest()
 
     :deep(.p-inputtext) {
       width: 100%;
+    }
+  }
+
+  .contols {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+
+    .active {
+      background-color: #10b981;
+      color: white;
     }
   }
 }

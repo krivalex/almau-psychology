@@ -2,7 +2,7 @@
   <section class="completed-tests">
     <p-datatable
       v-model:filters="filters"
-      :value="allCompletedTests"
+      :value="filteredData"
       :paginator="true"
       :rows="8"
       :rowsPerPageOptions="[5, 10, 20]"
@@ -101,8 +101,10 @@ import { writeToTelegram, writeToWhatsapp, transformDate } from '@/utils'
 import PDropdown from 'primevue/dropdown'
 import { statusLabels } from '@/utils'
 import SearchPanel from '@admin/completed-tests/components/SearchPanel.vue'
+import { useCompletedTest } from '@admin/completed-tests/composables/useCompletedTest'
 
 const { getAllContent, allCompletedTests, loading, updateStatus, filters } = useCurrentTest()
+const { filteredData } = useCompletedTest()
 
 async function toogleUpdateStatus(data: CompletedTest) {
   await updateStatus(data)

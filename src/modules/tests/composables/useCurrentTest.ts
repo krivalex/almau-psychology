@@ -18,6 +18,7 @@ const currentResult = ref<Result>()
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  testName: { value: null, matchMode: FilterMatchMode.CONTAINS },
 })
 
 const loading = reactive({
