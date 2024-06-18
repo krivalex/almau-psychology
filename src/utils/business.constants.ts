@@ -41,3 +41,10 @@ export const validators = {
   resultMsg: 'Результаты: где-то ошибка',
   resultMinMaxMag: 'Результаты: Минимальное значение должно быть меньше максимального',
 }
+
+export const statusLabels = [
+  { label: 'В процессе', value: 'in_progress' },
+  { label: 'Завершен', value: 'completed' },
+  { label: 'Нужно внимание', value: 'attention' },
+  { label: 'Не начат', value: 'not_started' },
+]

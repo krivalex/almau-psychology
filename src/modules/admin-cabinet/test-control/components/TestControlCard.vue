@@ -8,7 +8,7 @@
         <div class="image-block">
           <img class="preview-image" :src="test.image" alt="test image" @error="onImageError" />
         </div>
-        <div class="preview-content">
+        <div class="preview-content" :title="test.name">
           <h3>{{ test.name }}</h3>
         </div>
       </template>
@@ -109,6 +109,10 @@ async function onDeleteTest() {
     border-radius: 10px;
     border-top-left-radius: 30px !important;
     border-top-right-radius: 30px !important;
+    max-width: 520px;
+    min-width: 520px;
+    min-height: 300px;
+    max-height: 300px;
   }
 
   .desc {
@@ -145,6 +149,15 @@ async function onDeleteTest() {
 
   .preview-content {
     text-align: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    width: inherit;
+    padding: 0 20px;
+    width: 480px;
 
     h3 {
       padding: 5px 15px;

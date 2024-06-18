@@ -40,7 +40,13 @@
 
         <!-- result block -->
         <template v-else>
-          <div><p-button label="Посмотреть результаты" class="control-button" @click="completeTest" /></div>
+          <div>
+            <p-button
+              label="Посмотреть результаты"
+              class="control-button"
+              @click="completeTest(!!props?.previewTest)"
+            />
+          </div>
         </template>
       </div>
     </section>
@@ -56,12 +62,23 @@ import { useRouter } from 'vue-router'
 import { useCurrentTest } from '@test/composables/useCurrentTest'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
 import { onImageError } from '@/utils'
+import { Test } from '@/interfaces'
 
 const { selectedTest, getContentById, loading: testLoading } = useTest()
 const { currentIndex, clearTestAnswers, nextQuestion, prevQuestion, isTestCompleted, completeTest } = useCurrentTest()
 const router = useRouter()
 
+const props = defineProps<{
+  previewTest?: Test
+}>()
+
 onMounted(async () => {
+  if (props.previewTest) {
+    selectedTest.value = props.previewTest
+    console.log(selectedTest.value)
+    return
+  }
+
   if (!selectedTest.value) {
     await getContentById(router.currentRoute.value.params.id as string)
     if (!selectedTest.value) {

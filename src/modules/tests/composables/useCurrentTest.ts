@@ -1,12 +1,13 @@
 import { reactive, ref } from 'vue'
 import { Answer, CompletedTest, Result, User } from '@/interfaces'
 import { initNewCurrentTest } from '@/utils/business.init'
-import { DocumentData, addDoc, collection, getDocs } from 'firebase/firestore'
+import { DocumentData, addDoc, collection, doc, getDocs, updateDoc } from 'firebase/firestore'
 import { db } from '@/firebase-config'
 
 import { useTest } from '@/modules/tests/composables/useTest'
 import { useUser } from '@/composables/useUser'
 import { useRedirect } from '@/composables/useRedirect'
+import { FilterMatchMode } from 'primevue/api'
 
 const currentIndex = ref(0)
 const currentTest = ref<CompletedTest>(initNewCurrentTest)
@@ -14,6 +15,11 @@ const isTestCompleted = ref(false)
 const allCompletedTests = ref<CompletedTest[]>([])
 const completedTests = ref<CompletedTest | DocumentData>()
 const currentResult = ref<Result>()
+
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  testName: { value: null, matchMode: FilterMatchMode.CONTAINS },
+})
 
 const loading = reactive({
   allCompletedTests: false,
@@ -24,7 +30,7 @@ const loading = reactive({
 export const useCurrentTest = () => {
   const { goToResultPage } = useRedirect()
   const { selectedTest } = useTest()
-  const { googleUser } = useUser()
+  const { googleUser, updateUserInDatabase } = useUser()
   const yourDatabase = 'completedTests'
 
   async function getAllContent() {
@@ -34,8 +40,8 @@ export const useCurrentTest = () => {
       const querySnapshot = await getDocs(collection(db, yourDatabase))
       querySnapshot.forEach(doc => {
         const compressive = {
-          firebaseId: doc.id,
           ...doc.data(),
+          firebaseId: doc.id,
         }
         allCompletedTests.value.push(compressive as CompletedTest)
       })
@@ -113,16 +119,17 @@ export const useCurrentTest = () => {
     clickAnswerAnimation()
   }
 
+  function getScoreName() {
+    return selectedTest.value?.results.find(
+      result => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max,
+    )?.name
+  }
+
   function makeTestBody() {
-    if (googleUser.value) {
-      currentTest.value.student = googleUser.value as User
-    }
+    if (googleUser.value) currentTest.value.student = googleUser.value as User
     currentTest.value.created = new Date()
     currentTest.value.testName = selectedTest.value?.name as string
-    currentTest.value.scoreName =
-      (selectedTest.value?.results.find(
-        result => currentTest.value.scoreValue >= result.min && currentTest.value.scoreValue <= result.max,
-      )?.name as string) ?? 'Ошибка при записи'
+    currentTest.value.scoreName = getScoreName() || ''
   }
 
   function calculateResult() {
@@ -148,13 +155,31 @@ export const useCurrentTest = () => {
     })
   }
 
-  async function completeTest() {
+  async function completeTest(preview?: boolean) {
+    if (preview) {
+      makeTestBody()
+      clearTestAnswers()
+    }
+
     makeTestBody()
     calculateResult()
     await addContent()
+    await updateUserInDatabase(selectedTest.value?.name || 'Неизвестный тест')
     isTestCompleted.value = false
     clearTestAnswers()
     goToResultPage(selectedTest.value?.id)
+  }
+
+  async function updateStatus(data: CompletedTest | DocumentData) {
+    loading.completedTests = true
+    try {
+      if (data?.firebaseId) {
+        await updateDoc(doc(db, yourDatabase, data.firebaseId), data)
+      }
+      loading.completedTests = false
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return {
@@ -172,5 +197,7 @@ export const useCurrentTest = () => {
     calculateResult,
     currentResult,
     getAllContent,
+    updateStatus,
+    filters,
   }
 }

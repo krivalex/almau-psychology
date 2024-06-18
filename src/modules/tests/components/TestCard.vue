@@ -148,4 +148,3 @@ const props = defineProps<{
   padding: 0 10px;
 }
 </style>
-@/modules/tests/composables/useTest
