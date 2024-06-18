@@ -40,7 +40,13 @@
 
         <!-- result block -->
         <template v-else>
-          <div><p-button label="Посмотреть результаты" class="control-button" @click="completeTest" /></div>
+          <div>
+            <p-button
+              label="Посмотреть результаты"
+              class="control-button"
+              @click="completeTest(!!props?.previewTest)"
+            />
+          </div>
         </template>
       </div>
     </section>

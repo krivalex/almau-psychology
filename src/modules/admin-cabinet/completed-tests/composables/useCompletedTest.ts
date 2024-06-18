@@ -26,7 +26,6 @@ export function useCompletedTest() {
   function getTestOptions() {
     const testSet = new Set(allCompletedTests.value.map(test => test.testName))
     testOptions.value = Array.from(testSet).map(testName => ({ label: testName, value: testName }))
-    console.log(testOptions.value)
   }
 
   return {

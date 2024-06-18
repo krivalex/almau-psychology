@@ -105,6 +105,7 @@ import { useCompletedTest } from '@admin/completed-tests/composables/useComplete
 
 const { getAllContent, allCompletedTests, loading, updateStatus, filters } = useCurrentTest()
 const { filteredData } = useCompletedTest()
+const { getTestOptions } = useCompletedTest()
 
 async function toogleUpdateStatus(data: CompletedTest) {
   await updateStatus(data)
@@ -147,6 +148,7 @@ function isHasData(data: string | number) {
 
 onMounted(async () => {
   if (!allCompletedTests.value.length) await getAllContent()
+  getTestOptions()
 })
 </script>
 

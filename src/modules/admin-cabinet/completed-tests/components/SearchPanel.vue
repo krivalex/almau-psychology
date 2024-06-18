@@ -14,7 +14,14 @@
         :class="[mode === 'attention' ? 'active' : '']"
       />
       <p-button label="Все" @click="changeMode('all')" outlined :class="[mode === 'all' ? 'active' : '']" />
-      <p-dropdown v-model="filters['testName'].value" :options="testOptions" optionLabel="label" optionValue="value" />
+      <p-dropdown
+        v-model="filters['testName'].value"
+        :options="testOptions"
+        optionLabel="label"
+        optionValue="value"
+        showClear
+        placeholder="Название теста"
+      />
     </div>
     <div class="search">
       <i class="pi pi-search" />
@@ -29,14 +36,9 @@ import PButton from 'primevue/button'
 import PDropdown from 'primevue/dropdown'
 import { useCurrentTest } from '@test/composables/useCurrentTest'
 import { useCompletedTest } from '@admin/completed-tests/composables/useCompletedTest'
-import { onMounted } from 'vue'
 
 const { filters } = useCurrentTest()
-const { changeMode, mode, testOptions, getTestOptions } = useCompletedTest()
-
-onMounted(() => {
-  getTestOptions()
-})
+const { changeMode, mode, testOptions } = useCompletedTest()
 </script>
 
 <style scoped lang="scss">

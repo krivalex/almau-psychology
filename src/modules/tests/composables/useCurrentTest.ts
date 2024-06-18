@@ -155,7 +155,14 @@ export const useCurrentTest = () => {
     })
   }
 
-  async function completeTest() {
+  async function completeTest(preview: boolean = false) {
+    if (preview) {
+      makeTestBody()
+      calculateResult()
+      isTestCompleted.value = false
+      clearTestAnswers()
+    }
+
     makeTestBody()
     calculateResult()
     await addContent()

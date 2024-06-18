@@ -9,7 +9,7 @@
   </div>
   <div class="contols">
     <p-button icon="pi pi-arrow-left" class="control-button" @click="nextAction" />
-    <p-button icon="pi pi-refresh" class="p-button-text control-button refresh" />
+    <p-button icon="pi pi-refresh" class="p-button-text control-button refresh" @click="updateAction" />
     <p-button icon="pi pi-arrow-right" class="control-button" @click="prevAction" />
   </div>
 </template>
@@ -20,6 +20,10 @@ import { useChangeTest } from '@admin/test-control/composables/useChangeTest'
 import TestView from '@/modules/tests/TestView.vue'
 import ResultView from '@/modules/tests/ResultView.vue'
 import { ref, shallowRef } from 'vue'
+import { useCurrentTest } from '@/modules/tests/composables/useCurrentTest'
+
+const { clearTestAnswers, isTestCompleted } = useCurrentTest()
+const { test } = useChangeTest()
 
 const previewID = ref(1)
 
@@ -42,7 +46,10 @@ function prevAction() {
   previewID.value = previewID.value === 1 ? previewMap.value.length : previewID.value - 1
 }
 
-const { test } = useChangeTest()
+function updateAction() {
+  clearTestAnswers()
+  isTestCompleted.value = !isTestCompleted.value
+}
 </script>
 
 <style lang="scss" src="@admin/test-control/styles/test-control.scss" scoped />
