@@ -57,6 +57,7 @@ export interface Question {
   id: string
   text: string
   answers: Answer[]
+  answerType: AnswerType
 }
 
 export interface Answer {
@@ -73,3 +74,5 @@ export interface Result {
   min: number
   max: number
 }
+
+export type AnswerType = 'open' | 'buttons' | 'multi-buttons'

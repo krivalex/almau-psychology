@@ -1,4 +1,4 @@
-import { ConrolTestCondition } from '@/interfaces'
+import { AnswerType, ConrolTestCondition, Question } from '@/interfaces'
 import { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 import { inject, Ref, ref } from 'vue'
 import {
@@ -8,6 +8,7 @@ import {
   isNotValidMessage,
   secondLayerResults,
   initNewTest,
+  answersTypes,
 } from '@/utils'
 import { useTest } from '@/modules/tests/composables/useTest'
 
@@ -16,6 +17,7 @@ export function useChangeTest() {
   const test = ref(dialogRef?.value?.data?.test)
 
   const { newTest } = useTest()
+  const newAnswerType = ref<AnswerType>()
 
   const changeTestConditions: ConrolTestCondition[] = [
     {
@@ -142,7 +144,12 @@ export function useChangeTest() {
   }
 
   function addQuestion() {
-    test.value.questions.push({ text: '', answers: [{ text: '' }] })
+    const answerType = newAnswerType.value
+    test.value.questions.push({ text: '', answers: [{ text: '' }], answerType })
+  }
+
+  function getAnswerType(type: AnswerType) {
+    return answersTypes.find(answerType => answerType.value === type)?.label
   }
 
   function addResult() {
@@ -155,6 +162,10 @@ export function useChangeTest() {
 
   function deleteResult(index: number) {
     test.value.results.splice(index, 1)
+  }
+
+  function isShowAddAnswerButton(question: Question) {
+    return question.answerType === 'open'
   }
 
   function getConditions() {
@@ -247,5 +258,8 @@ export function useChangeTest() {
     deleteResult,
     getConditions,
     clear,
+    newAnswerType,
+    getAnswerType,
+    isShowAddAnswerButton,
   }
 }

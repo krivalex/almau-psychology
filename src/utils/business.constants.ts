@@ -48,3 +48,9 @@ export const statusLabels = [
   { label: 'Нужно внимание', value: 'attention' },
   { label: 'Не начат', value: 'not_started' },
 ]
+
+export const answersTypes = [
+  { value: 'open', label: 'Открытый' },
+  { value: 'buttons', label: 'Закрытый (1 ответ)' },
+  { value: 'multi-buttons', label: 'Закрытый (1+ ответ)' },
+]
