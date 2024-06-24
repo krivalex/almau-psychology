@@ -78,7 +78,7 @@ import PButton from 'primevue/button'
 import PDropdown from 'primevue/dropdown'
 
 import AnswersInfo from '@admin/test-control/components/modals/components/AnswersInfo.vue'
-import { answersTypes } from '@/utils'
+import { answersTypes, getAnswerType } from '@/utils'
 import { useChangeTest } from '@admin/test-control/composables/useChangeTest'
 
 const {
@@ -89,7 +89,6 @@ const {
   deleteQuestion,
   addQuestion,
   newAnswerType,
-  getAnswerType,
   isShowAddAnswerButton,
 } = useChangeTest()
 </script>

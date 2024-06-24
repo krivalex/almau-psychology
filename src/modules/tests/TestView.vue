@@ -17,19 +17,13 @@
       <!-- question block -->
       <div class="test-request">
         <div class="queston" v-if="selectedTest?.questions[currentIndex]">
-          <QuestionCard :question="selectedTest?.questions[currentIndex]" />
+          <question-block :question="selectedTest?.questions[currentIndex]" />
         </div>
 
         <!-- control block -->
         <template v-if="!isTestCompleted">
           <div class="control">
-            <div class="answers">
-              <template v-if="selectedTest?.questions[currentIndex]?.answers">
-                <template v-for="answer in selectedTest?.questions[currentIndex]?.answers" :key="answer.id">
-                  <p-button :label="answer.text" class="control-button" @click="nextQuestion(answer)" :id="answer.id" />
-                </template>
-              </template>
-            </div>
+            <answers-block />
             <div class="actions">
               <p-button icon="pi pi-arrow-left" class="action-button" @click="prevQuestion" />
               <div class="counter">{{ currentIndex + 1 }} / {{ selectedTest?.questions.length }}</div>
@@ -54,18 +48,21 @@
 </template>
 
 <script setup lang="ts">
-import { useTest } from '@test/composables/useTest'
-import QuestionCard from '@test/components/QuestionCard.vue'
-import { onMounted } from 'vue'
 import PButton from 'primevue/button'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useCurrentTest } from '@test/composables/useCurrentTest'
+
+import QuestionBlock from '@test/components/QuestionBlock.vue'
+import AnswersBlock from '@test/components/AnswersBlock.vue'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
+
 import { onImageError } from '@/utils'
 import { Test } from '@/interfaces'
+import { useCurrentTest } from '@test/composables/useCurrentTest'
+import { useTest } from '@test/composables/useTest'
 
 const { selectedTest, getContentById, loading: testLoading } = useTest()
-const { currentIndex, clearTestAnswers, nextQuestion, prevQuestion, isTestCompleted, completeTest } = useCurrentTest()
+const { currentIndex, clearTestAnswers, prevQuestion, isTestCompleted, completeTest } = useCurrentTest()
 const router = useRouter()
 
 const props = defineProps<{
@@ -75,7 +72,6 @@ const props = defineProps<{
 onMounted(async () => {
   if (props.previewTest) {
     selectedTest.value = props.previewTest
-    console.log(selectedTest.value)
     return
   }
 
@@ -166,15 +162,6 @@ onMounted(async () => {
       text-align: center;
     }
 
-    .answers {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      gap: 10px;
-      padding: 0 20px;
-    }
-
     .actions {
       display: flex;
       justify-content: space-between;
@@ -211,4 +198,3 @@ onMounted(async () => {
   }
 }
 </style>
-@/modules/tests/composables/useTest @/modules/tests/composables/useCurrentTest

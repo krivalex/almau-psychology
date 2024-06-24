@@ -8,7 +8,6 @@ import {
   isNotValidMessage,
   secondLayerResults,
   initNewTest,
-  answersTypes,
 } from '@/utils'
 import { useTest } from '@/modules/tests/composables/useTest'
 
@@ -148,10 +147,6 @@ export function useChangeTest() {
     test.value.questions.push({ text: '', answers: [{ text: '' }], answerType })
   }
 
-  function getAnswerType(type: AnswerType) {
-    return answersTypes.find(answerType => answerType.value === type)?.label
-  }
-
   function addResult() {
     test.value.results.push({
       name: '',
@@ -259,7 +254,6 @@ export function useChangeTest() {
     getConditions,
     clear,
     newAnswerType,
-    getAnswerType,
     isShowAddAnswerButton,
   }
 }
