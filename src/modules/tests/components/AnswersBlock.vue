@@ -9,7 +9,7 @@
           <p-button :label="answer.text" class="control-button" @click="nextQuestion(answer)" :id="answer.id" />
         </template>
         <template v-else-if="currentAnswerType === 'open'">
-          <p-textarea rows="6" cols="30" v-model="answer.text" :id="answer.id" />
+          <p-textarea rows="6" cols="30" v-model="answer.text" :id="answer.id" autoResize />
         </template>
         <template v-else-if="currentAnswerType === 'multi-buttons'">
           <p-button :label="answer.text" class="control-button" @click="nextQuestion(answer)" :id="answer.id" />
@@ -57,14 +57,17 @@ const isNoAnswers = computed(
   :deep(.p-inputtextarea) {
     width: 100%;
   }
-}
 
-.control-button {
-  width: 100%;
-  font-size: 1.5rem;
-  text-align: center;
-  padding: 0.5rem;
-  max-width: 80%;
+  .control-button {
+    min-width: 48%;
+    width: min-content;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 0.5rem;
+    max-width: 48%;
+    max-height: 80px;
+    min-height: 30px;
+  }
 }
 
 .clicked {

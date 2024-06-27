@@ -76,21 +76,44 @@ const props = defineProps<{
     border-top-right-radius: 30px !important;
   }
 
-  :deep(.p-card-body) {
+  :deep(.p-card-footer) {
     padding: 0;
+    position: relative;
+  }
+
+  :deep(.p-card-body) {
+    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.2rem;
   }
 
   .desc {
     padding: 0;
     margin-block-start: 0em;
     margin-block-end: 0em;
-    text-align: center;
+    text-align: start;
+    word-wrap: break-word;
+    hyphens: auto;
   }
 
   .author {
     position: absolute;
-    bottom: 5px;
-    right: 7px;
+    bottom: -23px;
+    right: 0px;
+    font-size: 0.8rem;
+    color: #ccc;
+  }
+
+  .time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 7px;
+    position: absolute;
+    bottom: -23px;
+    left: 10px;
     font-size: 0.8rem;
     color: #ccc;
   }
@@ -114,12 +137,18 @@ const props = defineProps<{
 
   .preview-content {
     text-align: center;
+    overflow: hidden;
+    max-height: 5.25em;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
 
     h3 {
       padding: 5px 15px;
       margin-block-start: 0em;
       margin-block-end: 0em;
-      font-size: 1.8rem;
+      font-size: 1.45rem;
     }
   }
 
@@ -128,27 +157,15 @@ const props = defineProps<{
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    margin-top: 10px;
     width: inherit;
     .contol-button {
       width: 180px;
     }
   }
-
-  .time {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    gap: 7px;
-    position: absolute;
-    bottom: 5px;
-    left: 7px;
-    font-size: 0.8rem;
-    color: #ccc;
-  }
 }
 
 :deep(.p-card .p-card-content) {
-  padding: 0 10px;
+  padding: 0 3px;
 }
 </style>
