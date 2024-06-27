@@ -51,6 +51,7 @@ const { selectedTest } = useTest()
 
 function enjoyTest() {
   selectedTest.value = props.test
+  console.log(selectedTest.value)
   goToTest(props.test.id as string)
 }
 

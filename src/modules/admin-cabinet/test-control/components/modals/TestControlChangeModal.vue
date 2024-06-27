@@ -56,7 +56,7 @@ import { useTest } from '@test/composables/useTest'
 import { success } from '@/utils/toast'
 import { useConfirm } from 'primevue/useconfirm'
 import { ref, watch } from 'vue'
-import { validators } from '@/utils'
+import { validators, genarateUniqueID } from '@/utils'
 import { onUnmounted } from 'vue'
 
 const { getConditions, test, clear } = useChangeTest()
@@ -127,6 +127,7 @@ async function onSaveTestToDraft() {
 
 async function publishTest() {
   test.value.visible = true
+  test.value.id = genarateUniqueID()
   await updateTest(test.value)
   await getAllContent()
   success('Управление тестами', 'Тест успешно опубликован')

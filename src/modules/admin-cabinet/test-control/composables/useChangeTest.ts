@@ -179,7 +179,12 @@ export function useChangeTest() {
   function getConditions() {
     const isTwoResult = test.value.results.length >= 2
     const isFiveQuestion = test.value.questions.length >= 5
-    const isAllQuestionsHasTwoMoreAnswers = test.value.questions.every((question: any) => question.answers.length >= 2)
+
+    const isAllQuestionsHasTwoMoreAnswers = test.value.questions.every((question: any) => {
+      const isTwoAnswers = question.answers.length >= 2
+      const isOpenQuestion = question.answerType === 'open'
+      return isTwoAnswers || isOpenQuestion
+    })
 
     const firstLayer = firstLayerFields.every(field => {
       return isValidData(test.value[field])
@@ -202,6 +207,7 @@ export function useChangeTest() {
     })
 
     const thirdLayer = test.value.questions.every((question: any) => {
+      if (question.answerType === 'open') return true
       return question.answers.every((answer: any) => {
         return thirdLayerFields.every(field => {
           return isValidData(answer[field])
