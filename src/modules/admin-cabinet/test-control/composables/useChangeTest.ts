@@ -8,6 +8,7 @@ import {
   isNotValidMessage,
   secondLayerResults,
   initNewTest,
+  answersDesc,
 } from '@/utils'
 import { useTest } from '@/modules/tests/composables/useTest'
 
@@ -130,6 +131,16 @@ export function useChangeTest() {
     return value !== null && value !== undefined && value !== ''
   }
 
+  function calculateMaxPosibleLength(question: Question) {
+    if (question.answerType === 'multi-buttons') return 40
+    if (question.answerType === 'buttons') return 100
+    if (question.answerType === 'open') return 300
+  }
+
+  function getInfoTypeAnswer(question: Question) {
+    return answersDesc[question.answerType as AnswerType]
+  }
+
   function deleteAnswer(Qindex: number, Rindex: number) {
     test.value.questions[Qindex].answers.splice(Rindex, 1)
   }
@@ -160,7 +171,9 @@ export function useChangeTest() {
   }
 
   function isShowAddAnswerButton(question: Question) {
-    return question.answerType === 'open'
+    const isOpenQuestion = question.answerType === 'open'
+    const isFourAnswersCompletly = question.answers.length >= 4
+    return isOpenQuestion || isFourAnswersCompletly
   }
 
   function getConditions() {
@@ -255,5 +268,7 @@ export function useChangeTest() {
     clear,
     newAnswerType,
     isShowAddAnswerButton,
+    calculateMaxPosibleLength,
+    getInfoTypeAnswer,
   }
 }

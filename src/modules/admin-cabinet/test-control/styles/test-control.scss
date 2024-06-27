@@ -181,16 +181,31 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
 
-  .type {
-    font-size: 1rem;
-    color: rgb(163, 163, 163);
+  .type-block {
 
-    strong {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    .type {
       font-size: 1rem;
-      color: #007bff;
-      font-weight: 600;
+      color: rgb(163, 163, 163);
+
+      strong {
+        font-size: 1rem;
+        color: #007bff;
+        font-weight: 600;
+      }
+    }
+
+    .info-button {
+      width: 25px;
+      height: 25px;
+
     }
   }
+
 }
 
 .beetween {
@@ -201,3 +216,5 @@
   width: 100%;
   max-width: 250px;
 }
+
+

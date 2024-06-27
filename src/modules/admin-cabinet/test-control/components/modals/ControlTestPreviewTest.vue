@@ -76,8 +76,8 @@ function updateAction() {
   display: flex;
   justify-content: space-evenly;
   top: calc(844px * 0.8);
-  padding: 5px 20px;
-  gap: 20px;
+  padding: 5px 17px;
+  gap: 22px;
 
   .control-button {
     width: 80px;

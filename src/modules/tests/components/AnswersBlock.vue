@@ -10,9 +10,19 @@
         </template>
         <template v-else-if="currentAnswerType === 'open'">
           <p-textarea rows="6" cols="30" v-model="answer.text" :id="answer.id" autoResize />
+          <p-button class="control-button p-text-button send-button" label="Ответить" @click="nextQuestion(answer)" />
         </template>
         <template v-else-if="currentAnswerType === 'multi-buttons'">
-          <p-button :label="answer.text" class="control-button" @click="nextQuestion(answer)" :id="answer.id" />
+          <div class="checkbox-label">
+            <p-checkbox v-model="answer.text" :id="answer.id" />
+            <span class="label" :id="answer.id">{{ answer.text }}</span>
+          </div>
+          <p-button
+            v-if="isMultiButtonAnswerNotExist"
+            class="control-button p-text-button send-button"
+            label="Ответить"
+            @click="nextQuestion(answer)"
+          />
         </template>
       </template>
     </template>
@@ -22,6 +32,8 @@
 <script setup lang="ts">
 import PButton from 'primevue/button'
 import PTextarea from 'primevue/textarea'
+import PCheckbox from 'primevue/checkbox'
+
 import { computed } from 'vue'
 
 import { useTest } from '@test/composables/useTest'
@@ -41,6 +53,10 @@ const isNoAnswers = computed(
     !selectedTest.value?.questions[currentIndex.value]?.answers.map(a => a.text).join('') &&
     currentAnswerType.value !== 'open',
 )
+
+const isMultiButtonAnswerNotExist = computed(() => {
+  return !selectedTest.value?.questions[currentIndex.value]?.answers.some(a => a.text)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -53,9 +69,26 @@ const isNoAnswers = computed(
   width: 100%;
   gap: 10px;
   padding: 0 20px;
+  padding-bottom: 10px;
+  position: relative;
 
   :deep(.p-inputtextarea) {
     width: 100%;
+  }
+
+  .send-button {
+    position: relative;
+    top: -20px;
+    background-color: transparent;
+    color: #059669;
+    border-color: transparent;
+    width: 100%;
+    min-width: 150px;
+
+    :deep(.p-button-label) {
+      font-size: 1.3rem;
+      width: 100%;
+    }
   }
 
   .control-button {
@@ -84,6 +117,29 @@ const isNoAnswers = computed(
   }
   100% {
     transform: scale(1);
+  }
+}
+
+.checkbox-label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  gap: 10px;
+  padding: 0 0.3rem;
+
+  .label {
+    font-size: 1rem;
+    width: 100%;
+    text-align: start;
+    max-height: 60px;
+    word-wrap: break-word;
+  }
+
+  :deep(.p-checkbox-box) {
+    width: 30px;
+    height: 22px;
   }
 }
 </style>

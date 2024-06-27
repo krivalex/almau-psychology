@@ -27,6 +27,7 @@
                     rows="1"
                     cols="30"
                     autoResize
+                    :maxlength="calculateMaxPosibleLength(test['questions'][Qindex])"
                   />
                 </template>
                 <template v-else-if="answerCondition.type === 'number'">
@@ -72,7 +73,7 @@ const props = defineProps<{
   Qindex: number
 }>()
 
-const { test, isValidData, deleteAnswer } = useChangeTest()
+const { test, isValidData, deleteAnswer, calculateMaxPosibleLength } = useChangeTest()
 
 const isOpenQuestion = ref(test.value['questions'][props.Qindex].answerType === 'open')
 </script>

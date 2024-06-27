@@ -26,9 +26,17 @@
             <AnswersInfo :answers="question.answers" :condition="condition" :Qindex="Qindex" />
 
             <div class="create-block-button beetween">
-              <span class="type"
-                >Тип вопроса: <strong>{{ getAnswerType(test['questions'][Qindex].answerType) }}</strong></span
-              >
+              <div class="type-block">
+                <p-button
+                  icon="pi pi-info"
+                  class="info-button"
+                  v-tooltip.top="getInfoTypeAnswer(test['questions'][Qindex])"
+                />
+                <span class="type">
+                  Тип вопроса:
+                  <strong>{{ getAnswerType(test['questions'][Qindex].answerType) }}</strong>
+                </span>
+              </div>
               <div class="buttons">
                 <p-button
                   label="Добавить ответ"
@@ -90,6 +98,7 @@ const {
   addQuestion,
   newAnswerType,
   isShowAddAnswerButton,
+  getInfoTypeAnswer,
 } = useChangeTest()
 </script>
 
