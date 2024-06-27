@@ -138,7 +138,7 @@ export function useChangeTest() {
   }
 
   function getInfoTypeAnswer(question: Question) {
-    return answersDesc[question.answerType as AnswerType]
+    return answersDesc[question.answerType as AnswerType] || answersDesc.buttons
   }
 
   function deleteAnswer(Qindex: number, Rindex: number) {
