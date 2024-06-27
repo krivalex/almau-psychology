@@ -76,6 +76,10 @@ const props = defineProps<{
     border-top-right-radius: 30px !important;
   }
 
+  :deep(.p-card-body) {
+    padding: 0;
+  }
+
   .desc {
     padding: 0;
     margin-block-start: 0em;
