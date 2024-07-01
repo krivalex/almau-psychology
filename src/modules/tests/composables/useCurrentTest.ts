@@ -1,7 +1,7 @@
 import { reactive, ref } from 'vue'
 import { Answer, CompletedTest, Result, User } from '@/interfaces'
 import { initNewCurrentTest } from '@/utils/business.init'
-import { DocumentData, addDoc, collection, doc, getDocs, updateDoc } from 'firebase/firestore'
+import { DocumentData, addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore'
 import { db } from '@/firebase-config'
 
 import { useTest } from '@/modules/tests/composables/useTest'
@@ -15,7 +15,6 @@ const isTestCompleted = ref(false)
 const allCompletedTests = ref<CompletedTest[]>([])
 const completedTests = ref<CompletedTest | DocumentData>()
 const currentResult = ref<Result>()
-const multiAnswers = ref<boolean[]>([])
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -68,10 +67,20 @@ export const useCurrentTest = () => {
     try {
       if (currentTest.value) {
         currentTest.value.id = Date.now().toString()
-        console.log(currentTest.value)
         await addDoc(collection(db, yourDatabase), currentTest.value)
         loading.currentTest = false
       }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async function deleteCompletedTest(firebaseId: string) {
+    loading.currentTest = true
+    try {
+      await deleteDoc(doc(db, yourDatabase, firebaseId))
+      allCompletedTests.value = allCompletedTests.value.filter(test => test.firebaseId !== firebaseId)
+      loading.currentTest = false
     } catch (error) {
       console.error(error)
     }
@@ -140,7 +149,6 @@ export const useCurrentTest = () => {
     }
 
     clickAnswerAnimation()
-    multiAnswers.value = []
   }
 
   function prevQuestion() {
@@ -151,7 +159,6 @@ export const useCurrentTest = () => {
       currentIndex.value--
     }
     clickAnswerAnimation()
-    multiAnswers.value = []
   }
 
   function getScoreName() {
@@ -235,6 +242,6 @@ export const useCurrentTest = () => {
     getAllContent,
     updateStatus,
     filters,
-    multiAnswers,
+    deleteCompletedTest,
   }
 }
