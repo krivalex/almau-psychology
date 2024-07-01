@@ -1,5 +1,7 @@
 <template>
-  <WarningPhoneMessage />
+  <!-- <template v-if="!props.previewTest">
+    <warning-phone-message />
+  </template> -->
 
   <template v-if="testLoading.test">
     <LoadSpinner />
@@ -56,7 +58,7 @@ import { useRouter } from 'vue-router'
 import QuestionBlock from '@test/components/QuestionBlock.vue'
 import AnswersBlock from '@test/components/AnswersBlock.vue'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
-import WarningPhoneMessage from '@/components/WarningPhoneMessage.vue'
+// import WarningPhoneMessage from '@/components/WarningPhoneMessage.vue'
 
 import { onImageError } from '@/utils'
 import { Test } from '@/interfaces'
