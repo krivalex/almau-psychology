@@ -1,5 +1,4 @@
 <template>
-  {{ currentTest.scoreValue }}
   <div class="answers">
     <template v-for="answer in selectedTest?.questions[currentIndex]?.answers" :key="answer.id">
       <template v-if="isNoAnswers">
@@ -46,7 +45,7 @@ import { useTest } from '@test/composables/useTest'
 import { useCurrentTest } from '@test/composables/useCurrentTest'
 
 const { selectedTest } = useTest()
-const { currentIndex, nextQuestion, currentTest } = useCurrentTest()
+const { currentIndex, nextQuestion } = useCurrentTest()
 
 function getAnswerType() {
   return selectedTest.value?.questions[currentIndex.value]?.answerType

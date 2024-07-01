@@ -234,16 +234,16 @@ export function useChangeTest() {
 
     const isValid = !(firstLayer && secondLayer && thirdLayer && secondLayerResult)
 
-    console.log('isVALID', {
-      firstLayer,
-      secondLayer,
-      secondLayerResult,
-      secondLayerAdditional,
-      thirdLayer,
-      isTwoResult,
-      isFiveQuestion,
-      isAllQuestionsHasTwoMoreAnswers,
-    })
+    // console.log('isVALID', {
+    //   firstLayer,
+    //   secondLayer,
+    //   secondLayerResult,
+    //   secondLayerAdditional,
+    //   thirdLayer,
+    //   isTwoResult,
+    //   isFiveQuestion,
+    //   isAllQuestionsHasTwoMoreAnswers,
+    // })
 
     const valid = !(
       firstLayer &&
