@@ -1,4 +1,5 @@
 <template>
+  {{ currentTest.scoreValue }}
   <div class="answers">
     <template v-for="answer in selectedTest?.questions[currentIndex]?.answers" :key="answer.id">
       <template v-if="isNoAnswers">
@@ -19,18 +20,18 @@
         </template>
         <template v-else-if="currentAnswerType === 'multi-buttons'">
           <div class="checkbox-label">
-            <p-checkbox v-model="multiAnswers" :id="answer.id" :falseValue="false" :trueValue="true" />
+            <p-checkbox v-model="answer.isChoose" :id="answer.id" :binary="true" />
             <span class="label" :id="answer.id">{{ answer.text }}</span>
           </div>
-          <p-button
-            v-if="isMultiButtonAnswerNotExist"
-            class="control-button p-text-button send-button"
-            label="Ответить"
-            @click="nextQuestion(answer)"
-          />
         </template>
       </template>
     </template>
+    <p-button
+      v-if="isMultiQuestionEmpthy()"
+      class="control-button p-text-button"
+      label="Ответить"
+      @click="nextQuestion(null, 'multi-buttons')"
+    />
   </div>
 </template>
 
@@ -39,15 +40,13 @@ import PButton from 'primevue/button'
 import PTextarea from 'primevue/textarea'
 import PCheckbox from 'primevue/checkbox'
 
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
 import { useTest } from '@test/composables/useTest'
 import { useCurrentTest } from '@test/composables/useCurrentTest'
 
 const { selectedTest } = useTest()
-const { currentIndex, nextQuestion } = useCurrentTest()
-
-const multiAnswers = ref<string[]>([])
+const { currentIndex, nextQuestion, currentTest } = useCurrentTest()
 
 function getAnswerType() {
   return selectedTest.value?.questions[currentIndex.value]?.answerType
@@ -57,6 +56,11 @@ function isOpenQuestionEmpthy(answer: { text: string }) {
   return !answer.text && getAnswerType() === 'open'
 }
 
+function isMultiQuestionEmpthy() {
+  const isMultiEmpty = selectedTest.value?.questions[currentIndex.value]?.answers.every(a => !a.isChoose)
+  return !isMultiEmpty && getAnswerType() === 'multi-buttons'
+}
+
 const currentAnswerType = computed(() => getAnswerType() || 'buttons')
 
 const isNoAnswers = computed(
@@ -64,10 +68,6 @@ const isNoAnswers = computed(
     !selectedTest.value?.questions[currentIndex.value]?.answers.map(a => a.text).join('') &&
     currentAnswerType.value !== 'open',
 )
-
-const isMultiButtonAnswerNotExist = computed(() => {
-  return !selectedTest.value?.questions[currentIndex.value]?.answers.some(a => a.text)
-})
 </script>
 
 <style lang="scss" scoped>

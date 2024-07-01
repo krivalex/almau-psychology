@@ -143,7 +143,7 @@ export function useChangeTest() {
   }
 
   function createNewAnswerBody() {
-    const ID = test.value.questions.answers.length + 1 || genarateUniqueID()
+    const ID = test.value?.questions?.answers?.length + 1 || genarateUniqueID()
     const newAnswer = { text: '', value: 0, id: ID }
     return newAnswer
   }

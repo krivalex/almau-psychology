@@ -15,6 +15,7 @@ const isTestCompleted = ref(false)
 const allCompletedTests = ref<CompletedTest[]>([])
 const completedTests = ref<CompletedTest | DocumentData>()
 const currentResult = ref<Result>()
+const multiAnswers = ref<boolean[]>([])
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -91,14 +92,36 @@ export const useCurrentTest = () => {
         value: answer.value,
       })
 
-      currentTest.value.scoreValue += answer.value
+      currentTest.value.scoreValue += answer.value || 0
     }
   }
 
-  function nextQuestion(answer: Answer) {
+  function multiButtonsHandler(mode?: 'multi-buttons') {
+    const isArgumentMultiMode = mode === 'multi-buttons'
+    const isAnswerMultiMode = selectedTest.value?.questions[currentIndex.value].answerType === 'multi-buttons'
+
+    if (isArgumentMultiMode && isAnswerMultiMode) {
+      const finalText = selectedTest.value?.questions[currentIndex.value].answers
+        .map(answer => answer.isChoose)
+        ?.filter(Boolean)
+        ?.join(', ')
+
+      return finalText
+    }
+  }
+
+  function nextQuestion(answer: Answer | null, mode?: 'multi-buttons') {
+    const isAnswerExist = selectedTest.value?.questions[currentIndex.value].answers[0]
+
+    if (!answer && isAnswerExist && selectedTest.value) {
+      answer = selectedTest.value.questions[currentIndex.value].answers[0]
+      const answerText = multiButtonsHandler(mode)
+      if (answerText) answer.text = answerText
+    }
+
     if (selectedTest.value) {
       if (currentIndex.value < selectedTest.value?.questions.length) {
-        saveAnswer(answer)
+        saveAnswer(answer!)
         currentIndex.value++
       }
     }
@@ -106,7 +129,9 @@ export const useCurrentTest = () => {
     if (currentIndex.value === selectedTest.value?.questions.length) {
       isTestCompleted.value = true
     }
+
     clickAnswerAnimation()
+    multiAnswers.value = []
   }
 
   function prevQuestion() {
@@ -117,6 +142,7 @@ export const useCurrentTest = () => {
       currentIndex.value--
     }
     clickAnswerAnimation()
+    multiAnswers.value = []
   }
 
   function getScoreName() {
@@ -199,5 +225,6 @@ export const useCurrentTest = () => {
     getAllContent,
     updateStatus,
     filters,
+    multiAnswers,
   }
 }
