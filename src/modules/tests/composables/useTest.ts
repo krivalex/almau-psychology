@@ -97,6 +97,7 @@ export const useTest = () => {
     loading.testList = true
     try {
       if (test.firebaseId) await deleteDoc(doc(db, yourDatabase, test.firebaseId))
+
       loading.testList = false
     } catch (error) {
       console.error(error)
