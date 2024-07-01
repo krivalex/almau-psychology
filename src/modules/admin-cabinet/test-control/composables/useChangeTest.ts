@@ -274,7 +274,7 @@ export function useChangeTest() {
 
   function clear() {
     test.value = {}
-    newTest.value = initNewTest
+    newTest.value = initNewTest()
   }
 
   return {

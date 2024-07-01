@@ -10,7 +10,7 @@ import { useRedirect } from '@/composables/useRedirect'
 import { FilterMatchMode } from 'primevue/api'
 
 const currentIndex = ref(0)
-const currentTest = ref<CompletedTest>(initNewCurrentTest)
+const currentTest = ref<CompletedTest>(Object.assign({}, initNewCurrentTest()))
 const isTestCompleted = ref(false)
 const allCompletedTests = ref<CompletedTest[]>([])
 const completedTests = ref<CompletedTest | DocumentData>()
@@ -68,6 +68,7 @@ export const useCurrentTest = () => {
     try {
       if (currentTest.value) {
         currentTest.value.id = Date.now().toString()
+        console.log(currentTest.value)
         await addDoc(collection(db, yourDatabase), currentTest.value)
         loading.currentTest = false
       }
@@ -78,52 +79,60 @@ export const useCurrentTest = () => {
 
   function clearTestAnswers() {
     currentIndex.value = 0
-    currentTest.value = initNewCurrentTest
+    currentTest.value = Object.assign({}, initNewCurrentTest())
     clickAnswerAnimation()
   }
 
-  function saveAnswer(answer: Answer) {
+  function saveAnswer(answer: Answer, answerScore: number) {
     if (selectedTest.value) {
       const _question = selectedTest.value?.questions[currentIndex.value].text
 
       currentTest.value?.answers.push({
         question: _question,
         answer: answer.text,
-        value: answer.value,
+        value: answerScore || answer.value,
       })
 
-      currentTest.value.scoreValue += answer.value || 0
+      currentTest.value.scoreValue += answerScore || answer.value || 0
     }
   }
 
   function multiButtonsHandler(mode?: 'multi-buttons') {
+    let answerScore = 0
+    let answerText = ''
+
     const isArgumentMultiMode = mode === 'multi-buttons'
     const isAnswerMultiMode = selectedTest.value?.questions[currentIndex.value].answerType === 'multi-buttons'
 
     if (isArgumentMultiMode && isAnswerMultiMode) {
-      const finalText = selectedTest.value?.questions[currentIndex.value].answers
-        .map(answer => answer.isChoose)
-        ?.filter(Boolean)
-        ?.join(', ')
-
-      return finalText
+      answerText =
+        selectedTest.value?.questions[currentIndex.value].answers
+          .map(answer => {
+            if (answer.isChoose) {
+              answerScore += answer.value
+              return answer.text
+            }
+          })
+          ?.filter(Boolean)
+          ?.join(', ') || ''
     }
+    return { answerText, answerScore }
   }
 
   function nextQuestion(answer: Answer | null, mode?: 'multi-buttons') {
+    let calculatedScore = 0
     const isAnswerExist = selectedTest.value?.questions[currentIndex.value].answers[0]
 
     if (!answer && isAnswerExist && selectedTest.value) {
       answer = selectedTest.value.questions[currentIndex.value].answers[0]
-      const answerText = multiButtonsHandler(mode)
+      const { answerText, answerScore } = multiButtonsHandler(mode)
       if (answerText) answer.text = answerText
+      if (answerScore) calculatedScore = answerScore
     }
 
-    if (selectedTest.value) {
-      if (currentIndex.value < selectedTest.value?.questions.length) {
-        saveAnswer(answer!)
-        currentIndex.value++
-      }
+    if (selectedTest.value && currentIndex.value < selectedTest.value?.questions.length) {
+      saveAnswer(answer!, calculatedScore)
+      currentIndex.value++
     }
 
     if (currentIndex.value === selectedTest.value?.questions.length) {
@@ -185,6 +194,7 @@ export const useCurrentTest = () => {
     if (preview) {
       makeTestBody()
       clearTestAnswers()
+      return
     }
 
     makeTestBody()

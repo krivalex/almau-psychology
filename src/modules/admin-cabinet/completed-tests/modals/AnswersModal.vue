@@ -26,10 +26,13 @@ const answers = ref(dialogRef?.value?.data?.answers.answers)
   margin-bottom: 5px;
   border-top: 1px solid #e0e0e0;
   border-bottom: 1px solid #e0e0e0;
+  max-width: 90vw;
+  min-width: 90vw;
 
   .index-question {
     display: flex;
     align-items: center;
+    max-width: inherit;
 
     .index {
       font-weight: bold;
@@ -45,6 +48,7 @@ const answers = ref(dialogRef?.value?.data?.answers.answers)
     color: #10b981;
     font-size: 1rem;
     font-weight: bold;
+    max-width: inherit;
   }
 }
 </style>

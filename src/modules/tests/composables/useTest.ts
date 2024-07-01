@@ -11,7 +11,7 @@ const selectedTest = ref<Test>()
 const testList = ref<Test[]>([])
 const visibleAddModal = ref(false)
 
-const newTest = ref<Test>(initNewTest)
+const newTest = ref<Test>(initNewTest())
 
 const loading = reactive({
   test: false,
@@ -119,7 +119,7 @@ export const useTest = () => {
   }
 
   function clearContent() {
-    newTest.value = initNewTest
+    newTest.value = initNewTest()
     visibleAddModal.value = false
   }
 

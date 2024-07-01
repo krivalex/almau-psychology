@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import PButton from 'primevue/button'
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 import QuestionBlock from '@test/components/QuestionBlock.vue'
@@ -81,6 +81,10 @@ onMounted(async () => {
       router.push('/')
     }
   }
+})
+
+onUnmounted(() => {
+  clearTestAnswers()
 })
 </script>
 
