@@ -1,8 +1,9 @@
 <template>
+  <WarningPhoneMessage />
+
   <template v-if="testLoading.test">
     <LoadSpinner />
   </template>
-
   <template v-else>
     <section class="test">
       <!-- just an info -->
@@ -55,6 +56,7 @@ import { useRouter } from 'vue-router'
 import QuestionBlock from '@test/components/QuestionBlock.vue'
 import AnswersBlock from '@test/components/AnswersBlock.vue'
 import LoadSpinner from '@/components/ui/LoadSpinner.vue'
+import WarningPhoneMessage from '@/components/WarningPhoneMessage.vue'
 
 import { onImageError } from '@/utils'
 import { Test } from '@/interfaces'
@@ -91,11 +93,12 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .test {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   color: black;
   position: relative;
+  min-height: 90vh;
 
   .test-request {
     height: 67vh;
@@ -148,8 +151,9 @@ onUnmounted(() => {
     align-items: center;
     margin: 30px 0;
     margin-bottom: 15px;
+    margin-top: 15px;
     padding: 10px;
-    height: 27vh;
+    height: 30vh;
   }
 
   .control {

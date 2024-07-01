@@ -30,7 +30,8 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90vh;
+  height: 100%;
+  min-height: 86vh;
   background-color: #f5f5f5;
   color: black;
   width: 100vw;

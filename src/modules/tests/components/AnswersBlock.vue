@@ -9,9 +9,9 @@
           <p-button :label="answer.text" class="control-button" @click="nextQuestion(answer)" :id="answer.id" />
         </template>
         <template v-else-if="currentAnswerType === 'open'">
-          <p-textarea rows="6" cols="30" v-model="answer.text" :id="answer.id" autoResize />
+          <p-textarea class="control-textarea" rows="6" cols="30" v-model="answer.text" :id="answer.id" autoResize />
           <p-button
-            class="control-button p-text-button send-button"
+            class="control-button p-text-button"
             label="Ответить"
             @click="nextQuestion(answer)"
             :disabled="isOpenQuestionEmpthy(answer)"
@@ -19,14 +19,15 @@
         </template>
         <template v-else-if="currentAnswerType === 'multi-buttons'">
           <div class="checkbox-label">
-            <p-checkbox v-model="answer.isChoose" :id="answer.id" :binary="true" />
+            <p-checkbox class="control-checkbox" v-model="answer.isChoose" :id="answer.id" :binary="true" />
             <span class="label" :id="answer.id">{{ answer.text }}</span>
           </div>
         </template>
       </template>
     </template>
     <p-button
-      v-if="isMultiQuestionEmpthy()"
+      v-if="currentAnswerType === 'multi-buttons'"
+      :disabled="!isMultiQuestionEmpthy()"
       class="control-button p-text-button"
       label="Ответить"
       @click="nextQuestion(null, 'multi-buttons')"
@@ -134,13 +135,13 @@ const isNoAnswers = computed(
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 100%;
-  max-width: 100%;
+  width: 90%;
+  max-width: 90%;
   gap: 10px;
   padding: 0 0.3rem;
 
   .label {
-    font-size: 1rem;
+    font-size: 1.2rem;
     width: 100%;
     text-align: start;
     max-height: 60px;

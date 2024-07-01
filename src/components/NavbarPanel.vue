@@ -3,7 +3,9 @@
     <div class="standart-navbar">
       <div class="naming" @click="goToMain">
         <img class="logo" src="@/assets/logo.png" alt="logo" />
-        <h1 class="name">AlmaU Psychology</h1>
+        <h1 class="name">
+          AlmaU Psychology <span class="version">{{ version }}</span>
+        </h1>
       </div>
       <div class="login-control">
         <admin-button />
@@ -18,6 +20,8 @@ import { useRedirect } from '@/composables/useRedirect'
 
 import LoginButton from '@/components/ui/LoginButton.vue'
 import AdminButton from '@/components/ui/AdminButton.vue'
+
+const version = '0.3.6'
 
 const { goToMain } = useRedirect()
 </script>
@@ -52,9 +56,18 @@ const { goToMain } = useRedirect()
       align-items: center;
       cursor: pointer;
       flex-direction: row;
+
       .logo {
         height: 40px;
         margin: 10px;
+      }
+
+      .version {
+        display: inline-block;
+        margin: 0;
+        font-size: 0.6rem;
+        vertical-align: middle;
+        color: #484848;
       }
 
       .name {

@@ -12,6 +12,7 @@ export interface User extends GoogleUser {
   telegramID: string
   enableTelegramEnter: boolean
   registerDate: Date
+  isTermAccepted: boolean
   firebaseId?: string
 }
 
@@ -66,6 +67,7 @@ export interface Answer {
   text: string
   value: number
   isChoose?: boolean
+  calculatedText?: string
 }
 
 export interface Result {

@@ -95,6 +95,10 @@ function updateAction() {
     border-top-left-radius: 1rem;
   }
 
+  :deep(.test-request .queston) {
+    height: 20vh;
+  }
+
   :deep(.question-text) {
     font-size: 1rem;
   }
@@ -104,7 +108,7 @@ function updateAction() {
   }
 
   :deep(.info) {
-    transform: translateY(30%);
+    transform: translateY(90%);
   }
 
   :deep(.control .answers .control-button) {
@@ -114,6 +118,15 @@ function updateAction() {
 
   :deep(.control .answers) {
     width: 100%;
+
+    .checkbox-label .label {
+      font-size: 0.8rem;
+    }
+
+    .send-button {
+      font-size: 1rem;
+      padding: 0.5rem 0.5rem;
+    }
   }
 
   :deep(.control .actions) {

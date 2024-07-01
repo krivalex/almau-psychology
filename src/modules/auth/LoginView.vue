@@ -80,6 +80,10 @@
         <span class="contols-message">Вы не заполнили обязательные поля:</span>
         <span class="valid-fields">{{ validationMesage }}</span>
       </template>
+      <div class="term-accept">
+        <p-checkbox v-model="newStudent.isTermAccepted" :binary="true" />
+        <span class="text-accept">Принять <strong @click="goToTermOfUse">пользовательское соглашение</strong></span>
+      </div>
       <button class="p-button" @click="checkValidateToRegister">Зарегистрироваться</button>
     </div>
   </section>
@@ -89,6 +93,8 @@
 import PInputMask from 'primevue/inputmask'
 import PDropdown from 'primevue/dropdown'
 import PInputText from 'primevue/inputtext'
+import PCheckbox from 'primevue/checkbox'
+
 import { useUser } from '@/composables/useUser'
 import { useRegistration } from '@auth/composables/useRegistration'
 import { computed, onMounted, ref } from 'vue'
@@ -96,11 +102,13 @@ import { useTelegram } from '@auth/composables/useTelegram'
 import { courses, loginFields, schools } from '@/utils'
 import { useUserDevice } from '@/composables/useUserDevice'
 import { User } from '@/interfaces'
+import { useRedirect } from '@/composables/useRedirect'
 
 const { googleUser } = useUser()
 const { newStudent, completeRegister } = useRegistration()
 const { getTelegramNickname, getTelegramID } = useTelegram()
 const { isBrowserMounted, isWebViewMounted } = useUserDevice()
+const { goToTermOfUse } = useRedirect()
 
 const validationMesage = ref<string>('')
 
@@ -115,6 +123,7 @@ function validate() {
   const specialty = isNotAStudent.value || !!newStudent.value.specialty
   const yearAdmission = isNotAStudent.value || !!newStudent.value.yearAdmission
   const phone = !!newStudent.value.phone
+  const term = newStudent.value.isTermAccepted
 
   const noValidFields = Object.entries(loginFields)
     .filter(([field]: [string, string]) => !newStudent.value[field as keyof User])
@@ -125,7 +134,7 @@ function validate() {
   }
 
   return {
-    valid: name && surname && specialty && yearAdmission && phone,
+    valid: name && surname && specialty && yearAdmission && phone && term,
     noValidFields,
   }
 }
@@ -242,5 +251,22 @@ function calculateYear() {
     margin-bottom: 10px;
   }
 }
+
+.term-accept {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: #000000;
+
+  .text-accept {
+    cursor: pointer;
+
+    strong {
+      color: black;
+      text-decoration: underline;
+    }
+  }
+}
 </style>
-@/modules/auth/composables/useRegistration @/modules/auth/composables/useTelegram

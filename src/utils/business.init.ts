@@ -19,6 +19,7 @@ export function initNewUser(): User {
     telegramLogin: '',
     enableTelegramEnter: false,
     registerDate: new Date(),
+    isTermAccepted: false,
   }
 }
 
