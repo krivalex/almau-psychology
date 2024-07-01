@@ -85,6 +85,14 @@
               />
             </div>
           </template>
+          <template v-else-if="col.field === 'firebaseId'">
+            <p-button
+              icon="pi pi-trash"
+              @click="openConfirmToDeleteCompletedTest(data.firebaseId)"
+              class="p-button-text"
+              severity="danger"
+            ></p-button>
+          </template>
           <span v-else>{{ data[field] }}</span>
         </template>
       </p-column>
@@ -106,10 +114,13 @@ import PDropdown from 'primevue/dropdown'
 import { statusLabels } from '@/utils'
 import SearchPanel from '@admin/completed-tests/components/SearchPanel.vue'
 import { useCompletedTest } from '@admin/completed-tests/composables/useCompletedTest'
+import { useConfirm } from 'primevue/useconfirm'
 
-const { getAllContent, allCompletedTests, loading, updateStatus, filters } = useCurrentTest()
+const { getAllContent, allCompletedTests, loading, updateStatus, filters, deleteCompletedTest } = useCurrentTest()
 const { getTestOptions, DT, filteredData, exportPretify } = useCompletedTest()
+
 const dialog = useDialog()
+const confirm = useConfirm()
 
 async function toogleUpdateStatus(data: CompletedTest) {
   await updateStatus(data)
@@ -142,10 +153,25 @@ const columns = [
   { field: 'answers', header: 'Карта ответов' },
   { field: 'status', header: 'Статус', style: 'max-width: 220px; min-width: 220px;' },
   { field: 'messages', header: 'Связаться' },
+  { field: 'firebaseId', header: '🗑️' },
 ]
 
 function isHasData(data: string | number) {
   return data || 'Нет данных'
+}
+
+function openConfirmToDeleteCompletedTest(id: string) {
+  confirm.require({
+    message: `Тест будет удален безвозвратно`,
+    header: `Вы уверены, что хотите удалить тест?`,
+    icon: 'pi pi-exclamation-triangle',
+    accept: async () => await deleteCompletedTest(id),
+    reject: () => {},
+    acceptLabel: 'Да, удалить тест',
+    rejectLabel: 'Отмена',
+    acceptClass: 'p-button-danger',
+    rejectClass: 'p-button-secondary',
+  })
 }
 
 onMounted(async () => {

@@ -9,6 +9,7 @@ import {
   secondLayerResults,
   initNewTest,
   answersDesc,
+  genarateUniqueID,
 } from '@/utils'
 import { useTest } from '@/modules/tests/composables/useTest'
 
@@ -141,12 +142,32 @@ export function useChangeTest() {
     return answersDesc[question.answerType as AnswerType] || answersDesc.buttons
   }
 
+  function createNewAnswerBody() {
+    const ID = test.value?.questions?.answers?.length + 1 || genarateUniqueID()
+    const newAnswer = { text: '', value: 0, id: ID }
+    return newAnswer
+  }
+
+  function createNewQuestionBody(answerType: AnswerType) {
+    const newQuestion = { text: '', answers: [createNewAnswerBody()], answerType }
+    return newQuestion
+  }
+
+  function createNewResultBody() {
+    const newResult = {
+      name: '',
+      description: '',
+      image: '',
+    }
+    return newResult
+  }
+
   function deleteAnswer(Qindex: number, Rindex: number) {
     test.value.questions[Qindex].answers.splice(Rindex, 1)
   }
 
   function addAnswer(Qindex: number) {
-    test.value.questions[Qindex].answers.push({ text: '' })
+    test.value.questions[Qindex].answers.push(createNewAnswerBody())
   }
 
   function deleteQuestion(Qindex: number) {
@@ -155,15 +176,11 @@ export function useChangeTest() {
 
   function addQuestion() {
     const answerType = newAnswerType.value
-    test.value.questions.push({ text: '', answers: [{ text: '' }], answerType })
+    test.value.questions.push(createNewQuestionBody(answerType || 'buttons'))
   }
 
   function addResult() {
-    test.value.results.push({
-      name: '',
-      description: '',
-      image: '',
-    })
+    test.value.results.push(createNewResultBody())
   }
 
   function deleteResult(index: number) {
@@ -217,16 +234,16 @@ export function useChangeTest() {
 
     const isValid = !(firstLayer && secondLayer && thirdLayer && secondLayerResult)
 
-    console.log('isVALID', {
-      firstLayer,
-      secondLayer,
-      secondLayerResult,
-      secondLayerAdditional,
-      thirdLayer,
-      isTwoResult,
-      isFiveQuestion,
-      isAllQuestionsHasTwoMoreAnswers,
-    })
+    // console.log('isVALID', {
+    //   firstLayer,
+    //   secondLayer,
+    //   secondLayerResult,
+    //   secondLayerAdditional,
+    //   thirdLayer,
+    //   isTwoResult,
+    //   isFiveQuestion,
+    //   isAllQuestionsHasTwoMoreAnswers,
+    // })
 
     const valid = !(
       firstLayer &&
@@ -257,7 +274,7 @@ export function useChangeTest() {
 
   function clear() {
     test.value = {}
-    newTest.value = initNewTest
+    newTest.value = initNewTest()
   }
 
   return {

@@ -38,6 +38,7 @@ export interface AnswersMap {
   question: string
   answer: string
   value: number
+  isChoose?: boolean
 }
 
 export interface Test {
@@ -64,6 +65,7 @@ export interface Answer {
   id: string
   text: string
   value: number
+  isChoose?: boolean
 }
 
 export interface Result {

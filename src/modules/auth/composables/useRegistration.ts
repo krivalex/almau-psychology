@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router'
 import { useTelegram } from '@auth/composables/useTelegram'
 import { useUserDevice } from '@/composables/useUserDevice'
 
-const newStudent = ref<User>(initNewUser)
+const newStudent = ref<User>(initNewUser())
 const studentList = ref<User[]>([])
 
 export const useRegistration = () => {
