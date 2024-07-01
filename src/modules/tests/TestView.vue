@@ -91,11 +91,12 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .test {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   color: black;
   position: relative;
+  min-height: 90vh;
 
   .test-request {
     height: 67vh;
@@ -148,8 +149,9 @@ onUnmounted(() => {
     align-items: center;
     margin: 30px 0;
     margin-bottom: 15px;
+    margin-top: 15px;
     padding: 10px;
-    height: 27vh;
+    height: 30vh;
   }
 
   .control {

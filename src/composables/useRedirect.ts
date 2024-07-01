@@ -46,6 +46,14 @@ export function useRedirect() {
     window.open('https://www.instagram.com/_krivalex_/?hl=ru')
   }
 
+  function goToTermOfUse() {
+    router.push('/term-of-use')
+  }
+
+  function goBack() {
+    router.back()
+  }
+
   return {
     isLoginPage,
     currentParamsID,
@@ -56,5 +64,7 @@ export function useRedirect() {
     goToResultPage,
     goToTest,
     redirectToKrivalex,
+    goToTermOfUse,
+    goBack,
   }
 }

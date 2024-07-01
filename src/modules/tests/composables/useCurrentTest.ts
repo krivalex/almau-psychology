@@ -98,7 +98,7 @@ export const useCurrentTest = () => {
 
       currentTest.value?.answers.push({
         question: _question,
-        answer: answer.text,
+        answer: answer.calculatedText || answer.text,
         value: answerScore || answer.value,
       })
 
@@ -135,7 +135,7 @@ export const useCurrentTest = () => {
     if (!answer && isAnswerExist && selectedTest.value) {
       answer = selectedTest.value.questions[currentIndex.value].answers[0]
       const { answerText, answerScore } = multiButtonsHandler(mode)
-      if (answerText) answer.text = answerText
+      if (answerText) answer.calculatedText = answerText
       if (answerScore) calculatedScore = answerScore
     }
 
@@ -183,6 +183,8 @@ export const useCurrentTest = () => {
   function clickAnswerAnimation() {
     const buttons = document.querySelectorAll('.control-button')
     const text = document.querySelector('.queston')
+    const checkboxes = document.querySelectorAll('.control-checkbox')
+    const textareas = document.querySelectorAll('.control-textarea')
 
     text?.classList.add('animation-question-text')
     setTimeout(() => {
@@ -193,6 +195,20 @@ export const useCurrentTest = () => {
       button.classList.add('clicked')
       setTimeout(() => {
         button.classList.remove('clicked')
+      }, 500)
+    })
+
+    checkboxes.forEach(checkbox => {
+      checkbox.classList.add('clicked')
+      setTimeout(() => {
+        checkbox.classList.remove('clicked')
+      }, 500)
+    })
+
+    textareas.forEach(textarea => {
+      textarea.classList.add('clicked')
+      setTimeout(() => {
+        textarea.classList.remove('clicked')
       }, 500)
     })
   }

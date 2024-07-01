@@ -44,6 +44,11 @@ const router = createRouter({
       name: 'admin-cabinet',
       component: () => import('@admin/AdminCabinetView.vue'),
     },
+    {
+      path: '/term-of-use',
+      name: 'term-of-use',
+      component: () => import('@/views/TermsOfUseView.vue'),
+    },
   ],
 })
 

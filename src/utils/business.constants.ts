@@ -25,6 +25,7 @@ export const loginFields: Record<string, string> = {
   yearAdmission: 'Год поступления',
   phone: 'Телефон',
   courseRegister: 'Курс',
+  isTermAccepted: 'Согласие на обработку данных',
 }
 
 export const isNotValidMessage = 'Обязательно для заполнения'
