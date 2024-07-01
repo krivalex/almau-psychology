@@ -57,8 +57,8 @@ function updateAction() {
 
 <style lang="scss" scoped>
 .preview-test-content {
-  width: calc(390px * 0.75);
-  height: calc(844px * 0.65);
+  width: calc(390px * 0.8);
+  height: calc(844px * 0.7);
   border: 3px solid gray;
   border-radius: 1rem;
   position: fixed;
@@ -68,19 +68,19 @@ function updateAction() {
 .preview-header {
   font-size: 1.5rem;
   position: relative;
-  bottom: -8%;
+  bottom: -13%;
 }
 
 .contols {
   position: fixed;
   display: flex;
   justify-content: space-evenly;
-  top: calc(844px * 0.75);
-  padding: 5px 20px;
-  gap: 20px;
+  top: calc(844px * 0.8);
+  padding: 5px 17px;
+  gap: 22px;
 
   .control-button {
-    width: 70px;
+    width: 80px;
     height: 40px;
     font-size: 1.7rem;
   }
@@ -100,7 +100,7 @@ function updateAction() {
   }
 
   :deep(.test-request) {
-    height: 360px;
+    height: 410px;
   }
 
   :deep(.info) {
@@ -110,6 +110,10 @@ function updateAction() {
   :deep(.control .answers .control-button) {
     font-size: 0.8rem;
     padding: 0.5rem 0.5rem;
+  }
+
+  :deep(.control .answers) {
+    width: 100%;
   }
 
   :deep(.control .actions) {

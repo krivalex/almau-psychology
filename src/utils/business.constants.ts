@@ -48,3 +48,18 @@ export const statusLabels = [
   { label: 'Нужно внимание', value: 'attention' },
   { label: 'Не начат', value: 'not_started' },
 ]
+
+export const answersTypes = [
+  { value: 'open', label: 'Открытый' },
+  { value: 'buttons', label: 'Закрытый (1 ответ)' },
+  { value: 'multi-buttons', label: 'Закрытый (1+ ответ)' },
+]
+
+export const answersDesc = {
+  open: `Ответ текстом \n
+  Длина ответа: <= 300 символов`,
+  buttons: `Выбор одного ответа \n
+  Длина ответа: <= 100 символов`,
+  'multi-buttons': ` Выбор одного или нескольких ответов \n
+  Длина ответа: <= 40 символов`,
+}

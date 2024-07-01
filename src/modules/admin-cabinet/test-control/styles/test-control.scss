@@ -28,12 +28,13 @@
 
   .number {
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     flex-direction: row;
     width: 100%;
     margin-top: 0.75rem;
     margin-bottom: 0.3rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    color: rgb(163, 163, 163);
 
     .label {
       font-weight: bold;
@@ -67,6 +68,10 @@
         font-weight: bold;
         min-width: 210px;
         padding-top: 0.5rem;
+      }
+
+      .small {
+        min-width: 130px !important;
       }
 
       .condition-body {
@@ -175,4 +180,41 @@
   align-items: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
+
+  .type-block {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    .type {
+      font-size: 1rem;
+      color: rgb(163, 163, 163);
+
+      strong {
+        font-size: 1rem;
+        color: #007bff;
+        font-weight: 600;
+      }
+    }
+
+    .info-button {
+      width: 25px;
+      height: 25px;
+
+    }
+  }
+
 }
+
+.beetween {
+  justify-content: space-between !important;
+}
+
+.select-answer-type {
+  width: 100%;
+  max-width: 250px;
+}
+
+

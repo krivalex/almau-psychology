@@ -1,4 +1,4 @@
-import { ConrolTestCondition } from '@/interfaces'
+import { AnswerType, ConrolTestCondition, Question } from '@/interfaces'
 import { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 import { inject, Ref, ref } from 'vue'
 import {
@@ -8,6 +8,7 @@ import {
   isNotValidMessage,
   secondLayerResults,
   initNewTest,
+  answersDesc,
 } from '@/utils'
 import { useTest } from '@/modules/tests/composables/useTest'
 
@@ -16,6 +17,7 @@ export function useChangeTest() {
   const test = ref(dialogRef?.value?.data?.test)
 
   const { newTest } = useTest()
+  const newAnswerType = ref<AnswerType>()
 
   const changeTestConditions: ConrolTestCondition[] = [
     {
@@ -129,6 +131,16 @@ export function useChangeTest() {
     return value !== null && value !== undefined && value !== ''
   }
 
+  function calculateMaxPosibleLength(question: Question) {
+    if (question.answerType === 'multi-buttons') return 40
+    if (question.answerType === 'buttons') return 100
+    if (question.answerType === 'open') return 300
+  }
+
+  function getInfoTypeAnswer(question: Question) {
+    return answersDesc[question.answerType as AnswerType] || answersDesc.buttons
+  }
+
   function deleteAnswer(Qindex: number, Rindex: number) {
     test.value.questions[Qindex].answers.splice(Rindex, 1)
   }
@@ -142,7 +154,8 @@ export function useChangeTest() {
   }
 
   function addQuestion() {
-    test.value.questions.push({ text: '', answers: [{ text: '' }] })
+    const answerType = newAnswerType.value
+    test.value.questions.push({ text: '', answers: [{ text: '' }], answerType })
   }
 
   function addResult() {
@@ -157,10 +170,21 @@ export function useChangeTest() {
     test.value.results.splice(index, 1)
   }
 
+  function isShowAddAnswerButton(question: Question) {
+    const isOpenQuestion = question.answerType === 'open'
+    const isFourAnswersCompletly = question.answers.length >= 4
+    return isOpenQuestion || isFourAnswersCompletly
+  }
+
   function getConditions() {
     const isTwoResult = test.value.results.length >= 2
     const isFiveQuestion = test.value.questions.length >= 5
-    const isAllQuestionsHasTwoMoreAnswers = test.value.questions.every((question: any) => question.answers.length >= 2)
+
+    const isAllQuestionsHasTwoMoreAnswers = test.value.questions.every((question: any) => {
+      const isTwoAnswers = question.answers.length >= 2
+      const isOpenQuestion = question.answerType === 'open'
+      return isTwoAnswers || isOpenQuestion
+    })
 
     const firstLayer = firstLayerFields.every(field => {
       return isValidData(test.value[field])
@@ -183,6 +207,7 @@ export function useChangeTest() {
     })
 
     const thirdLayer = test.value.questions.every((question: any) => {
+      if (question.answerType === 'open') return true
       return question.answers.every((answer: any) => {
         return thirdLayerFields.every(field => {
           return isValidData(answer[field])
@@ -247,5 +272,9 @@ export function useChangeTest() {
     deleteResult,
     getConditions,
     clear,
+    newAnswerType,
+    isShowAddAnswerButton,
+    calculateMaxPosibleLength,
+    getInfoTypeAnswer,
   }
 }

@@ -159,7 +159,7 @@ export const useUser = () => {
   }
 
   async function updateUserInDatabase(completedTestName: string) {
-    googleUser.value?.completedTests.push(completedTestName)
+    googleUser.value?.completedTests?.push(completedTestName)
 
     loading.googleUser = true
     try {

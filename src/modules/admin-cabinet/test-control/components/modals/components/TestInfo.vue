@@ -6,7 +6,7 @@
           <p-panel :header="`${Qindex + 1}. ${test['questions'][Qindex].text}`" toggleable collapsed>
             <div class="contain">
               <div class="condition">
-                <span class="label">Текст вопроса:</span>
+                <span class="label small">Текст вопроса:</span>
                 <div class="condition-body">
                   <p-text-area
                     v-model="test['questions'][Qindex].text"
@@ -22,94 +22,84 @@
                 </div>
               </div>
             </div>
-            <template v-for="(_, Rindex) in question.answers">
-              <span class="number">Ответ №{{ Rindex + 1 }}</span>
-              <div class="contain-horizontal">
-                <template v-for="questionCondition in condition.fields">
-                  <template v-for="resultCondition in questionCondition.fields">
-                    <div class="condition-body">
-                      <span class="label">{{ resultCondition.localization }}:</span>
-                      <div class="condition-content">
-                        <template v-if="resultCondition.type === 'textarea'">
-                          <p-text-area
-                            v-model="test['questions'][Qindex]['answers'][Rindex][resultCondition.field]"
-                            type="text"
-                            :class="{
-                              'p-invalid': !isValidData(
-                                test['questions'][Qindex]['answers']?.[Rindex]?.[resultCondition.field],
-                              ),
-                            }"
-                            class="input"
-                            rows="1"
-                            cols="30"
-                            autoResize
-                          />
-                        </template>
-                        <template v-else-if="resultCondition.type === 'number'">
-                          <p-input-number
-                            v-model="test['questions'][Qindex]['answers'][Rindex][resultCondition.field]"
-                            :class="{
-                              'p-invalid': !isValidData(
-                                test['questions'][Qindex]['answers'][Rindex][resultCondition.field],
-                              ),
-                            }"
-                            class="input"
-                          />
-                        </template>
-                        <template
-                          v-if="!isValidData(test['questions'][Qindex]['answers']?.[Rindex]?.[resultCondition.field])"
-                        >
-                          <small class="error-message">{{ resultCondition.validate }}</small>
-                        </template>
-                      </div>
-                    </div>
-                  </template>
-                </template>
-                <div class="delete-block">
-                  <p-button
-                    icon="pi pi-trash"
-                    @click="deleteAnswer(Qindex, Rindex)"
-                    class="p-button-text delete-icon"
-                  />
-                </div>
+
+            <AnswersInfo :answers="question.answers" :condition="condition" :Qindex="Qindex" />
+
+            <div class="create-block-button beetween">
+              <div class="type-block">
+                <p-button
+                  icon="pi pi-info"
+                  class="info-button"
+                  v-tooltip.top="getInfoTypeAnswer(test['questions'][Qindex])"
+                />
+                <span class="type">
+                  Тип вопроса:
+                  <strong>{{ getAnswerType(test['questions'][Qindex].answerType) }}</strong>
+                </span>
               </div>
-            </template>
-            <div class="create-block-button">
-              <p-button
-                label="Добавить ответ"
-                severity="normal"
-                icon="pi pi-plus"
-                @click="addAnswer(Qindex)"
-                class="p-button-text"
-              />
-              <p-button
-                label="Удалить вопрос"
-                severity="danger"
-                icon="pi pi-trash"
-                @click="deleteQuestion(Qindex)"
-                class="p-button-text"
-              />
+              <div class="buttons">
+                <p-button
+                  label="Добавить ответ"
+                  severity="normal"
+                  icon="pi pi-plus"
+                  @click="addAnswer(Qindex)"
+                  :disabled="isShowAddAnswerButton(test['questions'][Qindex])"
+                  class="p-button-text"
+                />
+                <p-button
+                  label="Удалить вопрос"
+                  severity="danger"
+                  icon="pi pi-trash"
+                  @click="deleteQuestion(Qindex)"
+                  class="p-button-text"
+                />
+              </div>
             </div>
           </p-panel>
         </template>
       </template>
     </template>
     <div class="create-block-button">
-      <p-button label="Добавить вопрос" icon="pi pi-plus" @click="addQuestion" class="p-button-text" />
+      <p-button
+        label="Добавить вопрос"
+        icon="pi pi-plus"
+        :disabled="!newAnswerType"
+        @click="addQuestion"
+        class="p-button-text"
+      />
+      <p-dropdown
+        class="select-answer-type"
+        v-model="newAnswerType"
+        :options="answersTypes"
+        optionLabel="label"
+        optionValue="value"
+        :showClear="true"
+      />
     </div>
   </p-panel>
 </template>
 
 <script setup lang="ts">
-import PInputNumber from 'primevue/inputnumber'
 import PPanel from 'primevue/panel'
 import PTextArea from 'primevue/textarea'
 import PButton from 'primevue/button'
+import PDropdown from 'primevue/dropdown'
 
+import AnswersInfo from '@admin/test-control/components/modals/components/AnswersInfo.vue'
+import { answersTypes, getAnswerType } from '@/utils'
 import { useChangeTest } from '@admin/test-control/composables/useChangeTest'
 
-const { changeTestConditions, test, isValidData, deleteAnswer, addAnswer, deleteQuestion, addQuestion } =
-  useChangeTest()
+const {
+  changeTestConditions,
+  test,
+  isValidData,
+  addAnswer,
+  deleteQuestion,
+  addQuestion,
+  newAnswerType,
+  isShowAddAnswerButton,
+  getInfoTypeAnswer,
+} = useChangeTest()
 </script>
 
 <style lang="scss" src="@admin/test-control/styles/test-control.scss" scoped />

@@ -31,18 +31,19 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .all-tests {
-  min-height: 100vh;
+  min-height: 110vh;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   color: black;
   margin-bottom: 3rem;
+  height: 120%;
 
   .about-all-tests {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.8rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    font-size: 2rem;
     font-weight: bold;
     color: black;
   }
@@ -50,10 +51,9 @@ onMounted(async () => {
   .all-tests-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap: 1.5rem;
     flex-wrap: wrap;
   }
 }
 </style>
-@/modules/tests/composables/useTest
