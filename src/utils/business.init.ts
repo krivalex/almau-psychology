@@ -41,6 +41,7 @@ export const initNewQuestion: Question = {
   id: '',
   text: '',
   answers: [initNewAnswer],
+  answerType: 'buttons',
 }
 
 export const initNewResult: Result = {
