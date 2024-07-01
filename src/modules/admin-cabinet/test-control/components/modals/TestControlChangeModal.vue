@@ -143,6 +143,7 @@ async function saveTestToDraft() {
   newTest.value = {
     ...newTest.value,
     ...test.value,
+    visible: false
   }
   await updateTest(newTest.value)
   await getAllContent()

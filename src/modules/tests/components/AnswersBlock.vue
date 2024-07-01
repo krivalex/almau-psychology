@@ -10,11 +10,16 @@
         </template>
         <template v-else-if="currentAnswerType === 'open'">
           <p-textarea rows="6" cols="30" v-model="answer.text" :id="answer.id" autoResize />
-          <p-button class="control-button p-text-button send-button" label="Ответить" @click="nextQuestion(answer)" />
+          <p-button
+            class="control-button p-text-button send-button"
+            label="Ответить"
+            @click="nextQuestion(answer)"
+            :disabled="isOpenQuestionEmpthy(answer)"
+          />
         </template>
         <template v-else-if="currentAnswerType === 'multi-buttons'">
           <div class="checkbox-label">
-            <p-checkbox v-model="answer.text" :id="answer.id" />
+            <p-checkbox v-model="multiAnswers" :id="answer.id" :falseValue="false" :trueValue="true" />
             <span class="label" :id="answer.id">{{ answer.text }}</span>
           </div>
           <p-button
@@ -34,7 +39,7 @@ import PButton from 'primevue/button'
 import PTextarea from 'primevue/textarea'
 import PCheckbox from 'primevue/checkbox'
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 import { useTest } from '@test/composables/useTest'
 import { useCurrentTest } from '@test/composables/useCurrentTest'
@@ -42,8 +47,14 @@ import { useCurrentTest } from '@test/composables/useCurrentTest'
 const { selectedTest } = useTest()
 const { currentIndex, nextQuestion } = useCurrentTest()
 
+const multiAnswers = ref<string[]>([])
+
 function getAnswerType() {
   return selectedTest.value?.questions[currentIndex.value]?.answerType
+}
+
+function isOpenQuestionEmpthy(answer: { text: string }) {
+  return !answer.text && getAnswerType() === 'open'
 }
 
 const currentAnswerType = computed(() => getAnswerType() || 'buttons')
