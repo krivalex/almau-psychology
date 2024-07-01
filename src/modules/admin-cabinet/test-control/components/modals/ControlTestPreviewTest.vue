@@ -2,8 +2,8 @@
   <div class="preview-test-content">
     <template v-for="preview in previewMap" :key="preview.id">
       <template v-if="previewID === preview.id">
-        <component :is="preview.view" :previewTest="test" :previewID="previewID - 2" :class="preview.class" />
         <h1 class="preview-header">{{ preview.id }}. {{ preview.header() }}</h1>
+        <component :is="preview.view" :previewTest="test" :previewID="previewID - 2" :class="preview.class" />
       </template>
     </template>
   </div>
@@ -63,12 +63,19 @@ function updateAction() {
   border-radius: 1rem;
   position: fixed;
   text-align: center;
+  overflow: scroll;
 }
 
 .preview-header {
-  font-size: 1.5rem;
-  position: relative;
-  bottom: -13%;
+  font-size: 0.75rem;
+  position: absolute;
+  z-index: 100000;
+  color: white;
+  background-color: black;
+  width: 100%;
+  top: -12px;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 }
 
 .contols {
@@ -89,6 +96,7 @@ function updateAction() {
 .preview-test-view {
   height: calc(844px * 0.64);
   justify-content: flex-start;
+  min-height: 60vh;
 
   :deep(.test-image) {
     border-top-right-radius: 1rem;
@@ -108,7 +116,7 @@ function updateAction() {
   }
 
   :deep(.info) {
-    transform: translateY(90%);
+    transform: translateY(50%);
   }
 
   :deep(.control .answers .control-button) {
@@ -147,6 +155,7 @@ function updateAction() {
   :deep(.result) {
     height: calc(844px * 0.64);
     border-radius: 1rem;
+    min-height: 60vh;
   }
 
   :deep(.title) {
