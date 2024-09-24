@@ -10,8 +10,10 @@ export function useRedirect() {
   const { telegramNickname, decodeTelegramUser } = useTelegram()
 
   const noLoginButtonViews = ['login', 'login-options', 'after-register']
-  const getRedirectRoute = () => `https://almau-psychology.netlify.app/login-options
-  ?redirect=true&redirectTeleramId=${decodeTelegramUser()}&redirectLogin=${telegramNickname.value}`
+  const getRedirectRoute = () =>
+    `https://almau-psychology.netlify.app/login-options?redirect=true&redirectTeleramId=${decodeTelegramUser()}&redirectLogin=${
+      telegramNickname.value
+    }`
 
   const isLoginPage = computed(() => {
     if (router.currentRoute?.value?.name) {
