@@ -171,7 +171,7 @@ async function onDeleteTest() {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     width: inherit;
     gap: 1rem;
   }

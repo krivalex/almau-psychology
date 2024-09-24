@@ -172,7 +172,7 @@ function calculateYear() {
     display: flex;
     flex-direction: column;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px 0;
+    padding: 20px 5px;
     width: 85%;
   }
 

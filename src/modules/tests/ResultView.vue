@@ -4,11 +4,17 @@
   </template>
   <template v-else>
     <section class="result-page">
-      <img class="result" :src="currentResult?.image" @error="onImageError" />
-      <h1 class="title">{{ currentResult?.name }}</h1>
-      <p class="description">{{ currentResult?.description }}</p>
-      <!-- <p-button label="Записаться на консультацию" class="control-button" @click="goToWhatsapp" /> -->
-      <p-button class="another-test-button" label="Пройти еще один тест" icon="pi pi-arrow-top" @click="goToMain" />
+      <template v-if="currentResult">
+        <img class="result" :src="currentResult?.image" @error="onImageError" />
+        <h1 class="title">{{ currentResult?.name }}</h1>
+        <p class="description">{{ currentResult?.description }}</p>
+        <!-- <p-button label="Записаться на консультацию" class="control-button" @click="goToWhatsapp" /> -->
+        <p-button class="another-test-button" label="Пройти еще один тест" icon="pi pi-arrow-top" @click="goToMain" />
+      </template>
+      <template v-else>
+        <img class="result" @error="onImageError" />
+        <h1 class="title">Не удалось загрузить результаты</h1>
+      </template>
     </section>
   </template>
 </template>
@@ -57,20 +63,20 @@ onMounted(async () => {
   color: black;
 
   .result {
-    height: 120vh;
+    height: 110vh;
     width: 100%;
     object-fit: cover;
   }
 
   .title {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 500;
     margin-bottom: 1rem;
     position: absolute;
     top: 0;
     padding: 20px;
     text-align: center;
-    text-shadow: 0 0 10px black;
+    text-shadow: 0 0 5px black;
     color: white;
   }
 

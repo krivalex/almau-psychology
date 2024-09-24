@@ -16,12 +16,11 @@
 </template>
 
 <script setup lang="ts">
-import { useRedirect } from '@/composables/useRedirect'
-
 import LoginButton from '@/components/ui/LoginButton.vue'
 import AdminButton from '@/components/ui/AdminButton.vue'
+import { useRedirect } from '@/composables/useRedirect'
 
-const version = '0.3.6'
+const version = '0.3.7'
 
 const { goToMain } = useRedirect()
 </script>
